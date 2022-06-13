@@ -11,26 +11,29 @@ const comlaintData = [
   {
     name: "Harshil Sarariya",
     email: "harshilprajapati@gmail.com",
+    number: 9510142642,
     doj: "23/09/2200",
   },
   {
     name: "Harshil Sarariya",
     email: "harshilprajapati@gmail.com",
+    number: 9510142642,
     doj: "23/09/2200",
   },
   {
     name: "Harshil Sarariya",
     email: "harshilprajapati@gmail.com",
+    number: 9510142642,
     doj: "23/09/2200",
   },
 ];
 
 const Users = () => {
   const commonClass =
-    "px-6 py-4 font-semibold text-lg bg-white text-black  whitespace-nowrap";
+    "px-6 py-4 font-medium text-lg bg-white text-black  whitespace-nowrap";
 
   return (
-    <div className="w-full nunito-font h-full bg-[#F1F5F9]">
+    <div className="w-full nunito-font  h-full bg-[#F1F5F9]">
       <div className="">
         <Navbar />
         <div className="flex flex-no-wrap">
@@ -54,6 +57,9 @@ const Users = () => {
                       Email
                     </th>
                     <th scope="col" className="px-6 py-3">
+                      Phone No.
+                    </th>
+                    <th scope="col" className="px-6 py-3">
                       Date Of Joining
                     </th>
                     <th scope="col" className="px-6 pl-16 py-3">
@@ -74,6 +80,9 @@ const Users = () => {
                           {complaint.name}
                         </th>
                         <td className={`${commonClass} `}>{complaint.email}</td>
+                        <td className={`${commonClass} `}>
+                          {complaint.number}
+                        </td>
                         <td className={`${commonClass}`}>{complaint.doj}</td>
                         <td className={`${commonClass} flex space-x-4`}>
                           <Link
