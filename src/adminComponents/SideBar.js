@@ -7,6 +7,7 @@ const SideBar = () => {
   const [performance, setPerformance] = useState(" ");
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
+
   useEffect(() => {
     if (window.location.pathname === "/ideal-admin") {
       setDashboard("bg-white");
@@ -16,7 +17,10 @@ const SideBar = () => {
       setDashboard("text-[#5C697B] hover:bg-white");
       setProduct("bg-white");
       setPerformance(" text-[#5C697B] hover:bg-white");
-    } else if (window.location.pathname === "/users") {
+    } else if (
+      window.location.pathname === "/users" ||
+      window.location.pathname === "/users/addMember"
+    ) {
       setDashboard("text-[#5C697B] hover:bg-white");
       setProduct("text-[#5C697B] hover:bg-white");
       setPerformance("bg-white");

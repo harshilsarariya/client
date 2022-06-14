@@ -8,6 +8,8 @@ import UpdateComplaint from "./adminComponents/UpdateComplaint";
 import ViewComplaint from "./adminComponents/ViewComplaints";
 import ViewComplaintDetails from "./adminComponents/ViewComplaintDetails";
 import Users from "./adminComponents/Users";
+import AddMember from "./adminComponents/AddMember";
+import UpdateMember from "./adminComponents/UpdateMember";
 
 function App() {
   return (
@@ -19,11 +21,13 @@ function App() {
         <Route path="/ideal-admin" element={<AdminHome />} />
         <Route path="/view-complaints" element={<ViewComplaint />} />
         <Route
-          path="/view-details-complaint"
+          path="/view-details-complaint/:cid"
           element={<ViewComplaintDetails />}
         />
-        <Route path="/update-complaint" element={<UpdateComplaint />} />
+        <Route path="/update-complaint/:cid" element={<UpdateComplaint />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/users/addMember" element={<AddMember />} />
+        <Route path="/users/updateMember/:mid" element={<UpdateMember />} />
       </Routes>
     </Router>
   );

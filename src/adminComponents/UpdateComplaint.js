@@ -1,80 +1,60 @@
 import React, { useEffect, useState } from "react";
-
+import { useParams } from "react-router-dom";
+import { updateComplaint, getComplaint } from "../api/complaint";
 import Navbar from "./Navbar";
 import SideBar from "./SideBar";
 import s_a from "../data/City";
 import state_arr from "../data/State";
 import { useNavigate } from "react-router-dom";
-import TextField from "@mui/material/TextField";
+
+export const defaultPost = {
+  partyName: "",
+  address: "",
+  pincode: "",
+  state: "",
+  city: "",
+  mobileNo: "",
+  plumbingNo: "",
+  brandName: "",
+  workDone: "",
+  problemSolved: "",
+  repeat: "",
+  syphoneColor: "",
+};
 
 const UpdateComplaint = () => {
+  const { cid } = useParams();
   const [city, setCity] = useState([]);
-  const [complaint, setComplaint] = useState({
-    partyName: "",
-    address: "",
-    pincode: "",
-    state: "",
-    city: "",
-    mobileNo: "",
-    plumbingNo: "",
-    brandName: "",
-    workDone: "No",
-    problemSolved: "NO",
-    repeat: "No",
-    syphoneColor: "",
-  });
+  const [complaintInfo, setComplaintInfo] = useState(defaultPost);
 
   let navigate = useNavigate();
+
+  const fetchComplaint = async () => {
+    const { complaint } = await getComplaint(cid);
+    setComplaintInfo(complaint);
+  };
+
   const handleCity = (e) => {
     var indexOfState = state_arr.indexOf(e.target.value) + 1;
     var city_arr = s_a[indexOfState].split("|");
     setCity(city_arr);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // API Call
-    const response = await fetch(
-      "http://localhost:5000/api/complaint/addcomplaint",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify({
-          partyName: complaint.partyName,
-          address: complaint.address,
-          pincode: complaint.pincode,
-          state: complaint.state,
-          city: complaint.city,
-          mobileNo: complaint.mobileNo,
-          plumbingNo: complaint.plumbingNo,
-          brandName: complaint.brandName,
-          workDone: complaint.workDone,
-          problemSolved: complaint.problemSolved,
-          repeat: complaint.repeat,
-          syphoneColor: complaint.syphoneColor,
-        }),
-      }
-    );
-
-    const json = await response.json();
-    if (json.success) {
-      // props.showAlert("Complaint Submitted successfully", "green");
-      alert("Complaint Submitted successfully");
-      navigate("/");
-    } else {
-      // props.showAlert(json.errors[0].msg, "red");
-      alert(json.errors[0].msg);
-    }
-  };
+  useEffect(() => {
+    fetchComplaint();
+  }, []);
 
   const onChange = (e) => {
     if (e.target.name === "state") {
       handleCity(e);
     }
-    setComplaint({ ...complaint, [e.target.name]: e.target.value });
+    setComplaintInfo({ ...complaintInfo, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { data } = await updateComplaint(cid, complaintInfo);
+    alert("Complaint Updated Successfully");
   };
 
   useEffect(() => {
@@ -96,7 +76,7 @@ const UpdateComplaint = () => {
                   <h1 className="text-xl font-medium">Update Complaint</h1>
                 </div>
                 <form
-                  onSubmit={handleSubmit}
+                  // onSubmit={handleSubmit}
                   className="lg:w-2/3 md:w-2/3 mx-auto"
                 >
                   <div className="flex flex-wrap -m-2">
@@ -112,6 +92,7 @@ const UpdateComplaint = () => {
                           type="text"
                           onChange={onChange}
                           required
+                          value={complaintInfo.partyName}
                           id="partyName"
                           name="partyName"
                           className="w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
@@ -131,6 +112,7 @@ const UpdateComplaint = () => {
                           type="text"
                           onChange={onChange}
                           required
+                          value={complaintInfo.brandName}
                           id="brandName"
                           name="brandName"
                           className="w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
@@ -148,13 +130,12 @@ const UpdateComplaint = () => {
                       </label>
                       <select
                         name="state"
-                        defaultValue="Select State"
                         required
                         onChange={onChange}
                         className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
                         aria-label=".form-select-lg example"
                       >
-                        <option>Select state</option>
+                        <option>{complaintInfo.state}</option>
                         {state_arr.map((state) => (
                           <option key={state} value={state.index}>
                             {state}
@@ -177,7 +158,7 @@ const UpdateComplaint = () => {
                         className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
                         aria-label=".form-select-lg example"
                       >
-                        <option>Select city</option>
+                        <option>{complaintInfo.city}</option>
                         {city.map((state) => (
                           <option key={state} value={state.index}>
                             {state}
@@ -196,6 +177,7 @@ const UpdateComplaint = () => {
                         <textarea
                           name="address"
                           onChange={onChange}
+                          value={complaintInfo.address}
                           required
                           className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg  h-32 outline-none text-gray-700  py-1 px-3 leading-8 transition-colors duration-200 ease-in-out resize-none"
                           placeholder="Ex. Plot no. 1, near to the bank"
@@ -215,6 +197,7 @@ const UpdateComplaint = () => {
                           required
                           onChange={onChange}
                           name="pincode"
+                          value={complaintInfo.pincode}
                           className="w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
                           placeholder="Pincode"
                         />
@@ -232,6 +215,7 @@ const UpdateComplaint = () => {
                           type="number"
                           required
                           onChange={onChange}
+                          value={complaintInfo.mobileNo}
                           name="mobileNo"
                           className="w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
                           placeholder="Mobile No."
@@ -250,6 +234,7 @@ const UpdateComplaint = () => {
                           type="number"
                           required
                           onChange={onChange}
+                          value={complaintInfo.plumbingNo}
                           name="plumbingNo"
                           className="w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
                           placeholder="Plumbing No."
@@ -267,6 +252,7 @@ const UpdateComplaint = () => {
                         <input
                           type="text"
                           required
+                          value={complaintInfo.syphoneColor}
                           onChange={onChange}
                           name="syphoneColor"
                           className="w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
@@ -289,8 +275,12 @@ const UpdateComplaint = () => {
                           className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
                           aria-label=".form-select-lg example"
                         >
-                          <option>No</option>
-                          <option>Yes</option>
+                          <option>
+                            {complaintInfo.workDone === "false" ? "Yes" : "No"}
+                          </option>
+                          <option>
+                            {complaintInfo.workDone === "true" ? "Yes" : "No"}
+                          </option>
                         </select>
                       </div>
                       <div className="mb-3 w-1/4 ml-2 right-0">
@@ -307,8 +297,16 @@ const UpdateComplaint = () => {
                           className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
                           aria-label=".form-select-lg example"
                         >
-                          <option>No</option>
-                          <option>Yes</option>
+                          <option>
+                            {complaintInfo.problemSolved === "false"
+                              ? "No"
+                              : "Yes"}
+                          </option>
+                          <option>
+                            {complaintInfo.problemSolved === "true"
+                              ? "Yes"
+                              : "No"}
+                          </option>
                         </select>
                       </div>
                       <div className="mb-3 w-1/4 ml-2 right-0">
@@ -325,13 +323,20 @@ const UpdateComplaint = () => {
                           className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
                           aria-label=".form-select-lg example"
                         >
-                          <option>No</option>
-                          <option>Yes</option>
+                          <option>
+                            {complaintInfo.repeat === "false" ? "Yes" : "No"}
+                          </option>
+                          <option>
+                            {complaintInfo.repeat === "true" ? "Yes" : "No"}
+                          </option>
                         </select>
                       </div>
                     </div>
                     <div className="p-2 mt-5 w-full">
-                      <button className="flex mx-auto text-white bg-[#717984] border-0 py-2 px-8 focus:outline-none hover:bg-[#5c646f] rounded text-lg">
+                      <button
+                        onClick={handleSubmit}
+                        className="flex mx-auto text-white bg-[#717984] border-0 py-2 px-8 focus:outline-none hover:bg-[#5c646f] rounded text-lg"
+                      >
                         Update
                       </button>
                     </div>

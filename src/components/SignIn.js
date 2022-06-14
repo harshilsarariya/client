@@ -23,9 +23,12 @@ const SignIn = () => {
     if (json.success) {
       // Save the auth token and redirect
       localStorage.setItem("token", json.authToken);
-      // props.showAlert("Logged in successfully", "green");
-      alert("Logged in successfully");
-      navigate("/ideal-admin");
+      // props.showAlert("Logged in successfully", "green")
+      if (credentials.email === "admin@ideal.com") {
+        navigate("/ideal-admin");
+      } else {
+        navigate("/register-complaint");
+      }
     } else {
       // props.showAlert(json.errors, "red");
       alert(json.errors);

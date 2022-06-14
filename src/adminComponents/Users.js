@@ -1,34 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import SideBar from "./SideBar";
 import { AiOutlinePlus } from "react-icons/ai";
 import { TbEdit } from "react-icons/tb";
 import { MdOutlineDelete } from "react-icons/md";
-import { HiOutlineViewGridAdd } from "react-icons/hi";
 import { Link } from "react-router-dom";
-
-const comlaintData = [
-  {
-    name: "Harshil Sarariya",
-    email: "harshilprajapati@gmail.com",
-    number: 9510142642,
-    doj: "23/09/2200",
-  },
-  {
-    name: "Harshil Sarariya",
-    email: "harshilprajapati@gmail.com",
-    number: 9510142642,
-    doj: "23/09/2200",
-  },
-  {
-    name: "Harshil Sarariya",
-    email: "harshilprajapati@gmail.com",
-    number: 9510142642,
-    doj: "23/09/2200",
-  },
-];
+import { useNavigate } from "react-router-dom";
+import { deleteMember } from "../api/complaint";
 
 const Users = () => {
+  let navigate = useNavigate();
+
+  const [members, setMembers] = useState([{}]);
+
+  const fetchMembers = async () => {
+    let databody = {
+      name: "",
+      email: "",
+      number: "",
+      id: "",
+    };
+
+    fetch("http://localhost:5000/api/auth/getmembers", {
+      method: "POST",
+      body: JSON.stringify(databody),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setMembers(data));
+    console.log(members);
+  };
+
+  let doj;
+  const handleDateFormate = (date) => {
+    const newDate = new Date(date);
+    const dateString = newDate.toLocaleDateString("en-us", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+    doj = dateString;
+  };
+
+  const handleDelete = async (memberId) => {
+    const confirmed = window.confirm("Are you sure!");
+    if (!confirmed) return;
+    const { message } = await deleteMember(memberId);
+
+    const newMembers = members.filter((p) => p._id !== memberId);
+    setMembers(newMembers);
+  };
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/signin");
+    }
+    fetchMembers();
+  }, []);
+
   const commonClass =
     "px-6 py-4 font-medium text-lg bg-white text-black  whitespace-nowrap";
 
@@ -41,10 +72,13 @@ const Users = () => {
           <section className="px-5 w-screen pt-2">
             <div className="flex justify-between ">
               <h2 className="text-xl ">Users Details</h2>
-              <button className="flex bg-[#164D62] p-2 rounded-xl text-white">
+              <Link
+                to={"/users/addMember"}
+                className="flex bg-[#164D62] p-2 rounded-xl text-white"
+              >
                 <AiOutlinePlus className="text-2xl" />
                 <span>Add New Member</span>
-              </button>
+              </Link>
             </div>
             <div className=" sm:rounded-lg mt-5">
               <table className="w-[1200px] text-sm text-left text-gray-500 ">
@@ -70,22 +104,21 @@ const Users = () => {
                 </thead>
 
                 <tbody>
-                  {comlaintData.map((complaint, index) => (
+                  {members.map((member, index) => (
                     <>
+                      {handleDateFormate(member.date)}
                       <tr
                         key={index}
                         className=" border-b  overflow-x-auto shadow-sm"
                       >
                         <th scope="row" className={`${commonClass}`}>
-                          {complaint.name}
+                          {member.name}
                         </th>
-                        <td className={`${commonClass} `}>{complaint.email}</td>
-                        <td className={`${commonClass} `}>
-                          {complaint.number}
-                        </td>
-                        <td className={`${commonClass}`}>{complaint.doj}</td>
+                        <td className={`${commonClass} `}>{member.email}</td>
+                        <td className={`${commonClass} `}>{member.phone}</td>
+                        <td className={`${commonClass}`}>{doj}</td>
                         <td className={`${commonClass} flex space-x-4`}>
-                          <Link
+                          {/* <Link
                             to={"/view-details-complaint"}
                             className="flex items-center cursor-pointer"
                           >
@@ -96,14 +129,21 @@ const Users = () => {
                             <span className="text-[#4bacc7] ml-1 font-semibold">
                               View
                             </span>
-                          </Link>
-                          <a className="flex items-center cursor-pointer">
-                            <TbEdit className="text-gray-500" size={19} />
+                          </Link> */}
+                          <Link
+                            to={`/users/updateMember/${member._id}`}
+                            className="flex items-center cursor-default "
+                          >
+                            {/* <TbEdit className="text-gray-500" size={19} /> */}
                             <span className="text-gray-500 ml-1 font-semibold">
-                              Edit
+                              {/* Edit */}{" "}
                             </span>
-                          </a>
-                          <a className="flex  items-center cursor-pointer">
+                          </Link>
+                          <button
+                            onClick={() => handleDelete(member._id)}
+                            className="flex  items-center cursor-pointer"
+                          >
+                            {console.log(member.id)}
                             <MdOutlineDelete
                               className="text-red-500"
                               size={20}
@@ -111,7 +151,7 @@ const Users = () => {
                             <span className="text-red-500 ml-1 font-semibold">
                               Delete
                             </span>
-                          </a>
+                          </button>
                         </td>
                       </tr>
                       <div className="mb-5" />

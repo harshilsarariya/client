@@ -1,12 +1,45 @@
-import React from "react";
-import ComplaintsList from "./ComplaintsList";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { TbEdit } from "react-icons/tb";
 import { MdOutlineDelete } from "react-icons/md";
 import SideBar from "./SideBar";
 import { Link } from "react-router-dom";
+import { getComplaint } from "../api/complaint";
+import { useNavigate, useParams } from "react-router-dom";
+
+export const defaultPost = {
+  partyName: "",
+  address: "",
+  pincode: "",
+  state: "",
+  city: "",
+  mobileNo: "",
+  plumbingNo: "",
+  brandName: "",
+  workDone: "",
+  problemSolved: "",
+  repeat: "",
+  syphoneColor: "",
+};
 
 const ViewComplaintDetails = () => {
+  const { cid } = useParams();
+  let navigate = useNavigate();
+
+  const [complaintInfo, setComplaintInfo] = useState(defaultPost);
+
+  const fetchComplaint = async () => {
+    const { complaint } = await getComplaint(cid);
+    setComplaintInfo(complaint);
+  };
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/signin");
+    }
+    fetchComplaint();
+  }, []);
+
   return (
     <div className="w-full nunito-font h-full bg-[#F1F5F9]">
       <div className="">
@@ -18,7 +51,7 @@ const ViewComplaintDetails = () => {
               <h2 className="mb-10 text-xl font-semibold">Complaint Details</h2>
               <div className="mb-10 flex text-lg space-x-6">
                 <Link
-                  to={"/update-complaint"}
+                  to={`/update-complaint/${complaintInfo.id}`}
                   className="flex items-center  cursor-pointer"
                 >
                   <TbEdit className="text-gray-500" size={19} />
@@ -37,16 +70,15 @@ const ViewComplaintDetails = () => {
                 Party Name :
               </h3>
               <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
-                Harshil Sarariya
+                {complaintInfo.partyName}
               </span>
             </div>
             <div className="flex my-5">
               <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
-                {" "}
                 Brand Name :
               </h3>
               <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
-                Techrazer
+                {complaintInfo.brandName}
               </span>
             </div>
             <div className="flex my-5">
@@ -60,75 +92,75 @@ const ViewComplaintDetails = () => {
             </div>
             <div className="flex my-5">
               <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
-                {" "}
                 City :
               </h3>
               <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
-                Halvad
+                {complaintInfo.city}
               </span>
             </div>
             <div className="flex my-5">
               <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
-                {" "}
                 Address :
               </h3>
               <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Doloribus, ipsa!
+                {complaintInfo.address}
               </span>
             </div>
             <div className="flex my-5">
               <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
-                {" "}
                 Pincode :
               </h3>
               <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
-                363330
+                {complaintInfo.pincode}
               </span>
             </div>
             <div className="flex my-5">
               <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
-                {" "}
                 Mobile No. :
               </h3>
               <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
-                9510142642
+                {complaintInfo.mobileNo}
               </span>
             </div>
             <div className="flex my-5">
               <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
-                {" "}
                 Plumbing No. :
               </h3>
-              <span className="w-5/6 text-lg rounded-xl p-2 bg-white">658</span>
+              <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
+                {complaintInfo.plumbingNo}
+              </span>
             </div>
             <div className="flex my-5">
               <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
-                {" "}
                 Syphone Color :
               </h3>
-              <span className="w-5/6 text-lg rounded-xl p-2 bg-white">Red</span>
+              <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
+                {complaintInfo.syphoneColor}
+              </span>
             </div>
             <div className="flex my-5">
               <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
-                {" "}
                 Work Done :
               </h3>
-              <span className="w-5/6 text-lg rounded-xl p-2 bg-white">Yes</span>
+              <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
+                {complaintInfo.workDone}
+              </span>
             </div>
             <div className="flex my-5">
               <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
-                {" "}
                 Problem Solved :
               </h3>
-              <span className="w-5/6 text-lg rounded-xl p-2 bg-white">No</span>
+              <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
+                {complaintInfo.problemSolved}
+              </span>
             </div>
             <div className="flex my-5">
               <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
-                {" "}
                 Repeat :
               </h3>
-              <span className="w-5/6 text-lg rounded-xl p-2 bg-white">No</span>
+              <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
+                {complaintInfo.repeat}
+              </span>
             </div>
           </div>
         </div>

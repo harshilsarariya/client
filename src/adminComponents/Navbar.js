@@ -1,9 +1,15 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
 
-  const widthOfNavbar = window.innerWidth - 64;
+  let navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/signin");
+  };
   return (
     <div>
       <div className="w-full nunito-font h-full bg-[#F1F5F9]">
@@ -12,41 +18,16 @@ const Navbar = () => {
           <div className="hidden lg:flex w-full pr-6">
             <div className="w-1/2  hidden lg:flex items-center pl-3">
               <h1 className="text-3xl text-white px-10">Ideal</h1>
-              <div className="relative w-full">
-                <div className="text-gray-500 absolute ml-4 inset-0 m-auto w-4 h-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="icon icon-tabler icon-tabler-search"
-                    width={16}
-                    height={16}
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <circle cx={10} cy={10} r={7} />
-                    <line x1={21} y1={21} x2={15} y2={15} />
-                  </svg>
-                </div>
-                <input
-                  className="border border-gray-100 focus:outline-none focus:border-indigo-700 rounded w-full text-sm text-gray-500 bg-gray-100 pl-12 py-2"
-                  type="text"
-                  placeholder="Search"
-                />
-              </div>
             </div>
             <div className="w-1/2 hidden lg:flex">
               <div className="w-full flex items-center pl-8 justify-end">
-                <div className="h-full w-20 flex items-center justify-center ">
-                  <div className="relative cursor-pointer text-[#688C9A]">
+                <div className="relative w-1/2 mr-7">
+                  <div className="text-gray-500 absolute ml-4 inset-0 m-auto w-4 h-4">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="icon icon-tabler icon-tabler-bell"
-                      width={28}
-                      height={28}
+                      className="icon icon-tabler icon-tabler-search"
+                      width={16}
+                      height={16}
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
                       stroke="currentColor"
@@ -55,11 +36,15 @@ const Navbar = () => {
                       strokeLinejoin="round"
                     >
                       <path stroke="none" d="M0 0h24v24H0z" />
-                      <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-                      <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+                      <circle cx={10} cy={10} r={7} />
+                      <line x1={21} y1={21} x2={15} y2={15} />
                     </svg>
-                    <div className="w-2 h-2 rounded-full bg-red-400 border border-white absolute inset-0 mt-1 mr-1 m-auto" />
                   </div>
+                  <input
+                    className="border border-gray-100 focus:outline-none focus:border-indigo-700 rounded w-full text-sm text-gray-500 bg-gray-100 pl-12 py-2"
+                    type="text"
+                    placeholder="Search"
+                  />
                 </div>
                 <div
                   className="flex items-center relative cursor-pointer"
@@ -101,7 +86,10 @@ const Navbar = () => {
                           </div>
                         </li>
                         <li className="flex w-full justify-between text-white hover:bg-[#1E4858] p-1 rounded  cursor-pointer items-center mt-2">
-                          <div className="flex items-center">
+                          <div
+                            onClick={handleLogout}
+                            className="flex items-center"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               className="icon icon-tabler icon-tabler-logout"
