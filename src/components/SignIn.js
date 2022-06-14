@@ -25,7 +25,7 @@ const SignIn = () => {
       localStorage.setItem("token", json.authToken);
       // props.showAlert("Logged in successfully", "green");
       alert("Logged in successfully");
-      navigate("/");
+      navigate("/ideal-admin");
     } else {
       // props.showAlert(json.errors, "red");
       alert(json.errors);
