@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const SideBar = () => {
-  const [dashboard, setDashboard] = useState("bg-white");
-  const [product, setProduct] = useState("text-[#5C697B] hover:bg-white");
-  const [performance, setPerformance] = useState(
-    " text-[#5C697B] hover:bg-white"
-  );
+  const [dashboard, setDashboard] = useState("");
+  const [product, setProduct] = useState("");
+  const [performance, setPerformance] = useState(" ");
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
+  useEffect(() => {
+    if (window.location.pathname === "/ideal-admin") {
+      setDashboard("bg-white");
+      setProduct("text-[#5C697B] hover:bg-white");
+      setPerformance(" text-[#5C697B] hover:bg-white");
+    } else if (window.location.pathname === "/view-complaints") {
+      setDashboard("text-[#5C697B] hover:bg-white");
+      setProduct("bg-white");
+      setPerformance(" text-[#5C697B] hover:bg-white");
+    } else if (window.location.pathname === "/users") {
+      setDashboard("text-[#5C697B] hover:bg-white");
+      setProduct("text-[#5C697B] hover:bg-white");
+      setPerformance("bg-white");
+    }
+  }, [window.location.pathname]);
+
   return (
     <div>
       {/* Sidebar starts */}
@@ -18,14 +32,7 @@ const SideBar = () => {
             className={`p-4 cursor-pointer  text-base leading-3 tracking-normal  m-3 rounded-xl ${dashboard} transition`}
           >
             <Link to={"/ideal-admin"}>
-              <div
-                className="flex items-center  "
-                onClick={() => {
-                  setDashboard("bg-white font-[#316275] ");
-                  setProduct("text-[#5C697B] hover:bg-white");
-                  setPerformance("text-[#5C697B] hover:bg-white");
-                }}
-              >
+              <div className="flex items-center  ">
                 <div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -54,14 +61,7 @@ const SideBar = () => {
             className={`p-4 cursor-pointer  text-base leading-3 tracking-normal  m-3 rounded-xl ${product} transition`}
           >
             <Link to={"/view-complaints"}>
-              <div
-                className="flex items-center"
-                onClick={() => {
-                  setProduct("bg-white");
-                  setDashboard("text-[#5C697B] hover:bg-white");
-                  setPerformance("text-[#5C697B] hover:bg-white");
-                }}
-              >
+              <div className="flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="icon icon-tabler icon-tabler-puzzle"
@@ -84,15 +84,7 @@ const SideBar = () => {
           <li
             className={`p-4 cursor-pointer  text-base leading-3 tracking-normal  m-3 rounded-xl ${performance} transition`}
           >
-            <Link
-              to={"/users"}
-              className="flex items-center"
-              onClick={() => {
-                setPerformance("bg-white");
-                setProduct("text-[#5C697B] hover:bg-white");
-                setDashboard("text-[#5C697B] hover:bg-white");
-              }}
-            >
+            <Link to={"/users"} className="flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="icon icon-tabler icon-tabler-compass"
