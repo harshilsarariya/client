@@ -4,9 +4,9 @@ import ComplaintList from "./ComplaintList";
 
 const Dashboard = () => {
   const labels = [
-    { lab: "Open", color: "orange", count: 213 },
-    { lab: "In Progress", color: "blue", count: 253 },
-    { lab: "Closed", color: "green", count: 243 },
+    { lab: "Open", color: "orange", count: "---" },
+    { lab: "In Progress", color: "blue", count: "---" },
+    { lab: "Closed", color: "green", count: "---" },
   ];
   let pageNo = 0;
   let POST_LIMIT = 5;

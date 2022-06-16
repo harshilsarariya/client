@@ -41,8 +41,9 @@ const Navbar = () => {
                     </svg>
                   </div>
                   <input
-                    className="border border-gray-100 focus:outline-none focus:border-indigo-700 rounded w-full text-sm text-gray-500 bg-gray-100 pl-12 py-2"
+                    className="border border-gray-100 focus:outline-none focus:border-indigo-700 rounded w-full text-sm text-gray-500 bg-gray-100 pl-12 py-2 "
                     type="text"
+                    disabled
                     placeholder="Search"
                   />
                 </div>
@@ -53,7 +54,7 @@ const Navbar = () => {
                   <div className="rounded-full">
                     {profile ? (
                       <ul className="p-2 w-52 border-r  bg-[#123E4F] absolute rounded right-0 shadow mt-12 sm:mt-16 ">
-                        <li className="flex w-full justify-between  p-1 rounded cursor-default  items-center">
+                        {/* <li className="flex w-full justify-between  p-1 rounded cursor-default  items-center">
                           <div className="flex items-center flex-col ">
                             <span className="text-base text-white ml-2">
                               Harshil Sarariya
@@ -62,9 +63,9 @@ const Navbar = () => {
                               Software Engineer
                             </span>
                           </div>
-                        </li>
+                        </li> */}
                         <hr className="my-2 border-[#254D5D]" />
-                        <li className="flex w-full  justify-between text-white hover:bg-[#1E4858] p-1 rounded cursor-pointer items-center">
+                        <li className="flex w-full  justify-between text-white hover:bg-[#1E4858] p-1 rounded cursor-default items-center">
                           <div className="flex items-center">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
