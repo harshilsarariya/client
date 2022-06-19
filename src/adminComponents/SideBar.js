@@ -6,7 +6,6 @@ const SideBar = () => {
   const [product, setProduct] = useState("");
   const [performance, setPerformance] = useState(" ");
   const [show, setShow] = useState(false);
-  const [profile, setProfile] = useState(false);
 
   useEffect(() => {
     if (window.location.pathname === "/ideal-admin") {

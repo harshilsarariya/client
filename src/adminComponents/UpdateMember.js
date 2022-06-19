@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SideBar from "./SideBar";
 // import { getMember } from "../api/complaint";
 
@@ -44,7 +44,6 @@ const UpdateMember = () => {
       navigate("/signin");
     }
     fetchMember();
-    console.log(credentials);
   }, []);
 
   const handleSubmit = async (e) => {

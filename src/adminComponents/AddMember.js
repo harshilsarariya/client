@@ -1,6 +1,5 @@
 import Navbar from "./Navbar";
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import SideBar from "./SideBar";
 
 const AddMember = () => {
@@ -10,7 +9,6 @@ const AddMember = () => {
     phoneNo: 0,
     password: "",
   });
-  let navigate = useNavigate();
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });

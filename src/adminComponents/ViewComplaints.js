@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import SideBar from "./SideBar";
 import RecentComplaint from "./ComplaintList";
 import { searchByCompany } from "../api/complaint";
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 import { AiOutlineSearch } from "react-icons/ai";
 export const defaultComplaint = {
   partyName: "",

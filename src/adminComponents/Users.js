@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import SideBar from "./SideBar";
 import { AiOutlinePlus } from "react-icons/ai";
-import { TbEdit } from "react-icons/tb";
 import { MdOutlineDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";

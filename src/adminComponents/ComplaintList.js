@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { fetchallcomplaints } from "../api/complaint";
 import { TbEdit } from "react-icons/tb";
 import { MdOutlineDelete } from "react-icons/md";
-import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { deleteComplaint } from "../api/complaint";
 import { HiOutlineViewGridAdd } from "react-icons/hi";
@@ -19,7 +18,7 @@ const RecentComplaint = (props) => {
   };
 
   const paginatioCount = getPaginationCount(totalComplaintCount);
-  const paginationArr = new Array(paginatioCount).fill(" ");
+  // const paginationArr = new Array(paginatioCount).fill(" ");
 
   const getallcomplaints = async () => {
     const { pageNo, limit } = props;
