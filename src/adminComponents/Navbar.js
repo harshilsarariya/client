@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);

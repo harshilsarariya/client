@@ -121,7 +121,6 @@ export const getMember = async (mid) => {
     return data;
   } catch (error) {
     const { response } = error;
-    console.log("DAta------>>>>>>> nahi");
     if (response?.data) {
       return response.data;
     }

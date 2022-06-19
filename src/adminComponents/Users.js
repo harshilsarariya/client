@@ -21,7 +21,7 @@ const Users = () => {
       id: "",
     };
 
-    fetch("http://localhost:5000/api/auth/getmembers", {
+    fetch("https://ideal-server.herokuapp.com/api/auth/getmembers", {
       method: "POST",
       body: JSON.stringify(databody),
       headers: {

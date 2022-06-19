@@ -18,7 +18,6 @@ const getMember = async (mid) => {
     return data;
   } catch (error) {
     const { response } = error;
-    console.log("DAta------>>>>>>> nahi");
     if (response?.data) {
       return response.data;
     }
@@ -51,7 +50,7 @@ const UpdateMember = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch(
-      "http://localhost:5000/api/auth/createmember",
+      "https://ideal-server.herokuapp.com/api/auth/createmember",
       {
         method: "POST",
         headers: {
