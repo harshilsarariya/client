@@ -17,7 +17,7 @@ const RecentComplaint = (props) => {
     return devision;
   };
 
-  const paginatioCount = getPaginationCount(totalComplaintCount);
+  // const paginatioCount = getPaginationCount(totalComplaintCount);
   // const paginationArr = new Array(paginatioCount).fill(" ");
 
   const getallcomplaints = async () => {
@@ -30,10 +30,10 @@ const RecentComplaint = (props) => {
     setTotalComplaintCount(complaintCount);
   };
 
-  const fetchMoreComplaints = (index) => {
-    props.pageNo = index;
-    getallcomplaints();
-  };
+  // const fetchMoreComplaints = (index) => {
+  //   props.pageNo = index;
+  //   getallcomplaints();
+  // };
 
   useEffect(() => {
     if (props.isSearch === true) {
@@ -55,8 +55,8 @@ const RecentComplaint = (props) => {
   const commonClass =
     "px-6 py-4 font-semibold text-base bg-white text-black  whitespace-nowrap";
 
-  const paginationClass =
-    "inline-flex items-center py-2 px-4 text-sm font-semibold text-gray-700 bg-white rounded-lg border border-gray-300 hover:bg-gray-200  hover:text-gray-900";
+  // const paginationClass =
+  //   "inline-flex items-center py-2 px-4 text-sm font-semibold text-gray-700 bg-white rounded-lg border border-gray-300 hover:bg-gray-200  hover:text-gray-900";
 
   let status;
   const handleStatus = (complaint) => {
