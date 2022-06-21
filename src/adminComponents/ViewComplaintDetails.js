@@ -83,11 +83,10 @@ const ViewComplaintDetails = () => {
             </div>
             <div className="flex my-5">
               <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
-                {" "}
                 State :
               </h3>
               <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
-                Gujarat
+                {complaintInfo.state}
               </span>
             </div>
             <div className="flex my-5">
@@ -124,7 +123,7 @@ const ViewComplaintDetails = () => {
             </div>
             <div className="flex my-5">
               <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
-                Plumbing No. :
+                Office No. :
               </h3>
               <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
                 {complaintInfo.plumbingNo}

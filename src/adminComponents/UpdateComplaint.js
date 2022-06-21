@@ -228,7 +228,7 @@ const UpdateComplaint = () => {
                           htmlFor="plumbingNo"
                           className="leading-7 text-base text-gray-600"
                         >
-                          Plumbing No
+                          Office No
                         </label>
                         <input
                           type="number"

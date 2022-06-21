@@ -7,16 +7,34 @@ const AddMember = () => {
     name: "",
     email: "",
     phoneNo: 0,
+    isForwardingMember: "",
+    states: [],
     password: "",
   });
+  const [isForwardingMember, setIsForwardingMember] = useState(false);
+  const [states, setStates] = useState([]);
 
   const onChange = (e) => {
+    if (e.target.name === "forwardingMember" && e.target.value === "Yes") {
+      setIsForwardingMember(true);
+    } else if (
+      e.target.name === "forwardingMember" &&
+      e.target.value === "No"
+    ) {
+      setIsForwardingMember(false);
+    }
+    if (e.target.name === "states") {
+      let st = e.target.value;
+      const myArray = st.split(",");
+      setStates(myArray);
+    }
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch(
-      "https://ideal-server.herokuapp.com/api/auth/createmember",
+      // "https://ideal-server.herokuapp.com/api/auth/createmember",
+      "http://localhost:5000/api/auth/createmember",
       {
         method: "POST",
         headers: {
@@ -25,6 +43,8 @@ const AddMember = () => {
         body: JSON.stringify({
           name: credentials.name,
           email: credentials.email,
+          isForwardingMember: isForwardingMember,
+          states: states,
           phone: credentials.phone,
           password: credentials.password,
         }),
@@ -38,6 +58,15 @@ const AddMember = () => {
       // props.showAlert(json.errors, "red");
       alert(json.errors);
     }
+
+    setCredentials({
+      name: "",
+      email: "",
+      phoneNo: 0,
+      isForwardingMember: "",
+      states: [],
+      password: "",
+    });
   };
 
   const commonClass =
@@ -51,7 +80,7 @@ const AddMember = () => {
           <div className="w-screen">
             <section className="text-gray-600  body-font relative">
               <div className="container px-5 py-4 mx-auto">
-                <div className="flex flex-col   mb-12">
+                <div className="flex flex-col   mb-6">
                   <h1 className="text-xl font-medium">Add Member</h1>
                 </div>
               </div>
@@ -119,6 +148,45 @@ const AddMember = () => {
                     </div>
                   </div>
                 </div>
+                <div className="mb-3 w-1/4 ml-2 right-0">
+                  <label
+                    htmlFor="forwardingMember"
+                    className="leading-7 text-base text-gray-600"
+                  >
+                    Forwarding Member
+                  </label>
+                  <select
+                    name="forwardingMember"
+                    onChange={onChange}
+                    required
+                    className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
+                    aria-label=".form-select-lg example"
+                  >
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                  </select>
+                </div>
+                {isForwardingMember && (
+                  <div className="p-2 w-full">
+                    <div className="relative">
+                      <label
+                        htmlFor="states"
+                        className="leading-7 text-base text-gray-600"
+                      >
+                        Enter States
+                      </label>
+                      <textarea
+                        name="states"
+                        onChange={onChange}
+                        // value={complaintInfo.address}
+                        required
+                        className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg  h-15 outline-none text-gray-700  py-1 px-3 leading-8 transition-colors duration-200 ease-in-out resize-none"
+                        placeholder="Ex. Gujarat,Maharashtra,Delhi"
+                      />
+                    </div>
+                  </div>
+                )}
+
                 <div>
                   <div className="p-2 ">
                     <div className="relative">

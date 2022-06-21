@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Navbar from "./Navbar";
+import { getMemberByEmail, getMember } from "../api/complaint";
 
 const SignIn = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   let navigate = useNavigate();
 
+  let memberId;
+  let isForwardingMember = "No";
+  const saveId = async () => {
+    const { data } = await getMemberByEmail(credentials.email);
+    memberId = data[0]._id;
+    localStorage.setItem("memberId", memberId);
+    isForwardingMember = data[0].isForwardingMember;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch(
-      "https://ideal-server.herokuapp.com/api/auth/signin",
+      // "https://ideal-server.herokuapp.com/api/auth/signin",
+      "http://localhost:5000/api/auth/signin",
       {
         method: "POST",
         headers: {
@@ -22,13 +33,16 @@ const SignIn = () => {
       }
     );
     const json = await response.json();
-
     if (json.success) {
       // Save the auth token and redirect
       localStorage.setItem("token", json.authToken);
+      localStorage.setItem("email", credentials.email);
+
       // props.showAlert("Logged in successfully", "green")
       if (credentials.email === "admin@ideal.com") {
         navigate("/ideal-admin");
+      } else if (isForwardingMember) {
+        navigate("/user-admin");
       } else {
         navigate("/register-complaint");
       }
@@ -36,6 +50,7 @@ const SignIn = () => {
       // props.showAlert(json.errors, "red");
       alert(json.errors);
     }
+    saveId();
   };
 
   const onChange = (e) => {

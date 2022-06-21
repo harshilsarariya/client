@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { deleteComplaint } from "../api/complaint";
 import { HiOutlineViewGridAdd } from "react-icons/hi";
 
-const RecentComplaint = (props) => {
+const ComplaintList = (props) => {
   const [complaints, setComplaints] = useState([]);
   const [totalComplaintCount, setTotalComplaintCount] = useState([]);
   const getPaginationCount = (length) => {
@@ -26,6 +26,7 @@ const RecentComplaint = (props) => {
       pageNo,
       limit
     );
+
     setComplaints(complaints);
     setTotalComplaintCount(complaintCount);
   };
@@ -199,4 +200,4 @@ const RecentComplaint = (props) => {
   );
 };
 
-export default RecentComplaint;
+export default ComplaintList;

@@ -72,6 +72,18 @@ export const searchComplaint = async (query) => {
     return { error: error.message || error };
   }
 };
+export const searchByState = async (query) => {
+  try {
+    const { data } = await member(`/complaint/searchByState?state=${query}`);
+    return data;
+  } catch (error) {
+    const { response } = error;
+    if (response?.data) {
+      return response.data;
+    }
+    return { error: error.message || error };
+  }
+};
 export const searchByCompany = async (query) => {
   try {
     const { data } = await member(
@@ -116,8 +128,20 @@ export const getMembers = async () => {
 
 export const getMember = async (mid) => {
   try {
-    const { data } = await fetch(`/auth/getmember/${mid}`);
-    console.log(data);
+    const { data } = await member(`/auth/getmember/${mid}`);
+    return data;
+  } catch (error) {
+    const { response } = error;
+    if (response?.data) {
+      return response.data;
+    }
+    return { error: error.message || error };
+  }
+};
+
+export const getMemberByEmail = async (query) => {
+  try {
+    const { data } = await member(`/auth/getMemberByEmail?email=${query}`);
     return data;
   } catch (error) {
     const { response } = error;
