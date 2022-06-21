@@ -33,8 +33,8 @@ const AddMember = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch(
-      // "https://ideal-server.herokuapp.com/api/auth/createmember",
-      "http://localhost:5000/api/auth/createmember",
+      "https://ideal-server.herokuapp.com/api/auth/createmember",
+      // "http://localhost:5000/api/auth/createmember",
       {
         method: "POST",
         headers: {
