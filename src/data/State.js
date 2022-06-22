@@ -30,6 +30,7 @@ var state_arr = new Array(
   "Rajasthan",
   "Sikkim",
   "Tamil Nadu",
+  "Telangana",
   "Tripura",
   "Uttar Pradesh",
   "Uttaranchal",
