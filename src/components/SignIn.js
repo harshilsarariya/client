@@ -41,9 +41,9 @@ const SignIn = () => {
       // props.showAlert("Logged in successfully", "green")
       if (credentials.email === "admin@ideal.com") {
         navigate("/ideal-admin");
-      } else if (isForwardingMember) {
+      } else if (isForwardingMember === "true") {
         navigate("/user-admin");
-      } else {
+      } else if (isForwardingMember === "false") {
         navigate("/register-complaint");
       }
     } else {
