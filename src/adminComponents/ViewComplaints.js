@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import SideBar from "./SideBar";
 import RecentComplaint from "./ComplaintList";
-import { searchByCompany } from "../api/complaint";
+import { searchByCompany, searchByState } from "../api/complaint";
 import { CSVLink } from "react-csv";
 import { AiOutlineSearch } from "react-icons/ai";
 export const defaultComplaint = {
@@ -24,6 +24,7 @@ const ViewComplaint = () => {
   let pageNo = 0;
   let POST_LIMIT = 15;
   const [companyView, setCompanyView] = useState(false);
+  const [stateView, setStateView] = useState(false);
   const [query, setQuery] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
@@ -32,25 +33,24 @@ const ViewComplaint = () => {
     const { value } = e.target;
     if (value === "Company") {
       setCompanyView(true);
+      setStateView(false);
     }
     if (value === "Default") {
+      setStateView(false);
       setCompanyView(false);
     }
-    if (value === "Date") {
-      setCompanyView(false);
-    }
-    if (value === "Open") {
-      setCompanyView(false);
-    }
-    if (value === "Closed") {
-      setCompanyView(false);
-    }
-    if (value === "InProgress") {
+    if (value === "State") {
+      setStateView(true);
       setCompanyView(false);
     }
   };
   const handleSearch = async (e) => {
     const data = await searchByCompany(query);
+    setIsSearch(true);
+    setSearchResult(data);
+  };
+  const handleStateBySearch = async (e) => {
+    const data = await searchByState(query);
     setIsSearch(true);
     setSearchResult(data);
   };
@@ -112,6 +112,33 @@ const ViewComplaint = () => {
                     </button>
                   </>
                 )}
+                {stateView && (
+                  <>
+                    <div>
+                      <CSVLink
+                        data={searchResult}
+                        headers={headers}
+                        className="bg-[#a6df6cb5] p-2 rounded-xl"
+                      >
+                        Export to CSV
+                      </CSVLink>
+                    </div>
+                    <div className="rounded-xl flex ml-5  ">
+                      <input
+                        onChange={(e) => setQuery(e.target.value)}
+                        className="border border-gray-100 rounded-l-xl focus:outline-none focus:border-indigo-700  w-full text-base text-gray-500 bg-white-100 pl-2 py-2 "
+                        type="text"
+                        placeholder="Search State"
+                      />
+                    </div>
+                    <button
+                      className="bg-slate-300 p-2 rounded-r-xl"
+                      onClick={handleStateBySearch}
+                    >
+                      <AiOutlineSearch size={20} />
+                    </button>
+                  </>
+                )}
                 <label
                   htmlFor="sortBy"
                   className="leading-7 text-lg text-gray-600 mr-3 ml-8"
@@ -126,11 +153,7 @@ const ViewComplaint = () => {
                 >
                   <option value="Default">Default</option>
                   <option value="Company">Company </option>
-                  <option value="Company">Employee </option>
-                  {/* <option value="Open">Open</option>
-                  <option value="InProgress">In Progress</option>
-                  <option value="Closed">Closed</option>
-                  <option value="Date">Date</option> */}
+                  <option value="State">State </option>
                 </select>
               </div>
             </div>
