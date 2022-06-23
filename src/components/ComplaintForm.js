@@ -28,8 +28,8 @@ const ComplaintForm = (props) => {
     e.preventDefault();
     // API Call
     const response = await fetch(
-      // "https://ideal-server.herokuapp.com/api/complaint/addcomplaint",
-      "http://localhost:5000/api/complaint/addcomplaint",
+      "https://ideal-server.herokuapp.com/api/complaint/addcomplaint",
+      // "http://localhost:5000/api/complaint/addcomplaint",
       {
         method: "POST",
         headers: {
