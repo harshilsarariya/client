@@ -35,17 +35,29 @@ const ViewComplaints = () => {
       setStateView(false);
       getComplaintByState(value);
     }
+    localStorage.setItem("search", value);
+  };
+
+  const handleSearch = async (e) => {
+    const data = await searchByState(query);
+    setIsSearch(true);
+    setSearchResult(data);
+    if (query.length >= 1) {
+      localStorage.setItem("search", query);
+    }
   };
 
   useEffect(() => {
     getMemberById(memberId);
   }, [memberId]);
 
-  const handleSearch = async (e) => {
-    const data = await searchByState(query);
-    setIsSearch(true);
-    setSearchResult(data);
-  };
+  useEffect(() => {
+    let search = localStorage.getItem("search");
+    if (search) {
+      setQuery(search);
+      getComplaintByState(search);
+    }
+  }, [window.location.pathname]);
 
   let headers = [
     { label: "Party Name", key: "partyName" },
@@ -85,7 +97,9 @@ const ViewComplaints = () => {
                   onChange={(e) => setQuery(e.target.value)}
                   className="border border-gray-100 rounded-l-xl focus:outline-none focus:border-indigo-700  w-full text-base text-gray-500 bg-white-100 pl-2 py-2 "
                   type="text"
+                  value={query}
                   placeholder="Search by state "
+                  onSubmit={handleSearch}
                 />
               </div>
               <button

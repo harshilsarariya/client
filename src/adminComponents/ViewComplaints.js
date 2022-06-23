@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import SideBar from "./SideBar";
 import RecentComplaint from "./ComplaintList";
-import { searchByCompany, searchByState } from "../api/complaint";
+import { getComplaint, searchByCompany, searchByState } from "../api/complaint";
 import { CSVLink } from "react-csv";
 import { AiOutlineSearch } from "react-icons/ai";
 export const defaultComplaint = {
@@ -21,13 +21,12 @@ export const defaultComplaint = {
 };
 
 const ViewComplaint = () => {
-  let pageNo = 0;
-  let POST_LIMIT = 15;
   const [companyView, setCompanyView] = useState(false);
   const [stateView, setStateView] = useState(false);
   const [query, setQuery] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
+  const [sortByVal, setSortByVal] = useState("Default");
 
   const handleSortByChange = (e) => {
     const { value } = e.target;
@@ -43,17 +42,48 @@ const ViewComplaint = () => {
       setStateView(true);
       setCompanyView(false);
     }
+    setSortByVal(value);
+    localStorage.setItem("sortBy", value);
+    setQuery("");
   };
+
   const handleSearch = async (e) => {
     const data = await searchByCompany(query);
     setIsSearch(true);
     setSearchResult(data);
+    if (query.length >= 1) {
+      localStorage.setItem("companyVal", query);
+    }
   };
+
   const handleStateBySearch = async (e) => {
     const data = await searchByState(query);
     setIsSearch(true);
     setSearchResult(data);
+    if (query.length >= 1) {
+      localStorage.setItem("stateVal", query);
+    }
   };
+  useEffect(() => {
+    let sortBy = localStorage.getItem("sortBy");
+    setSortByVal(sortBy);
+    if (sortBy === "Company") {
+      setCompanyView(true);
+      setStateView(false);
+      setQuery(localStorage.getItem("companyVal"));
+      if (query.length >= 1) {
+        handleSearch(query);
+      }
+    }
+    if (sortBy === "State") {
+      setStateView(true);
+      setCompanyView(false);
+      setQuery(localStorage.getItem("stateVal"));
+      if (query.length >= 1) {
+        handleStateBySearch(query);
+      }
+    }
+  }, [window.location.pathname]);
   let headers = [
     { label: "Party Name", key: "partyName" },
     { label: "Address", key: "address" },
@@ -100,6 +130,7 @@ const ViewComplaint = () => {
                       <input
                         onChange={(e) => setQuery(e.target.value)}
                         className="border border-gray-100 rounded-l-xl focus:outline-none focus:border-indigo-700  w-full text-base text-gray-500 bg-white-100 pl-2 py-2 "
+                        value={query}
                         type="text"
                         placeholder="Search Company"
                       />
@@ -126,6 +157,7 @@ const ViewComplaint = () => {
                     <div className="rounded-xl flex ml-5  ">
                       <input
                         onChange={(e) => setQuery(e.target.value)}
+                        value={query}
                         className="border border-gray-100 rounded-l-xl focus:outline-none focus:border-indigo-700  w-full text-base text-gray-500 bg-white-100 pl-2 py-2 "
                         type="text"
                         placeholder="Search State"
@@ -150,6 +182,7 @@ const ViewComplaint = () => {
                   id="sortBy"
                   onChange={handleSortByChange}
                   className="appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  p-2 transition-colors duration-200 ease-in-out"
+                  value={sortByVal}
                 >
                   <option value="Default">Default</option>
                   <option value="Company">Company </option>
@@ -157,12 +190,7 @@ const ViewComplaint = () => {
                 </select>
               </div>
             </div>
-            <RecentComplaint
-              isSearch={isSearch}
-              searchResult={searchResult}
-              pageNo={pageNo}
-              limit={POST_LIMIT}
-            />
+            <RecentComplaint isSearch={isSearch} searchResult={searchResult} />
           </div>
         </div>
       </div>

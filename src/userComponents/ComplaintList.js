@@ -10,17 +10,6 @@ const ComplaintList = (props) => {
   const [complaints, setComplaints] = useState([]);
   const [totalComplaintCount, setTotalComplaintCount] = useState([]);
 
-  const getallcomplaints = async () => {
-    const { pageNo, limit } = props;
-    const { complaints, complaintCount } = await fetchallcomplaints(
-      pageNo,
-      limit
-    );
-
-    setComplaints(complaints);
-    setTotalComplaintCount(complaintCount);
-  };
-
   const handleSearchResult = async (e) => {
     if (props.isSearch === true) {
       setComplaints(props.searchResult);
@@ -34,15 +23,12 @@ const ComplaintList = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.searchResult]);
 
-  // useEffect(() => {
-  //   // handleSearchResult();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [complaints]);
-
   let status;
   const handleStatus = (complaint) => {
     status =
-      complaint.problemSolved === "Yes"
+      complaint.workDone === "Visit Ok"
+        ? "Visit Ok"
+        : complaint.problemSolved === "Yes"
         ? complaint.workDone === "Yes"
           ? "Closed"
           : "In Progress"
@@ -129,6 +115,10 @@ const ComplaintList = (props) => {
                         </td>
                       ) : status === "Closed" ? (
                         <td className={`${commonClass} text-green-500`}>
+                          {status}
+                        </td>
+                      ) : status === "Visit Ok" ? (
+                        <td className={`${commonClass} text-violet-500`}>
                           {status}
                         </td>
                       ) : (

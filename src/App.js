@@ -12,6 +12,7 @@ import AdminHome from "./adminComponents/AdminHome";
 import UpdateComplaint from "./adminComponents/UpdateComplaint";
 import ViewComplaint from "./adminComponents/ViewComplaints";
 import ViewComplaintDetails from "./adminComponents/ViewComplaintDetails";
+import ViewComplaintDetailsByForwardinMember from "./userComponents/ViewComplaintDetails";
 import Users from "./adminComponents/Users";
 import AddMember from "./adminComponents/AddMember";
 import UpdateMember from "./adminComponents/UpdateMember";
@@ -64,6 +65,10 @@ function App() {
           <Route
             path="/user-admin/updateComplaint/:cid"
             element={<UpdateComplaintByUser />}
+          />
+          <Route
+            path="/user-admin/view-details-complaint/:cid"
+            element={<ViewComplaintDetailsByForwardinMember />}
           />
         </Route>
       </Routes>

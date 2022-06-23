@@ -9,16 +9,6 @@ import { HiOutlineViewGridAdd } from "react-icons/hi";
 const ComplaintList = (props) => {
   const [complaints, setComplaints] = useState([]);
   const [totalComplaintCount, setTotalComplaintCount] = useState([]);
-  const getPaginationCount = (length) => {
-    const devision = length / props.limit;
-    if (devision % 1 !== 0) {
-      return Math.floor(devision) + 1;
-    }
-    return devision;
-  };
-
-  // const paginatioCount = getPaginationCount(totalComplaintCount);
-  // const paginationArr = new Array(paginatioCount).fill(" ");
 
   const getallcomplaints = async () => {
     const { pageNo, limit } = props;
@@ -30,11 +20,6 @@ const ComplaintList = (props) => {
     setComplaints(complaints);
     setTotalComplaintCount(complaintCount);
   };
-
-  // const fetchMoreComplaints = (index) => {
-  //   props.pageNo = index;
-  //   getallcomplaints();
-  // };
 
   useEffect(() => {
     if (props.isSearch === true) {
@@ -56,15 +41,14 @@ const ComplaintList = (props) => {
   const commonClass =
     "px-6 py-4 font-semibold text-base bg-white text-black  whitespace-nowrap";
 
-  // const paginationClass =
-  //   "inline-flex items-center py-2 px-4 text-sm font-semibold text-gray-700 bg-white rounded-lg border border-gray-300 hover:bg-gray-200  hover:text-gray-900";
-
   let status;
   const handleStatus = (complaint) => {
     status =
       complaint.problemSolved === "Yes"
         ? complaint.workDone === "Yes"
           ? "Closed"
+          : complaint.workDone === "Visit Ok"
+          ? "Visit Ok"
           : "In Progress"
         : "Open";
   };
@@ -143,36 +127,75 @@ const ComplaintList = (props) => {
                   )}
                   <td className={`${commonClass}`}>{complaintDate}</td>
                   <td className={`${commonClass} flex space-x-4`}>
-                    <Link
-                      to={`/view-details-complaint/${complaint.id}`}
-                      className="flex items-center cursor-pointer"
-                    >
-                      <HiOutlineViewGridAdd
-                        className="text-[#4bacc7]"
-                        size={22}
-                      />
-                      <span className="text-[#4bacc7] ml-1 font-semibold">
-                        View
-                      </span>
-                    </Link>
-                    <Link
-                      to={`/update-complaint/${complaint.id}`}
-                      className="flex items-center cursor-pointer"
-                    >
-                      <TbEdit className="text-gray-500" size={19} />
-                      <spam className="text-gray-500 ml-1 font-semibold">
-                        Edit
-                      </spam>
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(complaint.id)}
-                      className="flex  items-center cursor-pointer"
-                    >
-                      <MdOutlineDelete className="text-red-500" size={20} />
-                      <span className="text-red-500 ml-1 font-semibold">
-                        Delete
-                      </span>
-                    </button>
+                    {props.isSearch === true ? (
+                      <>
+                        <Link
+                          to={`/view-details-complaint/${complaint._id}`}
+                          className="flex items-center cursor-pointer"
+                        >
+                          <HiOutlineViewGridAdd
+                            className="text-[#4bacc7]"
+                            size={22}
+                          />
+                          <span className="text-[#4bacc7] ml-1 font-semibold">
+                            View
+                          </span>
+                        </Link>
+                        <Link
+                          to={`/update-complaint/${complaint._id}`}
+                          className="flex items-center cursor-pointer"
+                        >
+                          {/* {console.log(complaint[index]._id)} */}
+                          <TbEdit className="text-gray-500" size={19} />
+                          <spam className="text-gray-500 ml-1 font-semibold">
+                            Edit
+                          </spam>
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(complaint._id)}
+                          className="flex  items-center cursor-pointer"
+                        >
+                          <MdOutlineDelete className="text-red-500" size={20} />
+                          <span className="text-red-500 ml-1 font-semibold">
+                            Delete
+                          </span>
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          to={`/view-details-complaint/${complaint.id}`}
+                          className="flex items-center cursor-pointer"
+                        >
+                          <HiOutlineViewGridAdd
+                            className="text-[#4bacc7]"
+                            size={22}
+                          />
+                          <span className="text-[#4bacc7] ml-1 font-semibold">
+                            View
+                          </span>
+                        </Link>
+                        <Link
+                          to={`/update-complaint/${complaint.id}`}
+                          className="flex items-center cursor-pointer"
+                        >
+                          {/* {console.log(complaint[index]._id)} */}
+                          <TbEdit className="text-gray-500" size={19} />
+                          <spam className="text-gray-500 ml-1 font-semibold">
+                            Edit
+                          </spam>
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(complaint.id)}
+                          className="flex  items-center cursor-pointer"
+                        >
+                          <MdOutlineDelete className="text-red-500" size={20} />
+                          <span className="text-red-500 ml-1 font-semibold">
+                            Delete
+                          </span>
+                        </button>
+                      </>
+                    )}
                   </td>
                 </tr>
                 <div className="mb-5" />
@@ -181,21 +204,6 @@ const ComplaintList = (props) => {
           </tbody>
         </table>
       </div>
-      {/* pagination */}
-      {/* {paginationArr.length > 1 && (
-        <div className="flex space-x-5  flex-1">
-         
-          {paginationArr.map((_, index) => (
-            <button
-              key={index}
-              className={`${paginationClass}`}
-              onClick={() => fetchMoreComplaints(index)}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div>
-      )} */}
     </div>
   );
 };
