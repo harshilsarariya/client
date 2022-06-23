@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { updateComplaint, getComplaint } from "../api/complaint";
-import s_a from "../data/City";
-import state_arr from "../data/State";
 import { useNavigate } from "react-router-dom";
+var pincodeDirectory = require("india-pincode-lookup");
 
 export const defaultPost = {
   partyName: "",
@@ -26,7 +25,6 @@ export const defaultPost = {
 
 const UpdateComplaint = () => {
   const { cid } = useParams();
-  const [city, setCity] = useState([]);
   const [complaintInfo, setComplaintInfo] = useState(defaultPost);
 
   let navigate = useNavigate();
@@ -36,21 +34,22 @@ const UpdateComplaint = () => {
     setComplaintInfo(complaint);
   };
 
-  const handleCity = (e) => {
-    var indexOfState = state_arr.indexOf(e.target.value) + 1;
-    var city_arr = s_a[indexOfState].split("|");
-    setCity(city_arr);
-  };
-
   useEffect(() => {
     fetchComplaint();
   }, []);
 
   const onChange = (e) => {
-    if (e.target.name === "state") {
-      handleCity(e);
+    if (e.target.name === "pincode") {
+      handlePincode(e);
     }
     setComplaintInfo({ ...complaintInfo, [e.target.name]: e.target.value });
+  };
+  const handlePincode = (e) => {
+    if (e.target.value.length === 6) {
+      let no = pincodeDirectory.lookup(e.target.value);
+      complaintInfo.state = no[0].stateName;
+      complaintInfo.city = no[0].districtName;
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -63,7 +62,6 @@ const UpdateComplaint = () => {
     if (!localStorage.getItem("token")) {
       navigate("/signin");
     }
-    console.log(complaintInfo);
   }, []);
 
   return (
@@ -119,70 +117,6 @@ const UpdateComplaint = () => {
                     />
                   </div>
                 </div>
-                {/* dropdown */}
-                <div className="p-2 w-1/2">
-                  <label
-                    htmlFor="message"
-                    className="leading-7 text-base text-gray-600"
-                  >
-                    Select State
-                  </label>
-                  <select
-                    name="state"
-                    required
-                    onChange={onChange}
-                    className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
-                    aria-label=".form-select-lg example"
-                  >
-                    <option>{complaintInfo.state}</option>
-                    {state_arr.map((state) => (
-                      <option key={state} value={state.index}>
-                        {state}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="p-2 w-1/2">
-                  <label
-                    htmlFor="message"
-                    className="leading-7 text-base text-gray-600"
-                  >
-                    Select city
-                  </label>
-                  <select
-                    name="city"
-                    onChange={onChange}
-                    required
-                    defaultValue="Select your city"
-                    className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
-                    aria-label=".form-select-lg example"
-                  >
-                    <option>{complaintInfo.city}</option>
-                    {city.map((state) => (
-                      <option key={state} value={state.index}>
-                        {state}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="p-2 w-full">
-                  <div className="relative">
-                    <label
-                      htmlFor="address"
-                      className="leading-7 text-base text-gray-600"
-                    >
-                      Address
-                    </label>
-                    <textarea
-                      name="address"
-                      onChange={onChange}
-                      value={complaintInfo.address}
-                      required
-                      className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg  h-32 outline-none text-gray-700  py-1 px-3 leading-8 transition-colors duration-200 ease-in-out resize-none"
-                      placeholder="Ex. Plot no. 1, near to the bank"
-                    />
-                  </div>
-                </div>
                 <div className="p-2 w-1/2">
                   <div className="relative">
                     <label
@@ -221,6 +155,62 @@ const UpdateComplaint = () => {
                     />
                   </div>
                 </div>
+                {/* dropdown */}
+                {/* <div className="flex space-x-4"> */}
+                <div className="p-2 w-1/2">
+                  <label
+                    htmlFor="state"
+                    className="leading-7 text-base text-gray-600"
+                  >
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    onChange={onChange}
+                    required
+                    id="state"
+                    name="state"
+                    value={complaintInfo.state}
+                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  />
+                </div>
+                <div className="p-2 w-1/2">
+                  <label
+                    htmlFor="city"
+                    className="leading-7 text-base text-gray-600"
+                  >
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    onChange={onChange}
+                    required
+                    id="city"
+                    value={complaintInfo.city}
+                    name="city"
+                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  />
+                </div>
+                {/* </div> */}
+                <div className="p-2 w-full">
+                  <div className="relative">
+                    <label
+                      htmlFor="address"
+                      className="leading-7 text-base text-gray-600"
+                    >
+                      Address
+                    </label>
+                    <textarea
+                      name="address"
+                      onChange={onChange}
+                      value={complaintInfo.address}
+                      required
+                      className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg  h-32 outline-none text-gray-700  py-1 px-3 leading-8 transition-colors duration-200 ease-in-out resize-none"
+                      placeholder="Ex. Plot no. 1, near to the bank"
+                    />
+                  </div>
+                </div>
+
                 <div className="p-2 w-1/2">
                   <div className="relative">
                     <label
@@ -271,15 +261,13 @@ const UpdateComplaint = () => {
                       name="workDone"
                       onChange={onChange}
                       required
+                      value={complaintInfo.workDone}
                       className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
                       aria-label=".form-select-lg example"
                     >
-                      <option>
-                        {complaintInfo.workDone === "Yes" ? "Yes" : "No"}
-                      </option>
-                      <option>
-                        {complaintInfo.workDone === "Yes" ? "No" : "Yes"}
-                      </option>
+                      <option>Yes</option>
+                      <option>No</option>
+                      <option>Visit Ok</option>
                     </select>
                   </div>
                   <div className="mb-3 w-1/4 ml-2 right-0">
@@ -293,15 +281,12 @@ const UpdateComplaint = () => {
                       name="problemSolved"
                       onChange={onChange}
                       required
+                      value={complaintInfo.problemSolved}
                       className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
                       aria-label=".form-select-lg example"
                     >
-                      <option>
-                        {complaintInfo.problemSolved === "Yes" ? "Yes" : "No"}
-                      </option>
-                      <option>
-                        {complaintInfo.problemSolved === "NO" ? "No" : "Yes"}
-                      </option>
+                      <option>Yes</option>
+                      <option>No</option>
                     </select>
                   </div>
                   <div className="mb-3 w-1/4 ml-2 right-0">
@@ -315,15 +300,12 @@ const UpdateComplaint = () => {
                       name="repeat"
                       onChange={onChange}
                       required
+                      value={complaintInfo.repeat}
                       className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
                       aria-label=".form-select-lg example"
                     >
-                      <option>
-                        {complaintInfo.repeat === "Yes" ? "Yes" : "No"}
-                      </option>
-                      <option>
-                        {complaintInfo.repeat === "No" ? "Yes" : "No"}
-                      </option>
+                      <option>Yes</option>
+                      <option>No</option>
                     </select>
                   </div>
                 </div>
