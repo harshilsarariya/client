@@ -120,7 +120,7 @@ const ViewComplaints = () => {
           <select
             id="sortBy"
             onChange={handleChange}
-            className="appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  p-2 transition-colors duration-200 ease-in-out"
+            className="appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-base outline-none text-gray-700  p-2 transition-colors duration-200 ease-in-out"
           >
             <option value="Default">Select State</option>
             {stateList.map((state) => (

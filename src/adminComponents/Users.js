@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import SideBar from "./SideBar";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
+import { TbEdit } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { deleteMember } from "../api/complaint";
@@ -133,11 +134,11 @@ const Users = () => {
                           </Link> */}
                           <Link
                             to={`/users/updateMember/${member._id}`}
-                            className="flex items-center cursor-default "
+                            className="flex items-center cursor-pointer "
                           >
-                            {/* <TbEdit className="text-gray-500" size={19} /> */}
+                            <TbEdit className="text-gray-500" size={19} />
                             <span className="text-gray-500 ml-1 font-semibold">
-                              {/* Edit */}{" "}
+                              Edit
                             </span>
                           </Link>
                           <button

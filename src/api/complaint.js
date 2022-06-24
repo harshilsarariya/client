@@ -151,3 +151,19 @@ export const getMemberByEmail = async (query) => {
     return { error: error.message || error };
   }
 };
+
+export const updateMember = async (memberId, fromData) => {
+  try {
+    const { data } = await member.put(
+      `/auth/updateMember/${memberId}`,
+      fromData
+    );
+    return data;
+  } catch (error) {
+    const { response } = error;
+    if (response?.data) {
+      return response.data;
+    }
+    return { error: error.message || error };
+  }
+};
