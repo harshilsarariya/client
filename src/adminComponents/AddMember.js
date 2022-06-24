@@ -11,17 +11,17 @@ const AddMember = () => {
     states: [],
     password: "",
   });
-  const [isForwardingMember, setIsForwardingMember] = useState(false);
+  const [isForwardingMember, setIsForwardingMember] = useState("");
   const [states, setStates] = useState([]);
 
   const onChange = (e) => {
-    if (e.target.name === "forwardingMember" && e.target.value === "Yes") {
-      setIsForwardingMember(true);
+    if (e.target.name === "isForwardingMember" && e.target.value === "Yes") {
+      setIsForwardingMember("Yes");
     } else if (
-      e.target.name === "forwardingMember" &&
+      e.target.name === "isForwardingMember" &&
       e.target.value === "No"
     ) {
-      setIsForwardingMember(false);
+      setIsForwardingMember("No");
     }
     if (e.target.name === "states") {
       let st = e.target.value;
@@ -156,7 +156,7 @@ const AddMember = () => {
                     Forwarding Member
                   </label>
                   <select
-                    name="forwardingMember"
+                    name="isForwardingMember"
                     onChange={onChange}
                     required
                     className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
@@ -166,7 +166,7 @@ const AddMember = () => {
                     <option value="Yes">Yes</option>
                   </select>
                 </div>
-                {isForwardingMember && (
+                {isForwardingMember === "Yes" ? (
                   <div className="p-2 w-full">
                     <div className="relative">
                       <label
@@ -185,6 +185,8 @@ const AddMember = () => {
                       />
                     </div>
                   </div>
+                ) : (
+                  <></>
                 )}
 
                 <div>
