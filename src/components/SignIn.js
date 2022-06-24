@@ -16,43 +16,6 @@ const SignIn = () => {
     isForwardingMember = data[0].isForwardingMember;
   };
 
-  if ("OTPCredential" in window) {
-    window.addEventListener("DOMContentLoaded", (e) => {
-      const input = document.querySelector(
-        'input[autocomplete="one-time-code"]'
-      );
-      if (!input) return;
-      const ac = new AbortController();
-      const form = input.closest("form");
-      if (form) {
-        form.addEventListener("submit", (e) => {
-          ac.abort();
-        });
-      }
-      navigator.credentials
-        .get({
-          otp: { transport: ["sms"] },
-          signal: ac.signal,
-        })
-        .then((otp) => {
-          input.value = otp.code;
-          if (form) form.submit();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
-  }
-  if ("OTPCredential" in window) {
-    window.addEventListener("DOMContentLoaded", (e) => {
-      const input = document.querySelector(
-        'input[autocomplete="one-time-code"]'
-      );
-      if (!input) return;
-
-      const form = input.closest("form");
-    });
-  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch(
@@ -78,9 +41,9 @@ const SignIn = () => {
       // props.showAlert("Logged in successfully", "green")
       if (credentials.email === "admin@ideal.com") {
         navigate("/ideal-admin");
-      } else if (isForwardingMember === "true") {
+      } else if (isForwardingMember === "No") {
         navigate("/user-admin");
-      } else if (isForwardingMember === "false") {
+      } else if (isForwardingMember === "Yes") {
         navigate("/register-complaint");
       }
     } else {
