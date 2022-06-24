@@ -6,7 +6,12 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-
+    localStorage.removeItem("email");
+    localStorage.removeItem("memberId");
+    localStorage.removeItem("sortBy");
+    localStorage.removeItem("stateVal");
+    localStorage.removeItem("search");
+    localStorage.removeItem("companyVal");
 
     navigate("/signin");
   };
