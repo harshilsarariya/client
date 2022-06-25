@@ -11,7 +11,7 @@ const AddMember = () => {
     states: [],
     password: "",
   });
-  const [isForwardingMember, setIsForwardingMember] = useState("");
+  const [isForwardingMember, setIsForwardingMember] = useState("No");
   const [states, setStates] = useState([]);
 
   const onChange = (e) => {
@@ -39,6 +39,7 @@ const AddMember = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
         },
         body: JSON.stringify({
           name: credentials.name,
@@ -50,10 +51,12 @@ const AddMember = () => {
         }),
       }
     );
+
     const json = await response.json();
+
     if (json.success) {
       // props.showAlert("Logged in successfully", "green");
-      alert("Logged in successfully");
+      alert("User Added successfully");
     } else {
       // props.showAlert(json.errors, "red");
       alert(json.errors);
