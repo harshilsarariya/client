@@ -2,10 +2,46 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import { getMemberByEmail, getMember } from "../api/complaint";
-
+import { firebase, auth } from "./firebase";
 const SignIn = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const [mynumber, setnumber] = useState("");
+  const [otp, setotp] = useState("");
+  const [show, setshow] = useState(false);
+  const [final, setfinal] = useState("");
+
   let navigate = useNavigate();
+
+  // Sent OTP
+  // const signin = () => {
+  //   if (mynumber === "" || mynumber.length < 10) return;
+
+  //   let verify = new firebase.auth.RecaptchaVerifier("recaptcha-container");
+  //   auth
+  //     .signInWithPhoneNumber(mynumber, verify)
+  //     .then((result) => {
+  //       setfinal(result);
+  //       alert("code sent");
+  //       setshow(true);
+  //     })
+  //     .catch((err) => {
+  //       alert(err);
+  //       window.location.reload();
+  //     });
+  // };
+
+  // // Validate OTP
+  // const ValidateOtp = () => {
+  //   if (otp === null || final === null) return;
+  //   final
+  //     .confirm(otp)
+  //     .then((result) => {
+  //       // success
+  //     })
+  //     .catch((err) => {
+  //       alert("Wrong code");
+  //     });
+  // };
 
   let memberId;
   let isForwardingMember = "No";
@@ -41,9 +77,9 @@ const SignIn = () => {
       // props.showAlert("Logged in successfully", "green")
       if (credentials.email === "admin@ideal.com") {
         navigate("/ideal-admin");
-      } else if (isForwardingMember === "No") {
-        navigate("/user-admin");
       } else if (isForwardingMember === "Yes") {
+        navigate("/user-admin");
+      } else if (isForwardingMember === "No") {
         navigate("/register-complaint");
       }
     } else {
@@ -59,8 +95,6 @@ const SignIn = () => {
 
   return (
     <>
-      <Navbar />
-
       <form
         onSubmit={handleSubmit}
         className=" md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col m-auto w-full mt-8 md:mt-8"
@@ -97,11 +131,37 @@ const SignIn = () => {
           Log in
         </button>
 
-        <div className="text-center mt-10">
-          <Link to="/signup" className="text-blue-500 font-semibold">
-            Forgot Password
-          </Link>
-        </div>
+        {/* <div className="text-center mt-10">
+          <div style={{ marginTop: "200px" }}>
+            <center>
+              <div style={{ display: !show ? "block" : "none" }}>
+                <input
+                  value={mynumber}
+                  onChange={(e) => {
+                    setnumber(e.target.value);
+                  }}
+                  placeholder="phone number"
+                />
+                <br />
+                <br />
+                <div id="recaptcha-container"></div>
+                <button onClick={signin}>Send OTP</button>
+              </div>
+              <div style={{ display: show ? "block" : "none" }}>
+                <input
+                  type="text"
+                  placeholder={"Enter your OTP"}
+                  onChange={(e) => {
+                    setotp(e.target.value);
+                  }}
+                ></input>
+                <br />
+                <br />
+                <button onClick={ValidateOtp}>Verify</button>
+              </div>
+            </center>
+          </div>
+        </div> */}
       </form>
     </>
   );

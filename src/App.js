@@ -23,14 +23,26 @@ import Navbar from "./adminComponents/Navbar";
 import ViewByStates from "./userComponents/ViewByStates";
 import ViewComplaints from "./userComponents/ViewComplaints";
 import UpdateComplaintByUser from "./userComponents/updateComplaint";
+import UserNavbar from "./components/Navbar";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/register-complaint" element={<ComplaintForm />} />
+        <Route
+          element={
+            <>
+              <div className="w-full nunito-font h-full bg-[#F1F5F9]">
+                <UserNavbar />
+                <Outlet />
+              </div>
+            </>
+          }
+        >
+          <Route path="/" element={<Home />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/register-complaint" element={<ComplaintForm />} />
+        </Route>
         <Route path="/ideal-admin" element={<AdminHome />} />
         <Route path="/view-complaints" element={<ViewComplaint />} />
         <Route

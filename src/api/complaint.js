@@ -84,6 +84,20 @@ export const searchByState = async (query) => {
     return { error: error.message || error };
   }
 };
+export const searchByPhoneNo = async (query) => {
+  try {
+    const { data } = await member(
+      `/complaint/searchByPhoneNo?mobileNo=${query}`
+    );
+    return data;
+  } catch (error) {
+    const { response } = error;
+    if (response?.data) {
+      return response.data;
+    }
+    return { error: error.message || error };
+  }
+};
 export const searchByCompany = async (query) => {
   try {
     const { data } = await member(

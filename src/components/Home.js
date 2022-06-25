@@ -1,11 +1,15 @@
 import React from "react";
 import ComplaintForm from "./ComplaintForm";
+import ComplaintListForUser from "./ComplaintListForUser";
+import Navbar from "./Navbar";
 
 const Home = () => {
   return (
     <>
-      {/* <Navbar /> */}
-      <ComplaintForm />
+      {/* home */}
+      <Navbar />
+      {/* <ComplaintForm /> */}
+      {/* <ComplaintListForUser /> */}
     </>
   );
 };

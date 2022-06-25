@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 var pincodeDirectory = require("india-pincode-lookup");
 
-const ComplaintForm = (props) => {
+const ComplaintForm = () => {
   const [pincode, setPincode] = useState();
   const [state, setState] = useState("");
   const [district, setDistrict] = useState("");
@@ -91,7 +91,6 @@ const ComplaintForm = (props) => {
 
   return (
     <div>
-      <Navbar />
       <section className="text-gray-600 body-font relative">
         <div className="container px-5 py-12 mx-auto">
           <div className="flex flex-col text-center w-full mb-12">

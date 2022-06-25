@@ -21,6 +21,7 @@ export const defaultPost = {
   problem: "",
   solution: "",
   plumberName: "",
+  closingDate: "",
 };
 
 const UpdateComplaint = () => {
@@ -32,6 +33,7 @@ const UpdateComplaint = () => {
   const fetchComplaint = async () => {
     const { complaint } = await getComplaint(cid);
     setComplaintInfo(complaint);
+    console.log(complaint);
   };
 
   useEffect(() => {
@@ -357,7 +359,7 @@ const UpdateComplaint = () => {
                     />
                   </div>
                 </div>
-                <div className="p-2 w-full">
+                <div className="p-2 w-1/2">
                   <div className="relative">
                     <label
                       htmlFor="plumberName"
@@ -376,6 +378,25 @@ const UpdateComplaint = () => {
                     />
                   </div>
                 </div>
+                <div className="p-2 w-1/2">
+                  <div className="relative">
+                    <label
+                      htmlFor="closingDate"
+                      className="leading-7 text-base text-gray-600"
+                    >
+                      Closing Date
+                    </label>
+                    <input
+                      type="name"
+                      onChange={onChange}
+                      value={complaintInfo.closingDate}
+                      id="closingDate"
+                      name="closingDate"
+                      className="w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
+                    />
+                  </div>
+                </div>
+                {console.log(complaintInfo.closingDate)}
                 <div className="p-2 mt-5 w-full">
                   <button
                     onClick={handleSubmit}

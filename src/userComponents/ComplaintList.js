@@ -9,7 +9,6 @@ const ComplaintList = (props) => {
     "px-6 py-4 font-semibold text-base bg-white text-black  whitespace-nowrap";
   const [complaints, setComplaints] = useState([]);
   const [totalComplaintCount, setTotalComplaintCount] = useState([]);
-
   const handleSearchResult = async (e) => {
     if (props.isSearch === true) {
       setComplaints(props.searchResult);
@@ -40,7 +39,7 @@ const ComplaintList = (props) => {
     const newDate = new Date(date);
     const dateString = newDate.toLocaleDateString("en-us", {
       year: "numeric",
-      month: "short",
+      month: "numeric",
       day: "numeric",
     });
     complaintDate = dateString;

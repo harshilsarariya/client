@@ -12,6 +12,7 @@ const ViewComplaints = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
   const [stateList, setStateList] = useState([]);
+  const [openingDate, setOpeningDate] = useState("");
 
   const memberId = localStorage.getItem("memberId");
 
@@ -60,6 +61,7 @@ const ViewComplaints = () => {
   }, [window.location.pathname]);
 
   let headers = [
+    { label: "Opening Date", key: "date" },
     { label: "Party Name", key: "partyName" },
     { label: "Address", key: "address" },
     { label: "Pincode", key: "pincode" },
@@ -72,6 +74,8 @@ const ViewComplaints = () => {
     { label: "Problem Solved", key: "problemSolved" },
     { label: "Repeat", key: "repeat" },
     { label: "Syphone Color", key: "syphoneColor" },
+    { label: "Plumber Name", key: "plumberName" },
+    { label: "Closing Date", key: "closingDate" },
   ];
 
   return (
@@ -129,7 +133,12 @@ const ViewComplaints = () => {
           </select>
         </div>
       </div>
-      <ComplaintList isSearch={isSearch} searchResult={searchResult} />
+      <ComplaintList
+        isSearch={isSearch}
+        searchResult={searchResult}
+        setOpeningDate={setOpeningDate}
+        openingDate={openingDate}
+      />
     </div>
   );
 };

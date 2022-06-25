@@ -18,6 +18,8 @@ export const defaultPost = {
   problemSolved: "",
   repeat: "",
   syphoneColor: "",
+  plumberName: "",
+  closingDate: "",
 };
 
 const ViewComplaintDetails = () => {
@@ -151,6 +153,22 @@ const ViewComplaintDetails = () => {
           </h3>
           <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
             {complaintInfo.repeat}
+          </span>
+        </div>
+        <div className="flex my-5">
+          <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
+            Plumber Name :
+          </h3>
+          <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
+            {complaintInfo.plumberName}
+          </span>
+        </div>
+        <div className="flex my-5">
+          <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
+            Closing Date :
+          </h3>
+          <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
+            {complaintInfo.closingDate}
           </span>
         </div>
       </div>
