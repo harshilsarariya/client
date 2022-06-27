@@ -19,6 +19,11 @@ export const defaultPost = {
   problemSolved: "",
   repeat: "",
   syphoneColor: "",
+  remark: "",
+  problem: "",
+  solution: "",
+  plumberName: "",
+  closingDate: "",
 };
 
 const UpdateComplaint = () => {
@@ -268,6 +273,7 @@ const UpdateComplaint = () => {
                         >
                           <option>Yes</option>
                           <option>No</option>
+                          <option>Visit Ok</option>
                         </select>
                       </div>
                       <div className="mb-3 w-1/4 ml-2 right-0">
@@ -307,6 +313,91 @@ const UpdateComplaint = () => {
                           <option>Yes</option>
                           <option>No</option>
                         </select>
+                      </div>
+                    </div>
+                    <div className="p-2 w-full">
+                      <div className="relative">
+                        <label
+                          htmlFor="remark"
+                          className="leading-7 text-base text-gray-600"
+                        >
+                          Remark
+                        </label>
+                        <textarea
+                          name="remark"
+                          onChange={onChange}
+                          value={complaintInfo.remark}
+                          className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg  h-28 outline-none text-gray-700  py-1 px-3 leading-8 transition-colors duration-200 ease-in-out resize-none"
+                        />
+                      </div>
+                    </div>
+                    <div className="p-2 w-full">
+                      <div className="relative">
+                        <label
+                          htmlFor="problem"
+                          className="leading-7 text-base text-gray-600"
+                        >
+                          Problem
+                        </label>
+                        <textarea
+                          name="problem"
+                          onChange={onChange}
+                          value={complaintInfo.problem}
+                          className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg  h-28 outline-none text-gray-700  py-1 px-3 leading-8 transition-colors duration-200 ease-in-out resize-none"
+                        />
+                      </div>
+                    </div>
+                    <div className="p-2 w-full">
+                      <div className="relative">
+                        <label
+                          htmlFor="solution"
+                          className="leading-7 text-base text-gray-600"
+                        >
+                          Solutions
+                        </label>
+                        <textarea
+                          name="solution"
+                          onChange={onChange}
+                          value={complaintInfo.solution}
+                          className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg  h-28 outline-none text-gray-700  py-1 px-3 leading-8 transition-colors duration-200 ease-in-out resize-none"
+                        />
+                      </div>
+                    </div>
+                    <div className="p-2 w-1/2">
+                      <div className="relative">
+                        <label
+                          htmlFor="plumberName"
+                          className="leading-7 text-base text-gray-600"
+                        >
+                          Plumber Name
+                        </label>
+                        <input
+                          type="text"
+                          onChange={onChange}
+                          value={complaintInfo.plumberName}
+                          id="plumberName"
+                          name="plumberName"
+                          className="w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
+                          placeholder="Ex. Mr Sarariya "
+                        />
+                      </div>
+                    </div>
+                    <div className="p-2 w-1/2">
+                      <div className="relative">
+                        <label
+                          htmlFor="closingDate"
+                          className="leading-7 text-base text-gray-600"
+                        >
+                          Closing Date
+                        </label>
+                        <input
+                          type="name"
+                          onChange={onChange}
+                          value={complaintInfo.closingDate}
+                          id="closingDate"
+                          name="closingDate"
+                          className="w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
+                        />
                       </div>
                     </div>
                     <div className="p-2 mt-5 w-full">
