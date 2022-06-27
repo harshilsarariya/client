@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
-import ComplaintForm from "./components/ComplaintForm";
 import AdminHome from "./adminComponents/AdminHome";
 import UpdateComplaint from "./adminComponents/UpdateComplaint";
 import ViewComplaint from "./adminComponents/ViewComplaints";
@@ -17,18 +16,20 @@ import Users from "./adminComponents/Users";
 import AddMember from "./adminComponents/AddMember";
 import UpdateMember from "./adminComponents/UpdateMember";
 import UserAdminHome from "./userComponents/UserAdminHome";
-import ComplaintList from "./userComponents/ComplaintList";
 import SlideBar from "../src/userComponents/SlideBar";
 import Navbar from "./adminComponents/Navbar";
 import ViewByStates from "./userComponents/ViewByStates";
 import ViewComplaints from "./userComponents/ViewComplaints";
 import UpdateComplaintByUser from "./userComponents/updateComplaint";
 import UserNavbar from "./components/Navbar";
+import ViewComplaintInDetailByUser from "./components/ViewComplaintInDetailByUser";
 
 function App() {
   return (
     <Router>
+      {/* <div id="recaptcha-container"></div> */}
       <Routes>
+        {/* Entry Routes */}
         <Route
           element={
             <>
@@ -41,8 +42,12 @@ function App() {
         >
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/register-complaint" element={<ComplaintForm />} />
+          <Route
+            path="/viewComplaintByUser/:cid"
+            element={<ViewComplaintInDetailByUser />}
+          />
         </Route>
+
         <Route path="/ideal-admin" element={<AdminHome />} />
         <Route path="/view-complaints" element={<ViewComplaint />} />
         <Route
