@@ -10,6 +10,7 @@ const Navbar = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [query, setQuery] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [isViewClicked, setIsViewClicked] = useState(false);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -93,9 +94,12 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* {!isSearch && showSearchBar && <ComplaintForm />} */}
-      {isSearch && showSearchBar && (
-        <ComplaintListForUser isSearch={isSearch} searchResult={searchResult} />
+      {isSearch && showSearchBar && !isViewClicked && (
+        <ComplaintListForUser
+          isSearch={isSearch}
+          searchResult={searchResult}
+          setIsViewClicked={setIsViewClicked}
+        />
       )}
     </div>
   );
