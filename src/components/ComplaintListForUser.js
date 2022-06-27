@@ -1,39 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { fetchallcomplaints } from "../api/complaint";
-import { TbEdit } from "react-icons/tb";
-import { MdOutlineDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { deleteComplaint } from "../api/complaint";
 import { HiOutlineViewGridAdd } from "react-icons/hi";
 
 const ComplaintListForUser = (props) => {
   const [complaints, setComplaints] = useState([]);
-  const [totalComplaintCount, setTotalComplaintCount] = useState([]);
-
-  const getallcomplaints = async () => {
-    const { pageNo, limit } = props;
-    const { complaints, complaintCount } = await fetchallcomplaints(
-      pageNo,
-      limit
-    );
-
-    setComplaints(complaints);
-    setTotalComplaintCount(complaintCount);
-  };
 
   useEffect(() => {
     if (props.isSearch === true) {
       setComplaints(props.searchResult);
-      console.log(complaints);
     }
-    // getallcomplaints();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.searchResult]);
 
   useEffect(() => {
     if (props.isSearch === true) {
       setComplaints(props.searchResult);
-      console.log(complaints);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [complaints]);
@@ -43,14 +24,21 @@ const ComplaintListForUser = (props) => {
 
   let status;
   const handleStatus = (complaint) => {
-    status =
-      complaint.problemSolved === "Yes"
-        ? complaint.workDone === "Yes"
-          ? "Closed"
-          : complaint.workDone === "Visit Ok"
-          ? "Visit Ok"
-          : "In Progress"
-        : "Open";
+    let ps = complaint.problemSolved;
+    let wd = complaint.workDone;
+
+    if ((ps === "Yes" && wd === "Yes") || (ps === "No" && wd === "Yes")) {
+      status = "Closed";
+    }
+    if (ps === "Yes" && wd === "No") {
+      status = "In Progress";
+    }
+    if (ps === "No" && wd === "No") {
+      status = "Open";
+    }
+    if (wd === "Visit Ok") {
+      status = "Visit Ok";
+    }
   };
 
   let complaintDate;
@@ -62,18 +50,6 @@ const ComplaintListForUser = (props) => {
       day: "numeric",
     });
     complaintDate = dateString;
-  };
-
-  const handleDelete = async (complaintId) => {
-    const confirmed = window.confirm("Are you sure!");
-    if (!confirmed) return;
-    const { error, message } = await deleteComplaint(complaintId);
-
-    if (error) {
-      console.log(message);
-    }
-    const newComplaint = complaints.filter((p) => p._id !== complaintId);
-    setComplaints(newComplaint);
   };
 
   return (
@@ -131,37 +107,19 @@ const ComplaintListForUser = (props) => {
                   <td className={`${commonClass}  `}>{complaint.mobileNo}</td>
                   <td className={`${commonClass}`}>{complaintDate}</td>
                   <td className={`${commonClass} flex space-x-4`}>
-                    {props.isSearch === true ? (
-                      <>
-                        <Link
-                          to={`/view-details-complaint/${complaint._id}`}
-                          className="flex items-center cursor-pointer"
-                        >
-                          <HiOutlineViewGridAdd
-                            className="text-[#4bacc7]"
-                            size={22}
-                          />
-                          <span className="text-[#4bacc7] ml-1 font-semibold">
-                            View
-                          </span>
-                        </Link>
-                      </>
-                    ) : (
-                      <>
-                        <Link
-                          to={`/view-details-complaint/${complaint.id}`}
-                          className="flex items-center cursor-pointer"
-                        >
-                          <HiOutlineViewGridAdd
-                            className="text-[#4bacc7]"
-                            size={22}
-                          />
-                          <span className="text-[#4bacc7] ml-1 font-semibold">
-                            View
-                          </span>
-                        </Link>
-                      </>
-                    )}
+                    <Link
+                      to={`/viewComplaintByUser/${complaint._id}`}
+                      className="flex items-center cursor-pointer"
+                      onClick={() => props.isViewClicked(true)}
+                    >
+                      <HiOutlineViewGridAdd
+                        className="text-[#4bacc7]"
+                        size={22}
+                      />
+                      <span className="text-[#4bacc7] ml-1 font-semibold">
+                        View
+                      </span>
+                    </Link>
                   </td>
                 </tr>
                 <div className="mb-5" />
