@@ -5,8 +5,6 @@ import { AiOutlineSearch } from "react-icons/ai";
 import ComplaintList from "./ComplaintList";
 
 const ViewComplaints = () => {
-  // let pageNo = 0;
-  // let POST_LIMIT = 15;
   const [stateView, setStateView] = useState(true);
   const [query, setQuery] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -72,8 +70,11 @@ const ViewComplaints = () => {
     { label: "Brand Name", key: "brandName" },
     { label: "Work Done", key: "workDone" },
     { label: "Problem Solved", key: "problemSolved" },
-    { label: "Repeat", key: "repeat" },
     { label: "Syphone Color", key: "syphoneColor" },
+    { label: "Repeat", key: "repeat" },
+    { label: "Remark", key: "remark" },
+    { label: "Problem", key: "problem" },
+    { label: "Solutions", key: "solutions" },
     { label: "Plumber Name", key: "plumberName" },
     { label: "Closing Date", key: "closingDate" },
   ];

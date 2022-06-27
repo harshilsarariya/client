@@ -101,7 +101,7 @@ export const searchByPhoneNo = async (query) => {
 export const searchByCompany = async (query) => {
   try {
     const { data } = await member(
-      `/complaint/searchByCompany?compayName=${query}`
+      `/complaint/searchByCompany?brandName=${query}`
     );
     return data;
   } catch (error) {

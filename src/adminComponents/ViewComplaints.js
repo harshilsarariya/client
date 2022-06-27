@@ -5,6 +5,7 @@ import RecentComplaint from "./ComplaintList";
 import { getComplaint, searchByCompany, searchByState } from "../api/complaint";
 import { CSVLink } from "react-csv";
 import { AiOutlineSearch } from "react-icons/ai";
+import moment from "moment";
 export const defaultComplaint = {
   partyName: "",
   address: "",
@@ -85,6 +86,7 @@ const ViewComplaint = () => {
     }
   }, [window.location.pathname]);
   let headers = [
+    { label: "Opening Date", key: "date" },
     { label: "Party Name", key: "partyName" },
     { label: "Address", key: "address" },
     { label: "Pincode", key: "pincode" },
@@ -97,12 +99,9 @@ const ViewComplaint = () => {
     { label: "Problem Solved", key: "problemSolved" },
     { label: "Repeat", key: "repeat" },
     { label: "Syphone Color", key: "syphoneColor" },
+    { label: "Closing Date", key: "closingDate" },
   ];
-  useEffect(() => {
-    // if (!localStorage.getItem("token")) {
-    //   // navigate("/signin");
-    // }
-  }, [searchResult]);
+
   return (
     <div className="w-full nunito-font h-full bg-[#F1F5F9]">
       <div className="">

@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 import { TbEdit } from "react-icons/tb";
 import { MdOutlineDelete } from "react-icons/md";
 import { HiOutlineViewGridAdd } from "react-icons/hi";
-import { fetchallcomplaints, deleteComplaint } from "../api/complaint";
+import { deleteComplaint } from "../api/complaint";
 const ComplaintList = (props) => {
   const commonClass =
     "px-6 py-4 font-semibold text-base bg-white text-black  whitespace-nowrap";
   const [complaints, setComplaints] = useState([]);
-  const [totalComplaintCount, setTotalComplaintCount] = useState([]);
   const handleSearchResult = async (e) => {
     if (props.isSearch === true) {
       setComplaints(props.searchResult);
@@ -39,17 +38,6 @@ const ComplaintList = (props) => {
     if (wd === "Visit Ok") {
       status = "Visit Ok";
     }
-  };
-
-  let complaintDate;
-  const handleDateFormate = (date) => {
-    const newDate = new Date(date);
-    const dateString = newDate.toLocaleDateString("en-us", {
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-    });
-    complaintDate = dateString;
   };
 
   const handleDelete = async (complaintId) => {
@@ -100,10 +88,7 @@ const ComplaintList = (props) => {
               <tbody>
                 {complaints.map((complaint, index) => (
                   <>
-                    {
-                      (handleStatus(complaint),
-                      handleDateFormate(complaint.date))
-                    }
+                    {handleStatus(complaint)}
                     <tr
                       key={index}
                       className=" border-b  overflow-x-auto shadow-sm"
@@ -132,7 +117,7 @@ const ComplaintList = (props) => {
                           {status}
                         </td>
                       )}
-                      <td className={`${commonClass}`}>{complaintDate}</td>
+                      <td className={`${commonClass}`}>{complaint.date}</td>
                       <td className={`${commonClass} flex space-x-4`}>
                         {props.isSearch === true ? (
                           <>

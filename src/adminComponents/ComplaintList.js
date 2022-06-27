@@ -5,7 +5,7 @@ import { MdOutlineDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { deleteComplaint } from "../api/complaint";
 import { HiOutlineViewGridAdd } from "react-icons/hi";
-
+import moment from "moment";
 const ComplaintList = (props) => {
   const [complaints, setComplaints] = useState([]);
   const [totalComplaintCount, setTotalComplaintCount] = useState([]);
@@ -18,13 +18,13 @@ const ComplaintList = (props) => {
     );
 
     setComplaints(complaints);
+
     setTotalComplaintCount(complaintCount);
   };
 
   useEffect(() => {
     if (props.isSearch === true) {
       setComplaints(props.searchResult);
-      console.log(complaints);
     }
     getallcomplaints();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,7 +33,6 @@ const ComplaintList = (props) => {
   useEffect(() => {
     if (props.isSearch === true) {
       setComplaints(props.searchResult);
-      console.log(complaints);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [complaints]);
@@ -111,7 +110,7 @@ const ComplaintList = (props) => {
           <tbody>
             {complaints.map((complaint, index) => (
               <>
-                {(handleStatus(complaint), handleDateFormate(complaint.date))}
+                {handleStatus(complaint)}
                 <tr
                   key={index}
                   className=" border-b  overflow-x-auto shadow-sm"
@@ -132,7 +131,7 @@ const ComplaintList = (props) => {
                   ) : (
                     <td className={`${commonClass} text-blue-500`}>{status}</td>
                   )}
-                  <td className={`${commonClass}`}>{complaintDate}</td>
+                  <td className={`${commonClass}`}>{complaint.date}</td>
                   <td className={`${commonClass} flex space-x-4`}>
                     {props.isSearch === true ? (
                       <>
@@ -152,7 +151,6 @@ const ComplaintList = (props) => {
                           to={`/update-complaint/${complaint._id}`}
                           className="flex items-center cursor-pointer"
                         >
-                          {/* {console.log(complaint[index]._id)} */}
                           <TbEdit className="text-gray-500" size={19} />
                           <spam className="text-gray-500 ml-1 font-semibold">
                             Edit
@@ -186,7 +184,6 @@ const ComplaintList = (props) => {
                           to={`/update-complaint/${complaint.id}`}
                           className="flex items-center cursor-pointer"
                         >
-                          {/* {console.log(complaint[index]._id)} */}
                           <TbEdit className="text-gray-500" size={19} />
                           <spam className="text-gray-500 ml-1 font-semibold">
                             Edit

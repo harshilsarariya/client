@@ -41,20 +41,9 @@ const ComplaintListForUser = (props) => {
     }
   };
 
-  let complaintDate;
-  const handleDateFormate = (date) => {
-    const newDate = new Date(date);
-    const dateString = newDate.toLocaleDateString("en-us", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-    complaintDate = dateString;
-  };
-
   return (
-    <div className=" w-full ">
-      <div className=" sm:rounded-lg mt-5">
+    <div className=" w-full p-5">
+      <div className=" sm:rounded-lg ">
         <table className="w-full text-sm text-left text-gray-500 ">
           <thead className="text-sm text-black uppercase bg-[#F1F5F9] ">
             <tr className="">
@@ -83,7 +72,7 @@ const ComplaintListForUser = (props) => {
           <tbody>
             {complaints.map((complaint, index) => (
               <>
-                {(handleStatus(complaint), handleDateFormate(complaint.date))}
+                {handleStatus(complaint)}
                 <tr
                   key={index}
                   className=" border-b  overflow-x-auto shadow-sm"
@@ -105,7 +94,7 @@ const ComplaintListForUser = (props) => {
                     <td className={`${commonClass} text-blue-500`}>{status}</td>
                   )}
                   <td className={`${commonClass}  `}>{complaint.mobileNo}</td>
-                  <td className={`${commonClass}`}>{complaintDate}</td>
+                  <td className={`${commonClass}`}>{complaint.date}</td>
                   <td className={`${commonClass} flex space-x-4`}>
                     <Link
                       to={`/viewComplaintByUser/${complaint._id}`}
