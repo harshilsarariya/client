@@ -15,10 +15,13 @@ const ViewByStates = () => {
   }, [memberId]);
 
   return (
-    <div className="p-2 grid grid-cols-5 h-32  mt-10 mx-10">
+    <div className="p-2 grid grid-cols-4  mt-10 mx-10">
       {stateList.map((state) => (
         <>
-          <button key={state} className="mx-2 rounded-xl bg-emerald-300">
+          <button
+            key={state}
+            className="mx-2 my-2 min-w-fit  h-32 rounded-xl bg-emerald-300"
+          >
             <h3 className="text-2xl p-10 text-green-800 font-bold">{state}</h3>
           </button>
         </>
