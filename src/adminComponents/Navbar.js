@@ -27,7 +27,7 @@ const Navbar = () => {
             </div>
             <div className="w-1/2 hidden lg:flex">
               <div className="w-full flex items-center pl-8 justify-end">
-                <div className="relative w-1/2 mr-7">
+                {/* <div className="relative w-1/2 mr-7">
                   <div className="text-gray-500 absolute ml-4 inset-0 m-auto w-4 h-4">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ const Navbar = () => {
                     disabled
                     placeholder="Search"
                   />
-                </div>
+                </div> */}
                 <div
                   className="flex items-center relative cursor-pointer"
                   onClick={() => setProfile(!profile)}
@@ -60,16 +60,6 @@ const Navbar = () => {
                   <div className="rounded-full">
                     {profile ? (
                       <ul className="p-2 w-52 border-r  bg-[#123E4F] absolute rounded right-0 shadow mt-12 sm:mt-16 ">
-                        {/* <li className="flex w-full justify-between  p-1 rounded cursor-default  items-center">
-                          <div className="flex items-center flex-col ">
-                            <span className="text-base text-white ml-2">
-                              Harshil Sarariya
-                            </span>
-                            <span className="text-sm ml-2 text-[#91A6AD]">
-                              Software Engineer
-                            </span>
-                          </div>
-                        </li> */}
                         <hr className="my-2 border-[#254D5D]" />
                         <li className="flex w-full  justify-between text-white hover:bg-[#1E4858] p-1 rounded cursor-default items-center">
                           <div className="flex items-center">
