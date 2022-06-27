@@ -1,50 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Navbar from "./Navbar";
 import { getMemberByEmail, getMember } from "../api/complaint";
-import { firebase, auth } from "./firebase";
 const SignIn = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const [mynumber, setnumber] = useState("");
-  const [otp, setotp] = useState("");
-  const [show, setshow] = useState(false);
-  const [final, setfinal] = useState("");
 
   let navigate = useNavigate();
 
-  // Sent OTP
-  // const signin = () => {
-  //   if (mynumber === "" || mynumber.length < 10) return;
-
-  //   let verify = new firebase.auth.RecaptchaVerifier("recaptcha-container");
-  //   auth
-  //     .signInWithPhoneNumber(mynumber, verify)
-  //     .then((result) => {
-  //       setfinal(result);
-  //       alert("code sent");
-  //       setshow(true);
-  //     })
-  //     .catch((err) => {
-  //       alert(err);
-  //       window.location.reload();
-  //     });
-  // };
-
-  // // Validate OTP
-  // const ValidateOtp = () => {
-  //   if (otp === null || final === null) return;
-  //   final
-  //     .confirm(otp)
-  //     .then((result) => {
-  //       // success
-  //     })
-  //     .catch((err) => {
-  //       alert("Wrong code");
-  //     });
-  // };
-
   let memberId;
-  let isForwardingMember = "No";
+  let isForwardingMember;
   const saveId = async () => {
     const { data } = await getMemberByEmail(credentials.email);
     memberId = data[0]._id;
@@ -80,7 +43,7 @@ const SignIn = () => {
       } else if (isForwardingMember === "Yes") {
         navigate("/user-admin");
       } else if (isForwardingMember === "No") {
-        navigate("/register-complaint");
+        navigate("/");
       }
     } else {
       // props.showAlert(json.errors, "red");
@@ -88,6 +51,12 @@ const SignIn = () => {
     }
     saveId();
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -97,7 +66,7 @@ const SignIn = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className=" md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col m-auto w-full mt-8 md:mt-8"
+        className=" md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col h-[92vh] m-auto w-full mt-8 md:mt-8"
       >
         <h2 className="text-gray-900 text-lg font-medium title-font mb-5">
           Log In
@@ -127,41 +96,12 @@ const SignIn = () => {
             className="w-full bg-white rounded border border-gray-300 focus:border-[#717984] focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
           />
         </div>
-        <button className="text-white bg-[#717984] border-0 py-2 px-8 focus:outline-none hover:bg-[#717984] rounded text-lg">
+        <button
+          onClick={handleSubmit}
+          className="text-white bg-[#717984] border-0 py-2 px-8 focus:outline-none hover:bg-[#717984] rounded text-lg"
+        >
           Log in
         </button>
-
-        {/* <div className="text-center mt-10">
-          <div style={{ marginTop: "200px" }}>
-            <center>
-              <div style={{ display: !show ? "block" : "none" }}>
-                <input
-                  value={mynumber}
-                  onChange={(e) => {
-                    setnumber(e.target.value);
-                  }}
-                  placeholder="phone number"
-                />
-                <br />
-                <br />
-                <div id="recaptcha-container"></div>
-                <button onClick={signin}>Send OTP</button>
-              </div>
-              <div style={{ display: show ? "block" : "none" }}>
-                <input
-                  type="text"
-                  placeholder={"Enter your OTP"}
-                  onChange={(e) => {
-                    setotp(e.target.value);
-                  }}
-                ></input>
-                <br />
-                <br />
-                <button onClick={ValidateOtp}>Verify</button>
-              </div>
-            </center>
-          </div>
-        </div> */}
       </form>
     </>
   );
