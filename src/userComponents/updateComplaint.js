@@ -221,15 +221,19 @@ const UpdateComplaint = () => {
                     >
                       Office No
                     </label>
-                    <input
-                      type="number"
+                    <select
                       required
                       onChange={onChange}
                       value={complaintInfo.plumbingNo}
                       name="plumbingNo"
-                      className="w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
+                      className="w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4  appearance-none leading-8 transition-colors duration-200 ease-in-out"
                       placeholder="Plumbing No."
-                    />
+                    >
+                      <option className="p-2 text-xl">Select Office No.</option>
+                      <option className="p-2 text-xl">7575024245</option>
+                      <option className="p-2 text-xl">9924733933</option>
+                      <option className="p-2 text-xl">9913833233</option>
+                    </select>
                   </div>
                 </div>
                 <div className="p-2 w-1/2">
@@ -396,7 +400,6 @@ const UpdateComplaint = () => {
                     />
                   </div>
                 </div>
-                {console.log(complaintInfo.closingDate)}
                 <div className="p-2 mt-5 w-full">
                   <button
                     onClick={handleSubmit}

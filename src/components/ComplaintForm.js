@@ -7,6 +7,7 @@ const ComplaintForm = () => {
   const [pincode, setPincode] = useState();
   const [state, setState] = useState("");
   const [district, setDistrict] = useState("");
+  const [totalComplaints, setTotalComplaints] = useState(0);
   const [complaint, setComplaint] = useState({
     partyName: "",
     address: "",
@@ -57,7 +58,6 @@ const ComplaintForm = () => {
     if (json.success) {
       // props.showAlert("Complaint Submitted successfully", "green");
       alert("Complaint Submitted successfully");
-      navigate("/");
     } else {
       // props.showAlert(json.errors[0].msg, "red");
       alert(json.errors[0].msg);
@@ -83,22 +83,50 @@ const ComplaintForm = () => {
     }
   };
 
+  // const hanfleTotalComplaint = async () => {
+  //   const response = await fetch(
+  //     // "https://ideal-server.herokuapp.com/api/complaint/totalcomplaint",
+  //     `http://localhost:5000/api/complaint/fetchComplaintsCount`,
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "auth-token": localStorage.getItem("token"),
+  //       },
+  //     }
+  //   );
+  //   const json = await response.json();
+  //   setTotalComplaints(json.len);
+  //   // console.log(json.length);
+  //   console.log(json.len);
+  // };
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/signin");
     }
+    // hanfleTotalComplaint();
   }, []);
 
   return (
     <div>
       <section className="text-gray-600 body-font relative">
         <div className="container px-5 py-12 mx-auto">
-          <div className="flex flex-col text-center w-full mb-12">
-            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
+          <div className="flex  text-center w-full mb-5">
+            {/* <div className=" mb-5">
+              <div className="flex text-2xl">
+                <h2 className="mr-16 ">Total Complaints</h2>
+                <span>{totalComplaints}</span>
+              </div>
+              <div className="flex text-2xl">
+                <h2 className="mr-9"> Today's Complaints</h2>
+                <span>2356</span>
+              </div>
+            </div> */}
+            <h1 className="sm:text-3xl mx-auto text-2xl font-medium title-font mb-4 text-gray-900">
               Please complete the form below for Enter complaints.
             </h1>
           </div>
-          <form onSubmit={handleSubmit} className="lg:w-1/2 md:w-2/3 mx-auto">
+          <form onSubmit={handleSubmit} className="lg:w-1/2 md:w-2/3 mx-auto ">
             <div className="flex flex-wrap -m-2">
               <div className="p-2 w-1/2">
                 <div className="relative">
@@ -110,7 +138,6 @@ const ComplaintForm = () => {
                   </label>
                   <input
                     type="text"
-                    required
                     onChange={onChange}
                     name="partyName"
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -231,42 +258,9 @@ const ComplaintForm = () => {
                   >
                     Office No
                   </label>
-                  <input
-                    type="number"
-                    required
-                    onChange={onChange}
-                    name="plumbingNo"
-                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                  />
-                </div>
-              </div>
-              <div className="p-2 w-1/2">
-                <div className="relative">
-                  <label
-                    htmlFor="syphoneColor"
-                    className="leading-7 text-base text-gray-600"
-                  >
-                    Syphone Color
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    onChange={onChange}
-                    name="syphoneColor"
-                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                  />
-                </div>
-              </div>
-              <div className="w-full flex flex-row justify-between space-x-5 my-5">
-                <div className="mb-3 w-1/2 ml-2 right-0">
-                  <label
-                    htmlFor="problemSolved"
-                    className="leading-7 text-base text-gray-600"
-                  >
-                    Problem Solved
-                  </label>
+
                   <select
-                    name="problemSolved"
+                    name="plumbingNo"
                     onChange={onChange}
                     required
                     className="form-select form-select-lg mb-3
@@ -287,10 +281,30 @@ const ComplaintForm = () => {
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     aria-label=".form-select-lg example"
                   >
-                    <option>No</option>
-                    <option>Yes</option>
+                    <option className="p-2 text-xl"> Select Office No.</option>
+                    <option className="p-2 text-xl">7575024245</option>
+                    <option className="p-2 text-xl">9924733933</option>
+                    <option className="p-2 text-xl">9913833233</option>
                   </select>
                 </div>
+              </div>
+              <div className="p-2 w-1/2">
+                <div className="relative">
+                  <label
+                    htmlFor="syphoneColor"
+                    className="leading-7 text-base text-gray-600"
+                  >
+                    Syphone Color
+                  </label>
+                  <input
+                    type="text"
+                    onChange={onChange}
+                    name="syphoneColor"
+                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  />
+                </div>
+              </div>
+              <div className="w-full flex flex-row justify-between space-x-5 my-5">
                 <div className="mb-3 w-1/2 right-0">
                   <label
                     htmlFor="repeat"
@@ -320,8 +334,8 @@ const ComplaintForm = () => {
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     aria-label=".form-select-lg example"
                   >
-                    <option>No</option>
-                    <option>Yes</option>
+                    <option className="p-2 text-xl">No</option>
+                    <option className="p-2 text-xl">Yes</option>
                   </select>
                 </div>
               </div>
