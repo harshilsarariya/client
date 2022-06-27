@@ -24,14 +24,21 @@ const ComplaintList = (props) => {
 
   let status;
   const handleStatus = (complaint) => {
-    status =
-      complaint.workDone === "Visit Ok"
-        ? "Visit Ok"
-        : complaint.problemSolved === "Yes"
-        ? complaint.workDone === "Yes"
-          ? "Closed"
-          : "In Progress"
-        : "Open";
+    let ps = complaint.problemSolved;
+    let wd = complaint.workDone;
+
+    if ((ps === "Yes" && wd === "Yes") || (ps === "No" && wd === "Yes")) {
+      status = "Closed";
+    }
+    if (ps === "Yes" && wd === "No") {
+      status = "In Progress";
+    }
+    if (ps === "No" && wd === "No") {
+      status = "Open";
+    }
+    if (wd === "Visit Ok") {
+      status = "Visit Ok";
+    }
   };
 
   let complaintDate;
@@ -130,7 +137,7 @@ const ComplaintList = (props) => {
                         {props.isSearch === true ? (
                           <>
                             <Link
-                              to={`/view-details-complaint/${complaint._id}`}
+                              to={`/user-admin/view-details-complaint/${complaint._id}`}
                               className="flex items-center cursor-pointer"
                             >
                               <HiOutlineViewGridAdd
@@ -166,7 +173,7 @@ const ComplaintList = (props) => {
                         ) : (
                           <>
                             <Link
-                              to={`/view-details-complaint/${complaint.id}`}
+                              to={`/user-admin/view-details-complaint/${complaint.id}`}
                               className="flex items-center cursor-pointer"
                             >
                               <HiOutlineViewGridAdd

@@ -43,14 +43,21 @@ const ComplaintList = (props) => {
 
   let status;
   const handleStatus = (complaint) => {
-    status =
-      complaint.problemSolved === "Yes"
-        ? complaint.workDone === "Yes"
-          ? "Closed"
-          : complaint.workDone === "Visit Ok"
-          ? "Visit Ok"
-          : "In Progress"
-        : "Open";
+    let ps = complaint.problemSolved;
+    let wd = complaint.workDone;
+
+    if ((ps === "Yes" && wd === "Yes") || (ps === "No" && wd === "Yes")) {
+      status = "Closed";
+    }
+    if (ps === "Yes" && wd === "No") {
+      status = "In Progress";
+    }
+    if (ps === "No" && wd === "No") {
+      status = "Open";
+    }
+    if (wd === "Visit Ok") {
+      status = "Visit Ok";
+    }
   };
 
   let complaintDate;
