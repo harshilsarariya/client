@@ -6,10 +6,7 @@ import Navbar from "./Navbar";
 const Home = () => {
   return (
     <>
-      {/* home */}
-      <Navbar />
-      {/* <ComplaintForm /> */}
-      {/* <ComplaintListForUser /> */}
+      <ComplaintForm />
     </>
   );
 };
