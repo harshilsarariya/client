@@ -82,11 +82,12 @@ const ComplaintForm = () => {
       complaint.city = no[0].districtName;
     }
   };
+  // let officeNo = 7575024245;
 
-  // const hanfleTotalComplaint = async () => {
+  // const handleTotalComplaint = async () => {
   //   const response = await fetch(
   //     // "https://ideal-server.herokuapp.com/api/complaint/totalcomplaint",
-  //     `http://localhost:5000/api/complaint/fetchComplaintsCount`,
+  //     `http://localhost:5000/api/complaint/fetchComplaintsCount?plumbingNo=${officeNo}`,
   //     {
   //       method: "GET",
   //       headers: {
@@ -97,14 +98,12 @@ const ComplaintForm = () => {
   //   );
   //   const json = await response.json();
   //   setTotalComplaints(json.len);
-  //   // console.log(json.length);
-  //   console.log(json.len);
   // };
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/signin");
     }
-    // hanfleTotalComplaint();
+    // handleTotalComplaint();
   }, []);
 
   return (

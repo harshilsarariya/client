@@ -7,6 +7,7 @@ const SignIn = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [otp, setOtp] = useState();
   const [verifyOtp, setVerifyOtp] = useState();
+  const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
 
   let memberId;
@@ -23,15 +24,20 @@ const SignIn = () => {
     otpMessage = Math.floor(100000 + Math.random() * 900000);
     localStorage.setItem("otpIdeal", otpMessage);
     setOtp(otpMessage);
-    Telegram.setToken("5341116480:AAFObiUJKoNQv8lM-ItVw49PrPqcACk1pSk");
-    Telegram.setRecipient("1361271607");
-    Telegram.setMessage(otpMessage);
-    Telegram.send();
+    Telegram.setToken("5544235859:AAGK1a8-kmIjoo5lG2c4H5R74ofEKH2g6eM");
+    Telegram.setRecipient("5474931297");
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      Telegram.setMessage(
+        "Your OTP for " + credentials.email + " is " + otpMessage
+      );
+      Telegram.send();
+    }, 1000);
   };
 
   const handleOtp = (e) => {
     setVerifyOtp(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -50,6 +56,7 @@ const SignIn = () => {
         }),
       }
     );
+
     const json = await response.json();
     setOtp(localStorage.getItem("otpIdeal"));
     if (otp === verifyOtp) {
@@ -117,39 +124,43 @@ const SignIn = () => {
         </div>
         <div className="flex  items-center">
           <div className="w-2/5">
-            <label htmlFor="phone" className="leading-7 text-sm text-gray-600">
-              Enter Phone No.
-            </label>
-            <select
-              id="phone"
-              // onChange={onPhoneChange}
-              name="phone"
-              className="w-full bg-white rounded border appearance-none mb-8 border-gray-300 focus:border-[#717984] focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-            >
-              <option>Select No.</option>
-              <option value="+919510142642">9510142642</option>
-              <option value="+919510142643">9510142643</option>
-            </select>
-          </div>
-          <div className="w-1/5">
-            <span
-              onClick={handlePhoneAuthentication}
-              className="bg-green-400 p-2 rounded ml-5 cursor-pointer"
-            >
-              Send OTP
-            </span>
-          </div>
-          <div className="w-2/5">
             <label htmlFor="otp" className="leading-7 text-sm text-gray-600">
               Enter OTP
             </label>
             <input
               id="otp"
               name="otp"
+              placeholder="Enter valid OTP"
               onChange={handleOtp}
               className="w-full bg-white rounded border appearance-none mb-8 border-gray-300 focus:border-[#717984] focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             />
           </div>
+
+          {!loading && (
+            <div className="w-1/5">
+              <span
+                onClick={handlePhoneAuthentication}
+                className="bg-green-400 p-2 px-3 rounded ml-7 cursor-pointer"
+              >
+                Send OTP
+              </span>
+            </div>
+          )}
+
+          {loading && (
+            <>
+              <div className="w-1/5 flex">
+                <span className="bg-green-400  cursor-default p-2 px-3 text-green-400  rounded ml-7 ">
+                  Send OTP
+                </span>
+                <img
+                  src="https://i.gifer.com/ZZ5H.gif"
+                  className="w-7 m-1 -ml-16"
+                  alt="loadingImg"
+                />
+              </div>
+            </>
+          )}
         </div>
 
         <button
