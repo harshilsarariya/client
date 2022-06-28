@@ -99,6 +99,10 @@ const ViewComplaint = () => {
     { label: "Problem Solved", key: "problemSolved" },
     { label: "Repeat", key: "repeat" },
     { label: "Syphone Color", key: "syphoneColor" },
+    { label: "Remark", key: "remark" },
+    { label: "Problem", key: "problem" },
+    { label: "Solutions", key: "solutions" },
+    { label: "Plumber Name", key: "plumberName" },
     { label: "Closing Date", key: "closingDate" },
   ];
 
