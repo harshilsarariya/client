@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { searchByPhoneNo } from "../api/complaint";
+import { searchByPhoneNo, search } from "../api/complaint";
 import ComplaintListForUser from "./ComplaintListForUser";
 import { AiOutlineSearch } from "react-icons/ai";
-import ComplaintForm from "./ComplaintForm";
+import { CSVLink } from "react-csv";
 
 const Navbar = () => {
   const [searchResult, setSearchResult] = useState([]);
@@ -45,6 +45,39 @@ const Navbar = () => {
     setSearchResult(data);
   };
 
+  const handleString = async (e) => {
+    const data = await search(query);
+    setIsSearch(true);
+    setSearchResult(data);
+  };
+  const handleSearch = (e) => {
+    if (!isNaN(query)) {
+      handleStateBySearch();
+    } else {
+      handleString();
+    }
+  };
+
+  let headers = [
+    { label: "Opening Date", key: "date" },
+    { label: "Party Name", key: "partyName" },
+    { label: "Address", key: "address" },
+    { label: "Pincode", key: "pincode" },
+    { label: "State", key: "state" },
+    { label: "City", key: "city" },
+    { label: "Mobile No", key: "mobileNo" },
+    { label: "Plumbing No", key: "plumbingNo" },
+    { label: "Brand Name", key: "brandName" },
+    { label: "Work Done", key: "workDone" },
+    { label: "Problem Solved", key: "problemSolved" },
+    { label: "Repeat", key: "repeat" },
+    { label: "Syphone Color", key: "syphoneColor" },
+    { label: "Remark", key: "remark" },
+    { label: "Problem", key: "problem" },
+    { label: "Solutions", key: "solutions" },
+    { label: "Closing Date", key: "closingDate" },
+  ];
+
   return (
     <div className="nunito-font  top-0 z-50 ">
       <nav className="flex bg-[#000000] items-center justify-between flex-wrap p-4 ">
@@ -56,23 +89,38 @@ const Navbar = () => {
           </li>
         </ul>
 
-        <div className="space-x-1 flex">
+        <div className="space-x-1 flex items-center">
           {showSearchBar && (
-            <div className="flex  mr-7">
-              <input
-                className="border border-gray-100 focus:outline-none focus:border-indigo-700  w-full text-sm text-gray-500 bg-gray-100 pl-4 py-2 rounded-l-xl "
-                type="text"
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search By Phone No."
-                onSubmit={handleStateBySearch}
-              />
-              <button
-                className="bg-slate-300 p-2 rounded-r-xl"
-                onClick={handleStateBySearch}
-              >
-                <AiOutlineSearch size={20} />
-              </button>
-            </div>
+            <>
+              <div className="mr-5 flex items-center">
+                {isSearch && (
+                  <div className="  ">
+                    <CSVLink
+                      data={searchResult}
+                      headers={headers}
+                      className="bg-[#86da32b5] rounded-xl p-2 px-4 text-lg mr-5"
+                    >
+                      Export
+                    </CSVLink>
+                  </div>
+                )}
+
+                <div className="flex ">
+                  <input
+                    className="border border-gray-100 focus:outline-none focus:border-indigo-700  w-full text-sm text-gray-500 bg-gray-100 pl-4 py-2 rounded-l-xl "
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search here"
+                    onSubmit={handleSearch}
+                  />
+                  <button
+                    className="bg-slate-300 p-2 rounded-r-xl"
+                    onClick={handleSearch}
+                  >
+                    <AiOutlineSearch size={20} />
+                  </button>
+                </div>
+              </div>
+            </>
           )}
           <ul className="flex space-x-6 items-center text-white font-bold ">
             <li>
