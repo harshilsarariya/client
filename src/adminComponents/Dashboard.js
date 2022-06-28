@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import ComplaintsCounter from "./ComplaintsCounter";
 import ComplaintList from "./ComplaintList";
 
 const Dashboard = () => {
+  const [openCount, setOpenCount] = useState(0);
+  const [closedCount, setClosedCount] = useState(0);
+  const [repeatCount, setRepeatCount] = useState(0);
   const labels = [
-    { lab: "Open", color: "orange", count: "---" },
-    { lab: "Closed", color: "blue", count: "---" },
-    { lab: "Repeat", color: "green", count: "---" },
+    { lab: "Open", color: "orange", count: openCount },
+    { lab: "Closed", color: "blue", count: closedCount },
+    { lab: "Repeat", color: "green", count: repeatCount },
   ];
   let pageNo = 0;
-  let POST_LIMIT = 5;
+  let POST_LIMIT = 7;
 
   return (
     <div className="w-full  ">
@@ -31,7 +34,13 @@ const Dashboard = () => {
           <h1 className="text-xl w-44 font-medium mt-8  border-b-2 border-gray-300">
             Recent Complaint
           </h1>
-          <ComplaintList pageNo={pageNo} limit={POST_LIMIT} />
+          <ComplaintList
+            setOpenCount={setOpenCount}
+            setClosedCount={setClosedCount}
+            setRepeatCount={setRepeatCount}
+            pageNo={pageNo}
+            limit={POST_LIMIT}
+          />
         </div>
       </div>
     </div>
