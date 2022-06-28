@@ -112,6 +112,18 @@ export const searchByCompany = async (query) => {
     return { error: error.message || error };
   }
 };
+export const search = async (query) => {
+  try {
+    const { data } = await member(`/complaint/search?query=${query}`);
+    return data;
+  } catch (error) {
+    const { response } = error;
+    if (response?.data) {
+      return response.data;
+    }
+    return { error: error.message || error };
+  }
+};
 
 export const deleteMember = async (memberId) => {
   try {
