@@ -30,29 +30,13 @@ const ComplaintForm = () => {
     repeat: "No",
     syphoneColor: "",
   });
-  const [officeNo, setOfficeNo] = useState(0);
+  const [email, setEmail] = useState(localStorage.getItem("email"));
   let navigate = useNavigate();
-  const getOfficeNo = async () => {
-    let email = localStorage.getItem("email");
-    const response = await fetch(
-      // `http://localhost:5000/api/auth/getMemberByEmail?email=${email}`,
-      `http://localhost:5000/api/auth/getMemberByEmail?email=${email}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const json = await response.json();
-    let pho = json.data[0].phone;
-    setOfficeNo(pho);
-  };
 
   const handleTotalComplaint = async () => {
     const response = await fetch(
-      `https://ideal-server.herokuapp.com/api/complaint/fetchComplaintsCount?plumbingNo=${officeNo}`,
-      // `http://localhost:5000/api/complaint/fetchComplaintsCount?plumbingNo=${9924733933}`,
+      `https://ideal-server.herokuapp.com/api/complaint/fetchComplaintsCount?email=${email}`,
+      // `http://localhost:5000/api/complaint/fetchComplaintsCount?email=${email}`,
       {
         method: "GET",
         headers: {
@@ -90,8 +74,8 @@ const ComplaintForm = () => {
 
   const handleTodaysTotalComplaint = async () => {
     const response = await fetch(
-      `https://ideal-server.herokuapp.com/api/complaint/fetchTodaysComplaintsCount?plumbingNo=${officeNo}`,
-      // `http://localhost:5000/api/complaint/fetchTodaysComplaintsCount?plumbingNo=${9924733933}`,
+      `https://ideal-server.herokuapp.com/api/complaint/fetchTodaysComplaintsCount?email=${email}`,
+      // `http://localhost:5000/api/complaint/fetchTodaysComplaintsCount?email=${email}`,
       {
         method: "GET",
         headers: {
@@ -130,6 +114,7 @@ const ComplaintForm = () => {
           problemSolved: complaint.problemSolved,
           repeat: complaint.repeat,
           syphoneColor: complaint.syphoneColor,
+          entryUserEmail: localStorage.getItem("email"),
         }),
       }
     );
@@ -139,6 +124,21 @@ const ComplaintForm = () => {
       // props.showAlert("Complaint Submitted successfully", "green");
       handleTotalComplaint();
       handleTodaysTotalComplaint();
+      setComplaint({
+        partyName: "",
+        address: "",
+        pincode: "",
+        state: "",
+        city: "",
+        mobileNo: "",
+        plumbingNo: "",
+        brandName: "",
+        workDone: "No",
+        problemSolved: "No",
+        repeat: "No",
+        syphoneColor: "",
+      });
+
       alert("Complaint Submitted successfully");
     } else {
       // props.showAlert(json.errors[0].msg, "red");
@@ -151,7 +151,6 @@ const ComplaintForm = () => {
       handlePincode(e);
     }
     setComplaint({ ...complaint, [e.target.name]: e.target.value });
-    console.log(complaint);
   };
 
   const handlePincode = (e) => {
@@ -169,18 +168,19 @@ const ComplaintForm = () => {
     if (!localStorage.getItem("token")) {
       navigate("/signin");
     }
-    getOfficeNo();
+    handleTotalComplaint();
+    handleTodaysTotalComplaint();
   }, []);
 
   useEffect(() => {
     handleTotalComplaint();
     handleTodaysTotalComplaint();
-  }, [officeNo]);
+  }, [totalComplaints]);
 
-  useEffect(() => {
+  setTimeout(() => {
     handleTotalComplaint();
-    handleTodaysTotalComplaint();
-  }, [totalComplaintsCount]);
+    handleTotalComplaint();
+  }, 2000);
 
   let headers = [
     { label: "Opening Date", key: "date" },
@@ -219,6 +219,7 @@ const ComplaintForm = () => {
                     <input
                       type="text"
                       onChange={onChange}
+                      value={complaint.partyName}
                       name="partyName"
                       className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     />
@@ -235,6 +236,7 @@ const ComplaintForm = () => {
                     <input
                       type="text"
                       onChange={onChange}
+                      value={complaint.brandName}
                       required
                       id="brandName"
                       name="brandName"
@@ -254,6 +256,7 @@ const ComplaintForm = () => {
                       type="number"
                       required
                       onChange={onChange}
+                      value={complaint.pincode}
                       name="pincode"
                       className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     />
@@ -270,6 +273,7 @@ const ComplaintForm = () => {
                     <input
                       type="number"
                       required
+                      value={complaint.mobileNo}
                       onChange={onChange}
                       name="mobileNo"
                       className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -326,6 +330,7 @@ const ComplaintForm = () => {
                     <textarea
                       name="address"
                       onChange={onChange}
+                      value={complaint.address}
                       required
                       className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
                     ></textarea>
@@ -344,6 +349,7 @@ const ComplaintForm = () => {
                     <select
                       name="plumbingNo"
                       onChange={onChange}
+                      value={complaint.plumbingNo}
                       required
                       className="form-select form-select-lg mb-3
       appearance-none
@@ -384,6 +390,7 @@ const ComplaintForm = () => {
                     <input
                       type="text"
                       onChange={onChange}
+                      value={complaint.syphoneColor}
                       name="syphoneColor"
                       className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     />
@@ -400,6 +407,7 @@ const ComplaintForm = () => {
                     <select
                       name="repeat"
                       onChange={onChange}
+                      value={complaint.repeat}
                       required
                       className="form-select form-select-lg mb-3
                   appearance-none
@@ -432,46 +440,109 @@ const ComplaintForm = () => {
               </div>
             </form>
           </div>
-          <div className="w-3/12">
-            <div>
-              <div className="flex text-2xl">
-                <h2 className="mr-16 font-bold">Total Complaints</h2>
-                <span className=" font-bold">{totalComplaintsCount}</span>
-              </div>
-              <div className="flex text-2xl">
-                <h2 className="mr-9 font-bold"> Today's Complaints</h2>
-                <span className=" font-bold">{todaysTotalComplaintsCount}</span>
-              </div>
-              <div className="my-5 min-w-full ">
-                <CSVLink
-                  data={todaysTotalComplaints}
-                  headers={headers}
-                  className="bg-[#86da32b5] text-xs p-1  lg:text-sm lg:p-2 px-5   xl:text-lg  rounded-lg "
-                >
-                  Download Today's Complaint
-                </CSVLink>
-              </div>
+
+          {/* complaints details */}
+          <div className="w-3/12 ">
+            <div className="relative overflow-x-auto w-72 text-white shadow-md sm:rounded-lg">
+              <table className=" table-fixed w-full">
+                <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      Complaints
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Count
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                    >
+                      Total Complaints
+                    </th>
+                    <td className="px-6 py-3 text-right">
+                      {totalComplaintsCount}
+                    </td>
+                  </tr>
+                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                    >
+                      Today's Complaints
+                    </th>
+                    <td className="px-6 py-3 text-right ">
+                      {todaysTotalComplaintsCount}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <table className="table-fixed">
-              <tbody>
-                <tr className="flex text-2xl font-bold text-blue-600">
-                  <td className="mr-20">Open</td>
-                  <td>{pending}</td>
-                </tr>
-                <tr className="flex text-2xl font-bold text-purple-600">
-                  <td className="mr-14">Visit Ok</td>
-                  <td>{visitOk}</td>
-                </tr>
-                <tr className="flex text-2xl font-bold text-green-600">
-                  <td className="mr-16">Closed</td>
-                  <td>{closed}</td>
-                </tr>
-                <tr className="flex text-2xl font-bold text-red-600">
-                  <td className="mr-10">Canceled</td>
-                  <td>{cancel}</td>
-                </tr>
-              </tbody>
-            </table>
+
+            <div className="relative mt-7 overflow-x-auto w-72 text-white shadow-md sm:rounded-lg">
+              <table className=" table-fixed w-full">
+                <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      Status
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Count
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                    >
+                      Open
+                    </th>
+                    <td className="px-6 py-3 text-right">{pending}</td>
+                  </tr>
+                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                    >
+                      Visit Ok
+                    </th>
+                    <td className="px-6 py-3 text-right ">{visitOk}</td>
+                  </tr>
+                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                    >
+                      Closed
+                    </th>
+                    <td className="px-6 py-3 text-right">{closed}</td>
+                  </tr>
+                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                    >
+                      Canceled
+                    </th>
+                    <td className="px-6 py-3 text-right">{cancel}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="relative mt-7 overflow-x-auto w-72 p-2  text-white sm:rounded-lg ">
+              <CSVLink
+                data={todaysTotalComplaints}
+                headers={headers}
+                className="bg-[#358f1af5] hover:bg-[#448131] shadow-md text-xs p-1  lg:text-sm lg:p-2  xl:text-lg  rounded-lg lg:px-4"
+              >
+                Download Today's Complaint
+              </CSVLink>
+            </div>
           </div>
         </div>
       </section>
