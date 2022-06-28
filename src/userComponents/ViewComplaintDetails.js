@@ -41,8 +41,8 @@ const ViewComplaintDetails = () => {
   }, []);
 
   return (
-    <div className="w-full nunito-font h-full bg-[#F1F5F9]">
-      <div className="w-screen p-5 mx-10">
+    <div className="w-full nunito-font  h-full bg-[#F1F5F9]">
+      <div className="min-w-screen p-5 mx-10">
         <div className="flex justify-between">
           <h2 className="mb-10 text-xl font-semibold">Complaint Details</h2>
           <div className="mb-10 flex text-lg space-x-6">

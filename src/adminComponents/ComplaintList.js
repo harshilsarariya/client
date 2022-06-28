@@ -57,6 +57,9 @@ const ComplaintList = (props) => {
     if (wd === "Visit Ok") {
       status = "Visit Ok";
     }
+    if (wd === "Cancel") {
+      status = "Cancel";
+    }
   };
 
   let complaintDate;
@@ -128,6 +131,12 @@ const ComplaintList = (props) => {
                     <td className={`${commonClass} text-green-500`}>
                       {status}
                     </td>
+                  ) : status === "Visit Ok" ? (
+                    <td className={`${commonClass} text-violet-500`}>
+                      {status}
+                    </td>
+                  ) : status === "Cancel" ? (
+                    <td className={`${commonClass} text-red-500`}>{status}</td>
                   ) : (
                     <td className={`${commonClass} text-blue-500`}>{status}</td>
                   )}

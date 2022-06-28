@@ -38,6 +38,9 @@ const ComplaintList = (props) => {
     if (wd === "Visit Ok") {
       status = "Visit Ok";
     }
+    if (wd === "Cancel") {
+      status = "Cancel";
+    }
   };
 
   const handleDelete = async (complaintId) => {
@@ -110,6 +113,10 @@ const ComplaintList = (props) => {
                         </td>
                       ) : status === "Visit Ok" ? (
                         <td className={`${commonClass} text-violet-500`}>
+                          {status}
+                        </td>
+                      ) : status === "Cancel" ? (
+                        <td className={`${commonClass} text-red-500`}>
                           {status}
                         </td>
                       ) : (

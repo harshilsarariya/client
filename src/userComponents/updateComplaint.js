@@ -274,6 +274,7 @@ const UpdateComplaint = () => {
                       <option>Yes</option>
                       <option>No</option>
                       <option>Visit Ok</option>
+                      <option>Cancel</option>
                     </select>
                   </div>
                   <div className="mb-3 w-1/4 ml-2 right-0">
