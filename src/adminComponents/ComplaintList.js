@@ -5,10 +5,10 @@ import { MdOutlineDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { deleteComplaint } from "../api/complaint";
 import { HiOutlineViewGridAdd } from "react-icons/hi";
-import moment from "moment";
 const ComplaintList = (props) => {
   const [complaints, setComplaints] = useState([]);
   const [totalComplaintCount, setTotalComplaintCount] = useState([]);
+  const [allComplaint, setAllComplaints] = useState([]);
 
   const getallcomplaints = async () => {
     const { pageNo, limit } = props;
@@ -18,8 +18,31 @@ const ComplaintList = (props) => {
     );
 
     setComplaints(complaints);
-
     setTotalComplaintCount(complaintCount);
+  };
+
+  const getComplaintStatus = async () => {
+    const { complaints } = await fetchallcomplaints();
+    setAllComplaints(complaints);
+    let ope = 0,
+      clo = 0,
+      rep = 0;
+    allComplaint.map((complaint) => {
+      if (complaint.workDone === "Yes") {
+        clo++;
+        props.setClosedCount(clo);
+      } else if (
+        complaint.workDone === "No" &&
+        complaint.problemSolved === "No"
+      ) {
+        ope++;
+        props.setOpenCount(ope);
+      }
+      if (complaint.repeat === "Yes") {
+        rep++;
+        props.setRepeatCount(rep);
+      }
+    });
   };
 
   useEffect(() => {
@@ -27,6 +50,7 @@ const ComplaintList = (props) => {
       setComplaints(props.searchResult);
     }
     getallcomplaints();
+    getComplaintStatus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.searchResult]);
 
@@ -34,8 +58,21 @@ const ComplaintList = (props) => {
     if (props.isSearch === true) {
       setComplaints(props.searchResult);
     }
+    getComplaintStatus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [complaints]);
+
+  useEffect(() => {
+    getComplaintStatus();
+  }, []);
+
+  useEffect(() => {
+    getComplaintStatus();
+  }, [window.location.pathname]);
+
+  setTimeout(() => {
+    getComplaintStatus();
+  }, 3000);
 
   const commonClass =
     "px-6 py-4 font-semibold text-base bg-white text-black  whitespace-nowrap";
@@ -60,17 +97,6 @@ const ComplaintList = (props) => {
     if (wd === "Cancel") {
       status = "Cancel";
     }
-  };
-
-  let complaintDate;
-  const handleDateFormate = (date) => {
-    const newDate = new Date(date);
-    const dateString = newDate.toLocaleDateString("en-us", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-    complaintDate = dateString;
   };
 
   const handleDelete = async (complaintId) => {
