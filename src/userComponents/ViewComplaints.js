@@ -17,7 +17,10 @@ const ViewComplaints = (props) => {
   const [isSearch, setIsSearch] = useState(false);
   const [stateList, setStateList] = useState([]);
   const [openingDate, setOpeningDate] = useState("");
-
+  // const [closedComplaintsFDx, setClosedComplaintsFDx] = useState([]);
+  // const [visitOkComplaintsFDx, setVisitOkComplaintsFDx] = useState([]);
+  // const [pendingComplaintsFDx, setPendingComplaintsFDx] = useState([]);
+  // const [cancelComplaintsFDx, setCancelComplaintsFDx] = useState([]);
   const memberId = localStorage.getItem("memberId");
 
   const getMemberById = async (memberId) => {
@@ -44,7 +47,6 @@ const ViewComplaints = (props) => {
   };
 
   const handleTotalComplaint = async () => {
-    console.log("handleTotalComplaint");
     let ope = 0,
       clo = 0,
       vis = 0,
@@ -56,18 +58,25 @@ const ViewComplaints = (props) => {
       ) {
         clo++;
         props.setClosed(clo);
+        // props.setClosedComplaintsFD([complaint]);
       } else if (
         complaint.workDone === "No" &&
         complaint.problemSolved === "No"
       ) {
         ope++;
         props.setPending(ope);
+        // setPendingComplaintsFDx([complaint]);
+        // console.log(pendingComplaintsFDx);
+        // console.log(complaint);
+        // props.setPendingComplaintsFD(pendingComplaintsFDx);
       } else if (complaint.workDone === "Visit Ok") {
         vis++;
         props.setVisitOk(vis);
+        // props.setVisitOkComplaintsFD([complaint]);
       } else if (complaint.workDone === "Cancel") {
         can++;
         props.setCancel(can);
+        // props.setCancelComplaintsFD([complaint]);
       }
     });
   };

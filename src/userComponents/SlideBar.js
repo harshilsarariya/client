@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { BsDownload } from "react-icons/bs";
+import { CSVLink } from "react-csv";
+
 const SideBar = (props) => {
   const [dashboard, setDashboard] = useState("");
   const [product, setProduct] = useState("");
@@ -22,6 +25,28 @@ const SideBar = (props) => {
       setVisibleStatus(false);
     }
   }, [history]);
+
+  // let headers = [
+  //   { label: "Opening Date", key: "date" },
+  //   { label: "Party Name", key: "partyName" },
+  //   { label: "Address", key: "address" },
+  //   { label: "Pincode", key: "pincode" },
+  //   { label: "State", key: "state" },
+  //   { label: "City", key: "city" },
+  //   { label: "Mobile No", key: "mobileNo" },
+  //   { label: "Plumbing No", key: "plumbingNo" },
+  //   { label: "Brand Name", key: "brandName" },
+  //   { label: "Work Done", key: "workDone" },
+  //   { label: "Problem Solved", key: "problemSolved" },
+  //   { label: "Repeat", key: "repeat" },
+  //   { label: "Syphone Color", key: "syphoneColor" },
+  // ];
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     console.log(props.pendingComplaintsFD);
+  //   }, 3000);
+  // }, []);
 
   return (
     <div>
@@ -84,7 +109,7 @@ const SideBar = (props) => {
 
           {/* status table */}
           {visibleStatus && (
-            <div className="relative mt-7 overflow-x-auto w-60 mx-2 text-white shadow-md sm:rounded-lg">
+            <div className="relative mt-7 overflow-x-auto w-64  text-white shadow-md sm:rounded-lg">
               <table className=" table-fixed w-full">
                 <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -94,6 +119,9 @@ const SideBar = (props) => {
                     <th scope="col" className="px-6 py-3">
                       Count
                     </th>
+                    {/* <th scope="col" className="px-6 py-3">
+                      Export
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -107,6 +135,16 @@ const SideBar = (props) => {
                     <td className="px-6 py-3 text-black dark:text-white text-right">
                       {props.pending}
                     </td>
+                    {/* <td className="px-6 py-3 text-black dark:text-white text-right">
+                      <button>
+                        <CSVLink
+                          data={props.pendingComplaintsFD}
+                          headers={headers}
+                        >
+                          <BsDownload />
+                        </CSVLink>
+                      </button>
+                    </td> */}
                   </tr>
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
                     <th
@@ -118,6 +156,11 @@ const SideBar = (props) => {
                     <td className="px-6 py-3 text-black dark:text-white text-right ">
                       {props.visitOk}
                     </td>
+                    {/* <td className="px-6 py-3 text-black dark:text-white text-right">
+                      <button>
+                        <BsDownload />
+                      </button>
+                    </td> */}
                   </tr>
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
                     <th
@@ -129,6 +172,11 @@ const SideBar = (props) => {
                     <td className="px-6 py-3 text-black dark:text-white text-right">
                       {props.closed}
                     </td>
+                    {/* <td className="px-6 py-3 text-black dark:text-white text-right">
+                      <button>
+                        <BsDownload />
+                      </button>
+                    </td> */}
                   </tr>
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
                     <th
@@ -140,6 +188,11 @@ const SideBar = (props) => {
                     <td className="px-6 py-3 text-black dark:text-white text-right">
                       {props.cancel}
                     </td>
+                    {/* <td className="px-6 py-3 text-black dark:text-white text-right">
+                      <button>
+                        <BsDownload />
+                      </button>
+                    </td> */}
                   </tr>
                 </tbody>
               </table>
