@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-const SideBar = () => {
+import { useNavigate } from "react-router-dom";
+const SideBar = (props) => {
   const [dashboard, setDashboard] = useState("");
   const [product, setProduct] = useState("");
   const [performance, setPerformance] = useState(" ");
   const [show, setShow] = useState(false);
+  const [visibleStatus, setVisibleStatus] = useState(false);
+  const history = useNavigate();
 
   useEffect(() => {
     if (window.location.pathname === "/user-admin/view-complaints") {
       setDashboard("text-[#5C697B] hover:bg-white");
       setProduct("bg-white");
       setPerformance(" text-[#5C697B] hover:bg-white");
+      setVisibleStatus(true);
     } else if (window.location.pathname === "/user-admin") {
       setDashboard("bg-white");
       setProduct("text-[#5C697B] hover:bg-white");
       setPerformance(" text-[#5C697B] hover:bg-white");
-    } else if (window.location.pathname === "/user-admin/viewByStates") {
-      setDashboard("text-[#5C697B] hover:bg-white");
-      setProduct("text-[#5C697B] hover:bg-white");
-      setPerformance("bg-white");
+      setVisibleStatus(false);
     }
-    console.log(window.location.pathname);
-  }, [window.location.pathname]);
+  }, [history]);
 
   return (
     <div>
@@ -82,29 +81,70 @@ const SideBar = () => {
               </div>
             </Link>
           </li>
-          {/* <li
-            className={`p-4 cursor-pointer  text-base leading-3 tracking-normal  m-3 rounded-xl ${performance} transition`}
-          >
-            <Link to={"/user-admin/viewByStates"} className="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="icon icon-tabler icon-tabler-compass"
-                width={20}
-                height={20}
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" />
-                <polyline points="8 16 10 10 16 8 14 14 8 16" />
-                <circle cx={12} cy={12} r={9} />
-              </svg>
-              <span className="ml-2">States</span>
-            </Link>
-          </li> */}
+
+          {/* status table */}
+          {visibleStatus && (
+            <div className="relative mt-7 overflow-x-auto w-60 mx-2 text-white shadow-md sm:rounded-lg">
+              <table className=" table-fixed w-full">
+                <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      Status
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Count
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                    >
+                      Open
+                    </th>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      {props.pending}
+                    </td>
+                  </tr>
+                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                    >
+                      Visit Ok
+                    </th>
+                    <td className="px-6 py-3 text-black dark:text-white text-right ">
+                      {props.visitOk}
+                    </td>
+                  </tr>
+                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                    >
+                      Closed
+                    </th>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      {props.closed}
+                    </td>
+                  </tr>
+                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                    >
+                      Canceled
+                    </th>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      {props.cancel}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          )}
         </ul>
       </div>
       {/*Mobile responsive sidebar*/}

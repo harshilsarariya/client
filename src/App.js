@@ -5,6 +5,7 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
+import { useState } from "react";
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 import AdminHome from "./adminComponents/AdminHome";
@@ -25,6 +26,12 @@ import UserNavbar from "./components/Navbar";
 import ViewComplaintInDetailByUser from "./components/ViewComplaintInDetailByUser";
 
 function App() {
+  // For Forwarding member status
+  const [closed, setClosed] = useState(0);
+  const [visitOk, setVisitOk] = useState(0);
+  const [pending, setPending] = useState(0);
+  const [cancel, setCancel] = useState(0);
+
   return (
     <Router>
       {/* <div id="recaptcha-container"></div> */}
@@ -48,6 +55,7 @@ function App() {
           />
         </Route>
 
+        {/* Admin */}
         <Route path="/ideal-admin" element={<AdminHome />} />
         <Route path="/view-complaints" element={<ViewComplaint />} />
         <Route
@@ -59,14 +67,19 @@ function App() {
         <Route path="/users/addMember" element={<AddMember />} />
         <Route path="/users/updateMember/:mid" element={<UpdateMember />} />
 
-        {/* Admin Routes */}
+        {/* User Admin Routes */}
         <Route
           element={
             <>
               <div className="w-full nunito-font h-full bg-[#F1F5F9]">
                 <Navbar />
                 <div className="flex flex-no-wrap">
-                  <SlideBar />
+                  <SlideBar
+                    closed={closed}
+                    pending={pending}
+                    visitOk={visitOk}
+                    cancel={cancel}
+                  />
                   <Outlet />
                 </div>
               </div>
@@ -76,7 +89,14 @@ function App() {
           <Route path="/user-admin" element={<UserAdminHome />} />
           <Route
             path="/user-admin/view-complaints"
-            element={<ViewComplaints />}
+            element={
+              <ViewComplaints
+                setCancel={setCancel}
+                setClosed={setClosed}
+                setPending={setPending}
+                setVisitOk={setVisitOk}
+              />
+            }
           />
           <Route path="/user-admin/viewByStates" element={<ViewByStates />} />
           <Route
