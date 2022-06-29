@@ -76,8 +76,8 @@ const ComplaintForm = () => {
 
   const handleTodaysTotalComplaint = async () => {
     const response = await fetch(
-      // `https://ideal-server.herokuapp.com/api/complaint/fetchTodaysComplaintsCount?email=${email}`,
-      `http://localhost:5000/api/complaint/fetchTodaysComplaintsCount?email=${email}`,
+      `https://ideal-server.herokuapp.com/api/complaint/fetchTodaysComplaintsCount?email=${email}`,
+      // `http://localhost:5000/api/complaint/fetchTodaysComplaintsCount?email=${email}`,
       {
         method: "GET",
         headers: {
@@ -95,8 +95,8 @@ const ComplaintForm = () => {
     e.preventDefault();
     // API Call
     const response = await fetch(
-      // "https://ideal-server.herokuapp.com/api/complaint/addcomplaint",
-      "http://localhost:5000/api/complaint/addcomplaint",
+      "https://ideal-server.herokuapp.com/api/complaint/addcomplaint",
+      // "http://localhost:5000/api/complaint/addcomplaint",
       {
         method: "POST",
         headers: {
