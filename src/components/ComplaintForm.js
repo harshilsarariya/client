@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CSVLink } from "react-csv";
+import { GrRefresh } from "react-icons/gr";
 var pincodeDirectory = require("india-pincode-lookup");
-
 const ComplaintForm = () => {
   const [pincode, setPincode] = useState();
   const [state, setState] = useState("");
@@ -122,8 +122,6 @@ const ComplaintForm = () => {
     const json = await response.json();
     if (json.success) {
       // props.showAlert("Complaint Submitted successfully", "green");
-      handleTotalComplaint();
-      handleTodaysTotalComplaint();
       setComplaint({
         partyName: "",
         address: "",
@@ -171,16 +169,6 @@ const ComplaintForm = () => {
     handleTotalComplaint();
     handleTodaysTotalComplaint();
   }, []);
-
-  useEffect(() => {
-    handleTotalComplaint();
-    handleTodaysTotalComplaint();
-  }, [totalComplaints]);
-
-  setTimeout(() => {
-    handleTotalComplaint();
-    handleTotalComplaint();
-  }, 2000);
 
   let headers = [
     { label: "Opening Date", key: "date" },
@@ -443,6 +431,12 @@ const ComplaintForm = () => {
 
           {/* complaints details */}
           <div className="w-3/12 ">
+            <button
+              className="bg-gray-400 p-2  transform rounded-3xl mb-5 "
+              onClick={handleTotalComplaint}
+            >
+              <GrRefresh size={24} />
+            </button>
             <div className="relative overflow-x-auto w-72 text-white shadow-md sm:rounded-lg">
               <table className=" table-fixed w-full">
                 <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

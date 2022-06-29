@@ -21,6 +21,7 @@ const Dashboard = () => {
           <h1 className="text-xl w-44 font-medium border-b-2 border-gray-300">
             General Report
           </h1>
+
           <div className="grid grid-cols-12 gap-16 mt-5 transition duration-150 ease-out hover:ease-in-out">
             {labels.map((label, index) => (
               <ComplaintsCounter
