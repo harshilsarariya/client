@@ -10,6 +10,26 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { GrRefresh } from "react-icons/gr";
 import ComplaintList from "./ComplaintList";
 
+export const defaultPost = {
+  partyName: "",
+  address: "",
+  pincode: "",
+  state: "",
+  city: "",
+  mobileNo: "",
+  plumbingNo: "",
+  brandName: "",
+  workDone: "",
+  problemSolved: "",
+  repeat: "",
+  syphoneColor: "",
+  remark: "",
+  problem: "",
+  solution: "",
+  plumberName: "",
+  closingDate: "",
+};
+
 const ViewComplaints = (props) => {
   const [stateView, setStateView] = useState(true);
   const [query, setQuery] = useState("");
@@ -17,10 +37,10 @@ const ViewComplaints = (props) => {
   const [isSearch, setIsSearch] = useState(false);
   const [stateList, setStateList] = useState([]);
   const [openingDate, setOpeningDate] = useState("");
-  // const [closedComplaintsFDx, setClosedComplaintsFDx] = useState([]);
-  // const [visitOkComplaintsFDx, setVisitOkComplaintsFDx] = useState([]);
-  // const [pendingComplaintsFDx, setPendingComplaintsFDx] = useState([]);
-  // const [cancelComplaintsFDx, setCancelComplaintsFDx] = useState([]);
+  const [closedComplaintsFDx, setClosedComplaintsFDx] = useState([]);
+  const [visitOkComplaintsFDx, setVisitOkComplaintsFDx] = useState([]);
+  const [pendingComplaintsFDx, setPendingComplaintsFDx] = useState([]);
+  const [cancelComplaintsFDx, setCancelComplaintsFDx] = useState([]);
   const memberId = localStorage.getItem("memberId");
 
   const getMemberById = async (memberId) => {
@@ -51,6 +71,10 @@ const ViewComplaints = (props) => {
       clo = 0,
       vis = 0,
       can = 0;
+    props.setPendingComplaintsFD([]);
+    props.setClosedComplaintsFD([]);
+    props.setVisitOkComplaintsFD([]);
+    props.setCancelComplaintsFD([]);
     searchResult.map((complaint) => {
       if (
         (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") ||
@@ -58,34 +82,42 @@ const ViewComplaints = (props) => {
       ) {
         clo++;
         props.setClosed(clo);
-        // props.setClosedComplaintsFD([complaint]);
+        setClosedComplaintsFDx(complaint);
+        setClosedComplaintsFDx(complaint);
+        props.setClosedComplaintsFD((closedComplaintsFDx) => [
+          ...closedComplaintsFDx,
+          complaint,
+        ]);
       } else if (
         complaint.workDone === "No" &&
         complaint.problemSolved === "No"
       ) {
         ope++;
         props.setPending(ope);
-        // setPendingComplaintsFDx([complaint]);
-        // console.log(pendingComplaintsFDx);
-        // console.log(complaint);
-        // props.setPendingComplaintsFD(pendingComplaintsFDx);
+        setPendingComplaintsFDx(complaint);
+        props.setPendingComplaintsFD((pendingComplaintsFDx) => [
+          ...pendingComplaintsFDx,
+          complaint,
+        ]);
       } else if (complaint.workDone === "Visit Ok") {
         vis++;
         props.setVisitOk(vis);
-        // props.setVisitOkComplaintsFD([complaint]);
+        setVisitOkComplaintsFDx(complaint);
+        props.setVisitOkComplaintsFD((visitOkComplaintsFDx) => [
+          ...visitOkComplaintsFDx,
+          complaint,
+        ]);
       } else if (complaint.workDone === "Cancel") {
         can++;
         props.setCancel(can);
-        // props.setCancelComplaintsFD([complaint]);
+        setCancelComplaintsFDx(complaint);
+        props.setVisitOkComplaintsFD((cancelComplaintsFDx) => [
+          ...cancelComplaintsFDx,
+          complaint,
+        ]);
       }
     });
   };
-
-  // const handleSearch = async (e) => {
-  //   const data = await searchByState(query);
-  //   setIsSearch(true);
-  //   setSearchResult(data);
-  // };
 
   const handleQuerySearch = async () => {
     const data = await searchByPhoneNo(query);
