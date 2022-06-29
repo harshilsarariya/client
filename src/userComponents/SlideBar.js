@@ -26,27 +26,21 @@ const SideBar = (props) => {
     }
   }, [history]);
 
-  // let headers = [
-  //   { label: "Opening Date", key: "date" },
-  //   { label: "Party Name", key: "partyName" },
-  //   { label: "Address", key: "address" },
-  //   { label: "Pincode", key: "pincode" },
-  //   { label: "State", key: "state" },
-  //   { label: "City", key: "city" },
-  //   { label: "Mobile No", key: "mobileNo" },
-  //   { label: "Plumbing No", key: "plumbingNo" },
-  //   { label: "Brand Name", key: "brandName" },
-  //   { label: "Work Done", key: "workDone" },
-  //   { label: "Problem Solved", key: "problemSolved" },
-  //   { label: "Repeat", key: "repeat" },
-  //   { label: "Syphone Color", key: "syphoneColor" },
-  // ];
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     console.log(props.pendingComplaintsFD);
-  //   }, 3000);
-  // }, []);
+  let headers = [
+    { label: "Opening Date", key: "date" },
+    { label: "Party Name", key: "partyName" },
+    { label: "Address", key: "address" },
+    { label: "Pincode", key: "pincode" },
+    { label: "State", key: "state" },
+    { label: "City", key: "city" },
+    { label: "Mobile No", key: "mobileNo" },
+    { label: "Plumbing No", key: "plumbingNo" },
+    { label: "Brand Name", key: "brandName" },
+    { label: "Work Done", key: "workDone" },
+    { label: "Problem Solved", key: "problemSolved" },
+    { label: "Repeat", key: "repeat" },
+    { label: "Syphone Color", key: "syphoneColor" },
+  ];
 
   return (
     <div>
@@ -119,9 +113,9 @@ const SideBar = (props) => {
                     <th scope="col" className="px-6 py-3">
                       Count
                     </th>
-                    {/* <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-6 py-3">
                       Export
-                    </th> */}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -135,7 +129,7 @@ const SideBar = (props) => {
                     <td className="px-6 py-3 text-black dark:text-white text-right">
                       {props.pending}
                     </td>
-                    {/* <td className="px-6 py-3 text-black dark:text-white text-right">
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
                       <button>
                         <CSVLink
                           data={props.pendingComplaintsFD}
@@ -144,7 +138,7 @@ const SideBar = (props) => {
                           <BsDownload />
                         </CSVLink>
                       </button>
-                    </td> */}
+                    </td>
                   </tr>
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
                     <th
@@ -156,11 +150,16 @@ const SideBar = (props) => {
                     <td className="px-6 py-3 text-black dark:text-white text-right ">
                       {props.visitOk}
                     </td>
-                    {/* <td className="px-6 py-3 text-black dark:text-white text-right">
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
                       <button>
-                        <BsDownload />
+                        <CSVLink
+                          data={props.visitOkComplaintsFD}
+                          headers={headers}
+                        >
+                          <BsDownload />
+                        </CSVLink>
                       </button>
-                    </td> */}
+                    </td>
                   </tr>
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
                     <th
@@ -172,11 +171,16 @@ const SideBar = (props) => {
                     <td className="px-6 py-3 text-black dark:text-white text-right">
                       {props.closed}
                     </td>
-                    {/* <td className="px-6 py-3 text-black dark:text-white text-right">
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
                       <button>
-                        <BsDownload />
+                        <CSVLink
+                          data={props.closedComplaintsFD}
+                          headers={headers}
+                        >
+                          <BsDownload />
+                        </CSVLink>
                       </button>
-                    </td> */}
+                    </td>
                   </tr>
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
                     <th
@@ -188,11 +192,16 @@ const SideBar = (props) => {
                     <td className="px-6 py-3 text-black dark:text-white text-right">
                       {props.cancel}
                     </td>
-                    {/* <td className="px-6 py-3 text-black dark:text-white text-right">
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
                       <button>
-                        <BsDownload />
+                        <CSVLink
+                          data={props.cancelComplaintsFD}
+                          headers={headers}
+                        >
+                          <BsDownload />
+                        </CSVLink>
                       </button>
-                    </td> */}
+                    </td>
                   </tr>
                 </tbody>
               </table>

@@ -53,6 +53,7 @@ const ComplaintForm = () => {
       clo = 0,
       vis = 0,
       can = 0;
+    setVisitOKComplaints([]);
     totalComplaints.map((complaint) => {
       if (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") {
         clo++;
@@ -66,7 +67,7 @@ const ComplaintForm = () => {
       } else if (complaint.workDone === "Visit Ok") {
         vis++;
         setVisitOk(vis);
-        setVisitOKComplaints([complaint]);
+        setVisitOKComplaints((c) => [...c, complaint]);
       } else if (complaint.workDone === "Cancel") {
         can++;
         setCancel(can);

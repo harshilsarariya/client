@@ -31,10 +31,10 @@ function App() {
   const [visitOk, setVisitOk] = useState(0);
   const [pending, setPending] = useState(0);
   const [cancel, setCancel] = useState(0);
-  // const [closedComplaintsFD, setClosedComplaintsFD] = useState([]);
-  // const [visitOkComplaintsFD, setVisitOkComplaintsFD] = useState([]);
-  // const [pendingComplaintsFD, setPendingComplaintsFD] = useState([]);
-  // const [cancelComplaintsFD, setCancelComplaintsFD] = useState([]);
+  const [closedComplaintsFD, setClosedComplaintsFD] = useState([]);
+  const [visitOkComplaintsFD, setVisitOkComplaintsFD] = useState([]);
+  const [pendingComplaintsFD, setPendingComplaintsFD] = useState([]);
+  const [cancelComplaintsFD, setCancelComplaintsFD] = useState([]);
 
   return (
     <Router>
@@ -83,10 +83,10 @@ function App() {
                     pending={pending}
                     visitOk={visitOk}
                     cancel={cancel}
-                    // closedComplaintsFD={closedComplaintsFD}
-                    // pendingComplaintsFD={pendingComplaintsFD}
-                    // visitOkComplaintsFD={visitOkComplaintsFD}
-                    // cancelComplaintsFD={cancelComplaintsFD}
+                    closedComplaintsFD={closedComplaintsFD}
+                    pendingComplaintsFD={pendingComplaintsFD}
+                    visitOkComplaintsFD={visitOkComplaintsFD}
+                    cancelComplaintsFD={cancelComplaintsFD}
                   />
                   <Outlet />
                 </div>
@@ -103,11 +103,14 @@ function App() {
                 setClosed={setClosed}
                 setPending={setPending}
                 setVisitOk={setVisitOk}
-                // pendingComplaintsFD={pendingComplaintsFD}
-                // setCancelComplaintsFD={setCancelComplaintsFD}
-                // setClosedComplaintsFD={setClosedComplaintsFD}
-                // setPendingComplaintsFD={setPendingComplaintsFD}
-                // setVisitOkComplaintsFD={setVisitOkComplaintsFD}
+                closedComplaintsFD={closedComplaintsFD}
+                pendingComplaintsFD={pendingComplaintsFD}
+                visitOkComplaintsFD={visitOkComplaintsFD}
+                cancelComplaintsFD={cancelComplaintsFD}
+                setCancelComplaintsFD={setCancelComplaintsFD}
+                setClosedComplaintsFD={setClosedComplaintsFD}
+                setPendingComplaintsFD={setPendingComplaintsFD}
+                setVisitOkComplaintsFD={setVisitOkComplaintsFD}
               />
             }
           />
