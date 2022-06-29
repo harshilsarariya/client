@@ -30,6 +30,7 @@ const ComplaintForm = () => {
     repeat: "No",
     syphoneColor: "",
   });
+  const [visitOKComplaints, setVisitOKComplaints] = useState([]);
   const [email, setEmail] = useState(localStorage.getItem("email"));
   let navigate = useNavigate();
 
@@ -65,6 +66,7 @@ const ComplaintForm = () => {
       } else if (complaint.workDone === "Visit Ok") {
         vis++;
         setVisitOk(vis);
+        setVisitOKComplaints([complaint]);
       } else if (complaint.workDone === "Cancel") {
         can++;
         setCancel(can);
@@ -74,8 +76,8 @@ const ComplaintForm = () => {
 
   const handleTodaysTotalComplaint = async () => {
     const response = await fetch(
-      `https://ideal-server.herokuapp.com/api/complaint/fetchTodaysComplaintsCount?email=${email}`,
-      // `http://localhost:5000/api/complaint/fetchTodaysComplaintsCount?email=${email}`,
+      // `https://ideal-server.herokuapp.com/api/complaint/fetchTodaysComplaintsCount?email=${email}`,
+      `http://localhost:5000/api/complaint/fetchTodaysComplaintsCount?email=${email}`,
       {
         method: "GET",
         headers: {
@@ -93,8 +95,8 @@ const ComplaintForm = () => {
     e.preventDefault();
     // API Call
     const response = await fetch(
-      "https://ideal-server.herokuapp.com/api/complaint/addcomplaint",
-      // "http://localhost:5000/api/complaint/addcomplaint",
+      // "https://ideal-server.herokuapp.com/api/complaint/addcomplaint",
+      "http://localhost:5000/api/complaint/addcomplaint",
       {
         method: "POST",
         headers: {
@@ -457,7 +459,7 @@ const ComplaintForm = () => {
                     >
                       Total Complaints
                     </th>
-                    <td className="px-6 py-3 text-right">
+                    <td className=" text-black dark:text-white px-6 py-3 text-right">
                       {totalComplaintsCount}
                     </td>
                   </tr>
@@ -468,7 +470,7 @@ const ComplaintForm = () => {
                     >
                       Today's Complaints
                     </th>
-                    <td className="px-6 py-3 text-right ">
+                    <td className="px-6 py-3 text-black dark:text-white text-right ">
                       {todaysTotalComplaintsCount}
                     </td>
                   </tr>
@@ -496,7 +498,9 @@ const ComplaintForm = () => {
                     >
                       Open
                     </th>
-                    <td className="px-6 py-3 text-right">{pending}</td>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      {pending}
+                    </td>
                   </tr>
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
                     <th
@@ -505,7 +509,9 @@ const ComplaintForm = () => {
                     >
                       Visit Ok
                     </th>
-                    <td className="px-6 py-3 text-right ">{visitOk}</td>
+                    <td className="px-6 py-3 text-black dark:text-white text-right ">
+                      {visitOk}
+                    </td>
                   </tr>
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
                     <th
@@ -514,7 +520,9 @@ const ComplaintForm = () => {
                     >
                       Closed
                     </th>
-                    <td className="px-6 py-3 text-right">{closed}</td>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      {closed}
+                    </td>
                   </tr>
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
                     <th
@@ -523,7 +531,9 @@ const ComplaintForm = () => {
                     >
                       Canceled
                     </th>
-                    <td className="px-6 py-3 text-right">{cancel}</td>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      {cancel}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -535,6 +545,15 @@ const ComplaintForm = () => {
                 className="bg-[#358f1af5] hover:bg-[#448131] shadow-md text-xs p-1  lg:text-sm lg:p-2  xl:text-lg  rounded-lg lg:px-4"
               >
                 Download Today's Complaint
+              </CSVLink>
+            </div>
+            <div className="relative mt-7 overflow-x-auto w-72 p-2  text-white sm:rounded-lg ">
+              <CSVLink
+                data={visitOKComplaints}
+                headers={headers}
+                className="bg-[#358f1af5] hover:bg-[#448131] shadow-md text-xs p-1  lg:text-sm lg:p-2  xl:text-lg  rounded-lg lg:px-4"
+              >
+                Download VisitOk Complaint
               </CSVLink>
             </div>
           </div>
