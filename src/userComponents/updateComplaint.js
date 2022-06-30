@@ -22,6 +22,7 @@ export const defaultPost = {
   solution: "",
   plumberName: "",
   closingDate: "",
+  code: "",
 };
 
 const UpdateComplaint = () => {
@@ -252,6 +253,24 @@ const UpdateComplaint = () => {
                       name="syphoneColor"
                       className="w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
                       placeholder="Syphone Color"
+                    />
+                  </div>
+                </div>
+                <div className="p-2 w-1/2">
+                  <div className="relative">
+                    <label
+                      htmlFor="code"
+                      className="leading-7 text-base text-gray-600"
+                    >
+                      Code
+                    </label>
+                    <input
+                      type="text"
+                      value={complaintInfo.code}
+                      onChange={onChange}
+                      name="code"
+                      className="w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
+                      placeholder="Enter Code"
                     />
                   </div>
                 </div>

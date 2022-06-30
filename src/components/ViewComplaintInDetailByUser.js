@@ -15,6 +15,7 @@ export const defaultPost = {
   problemSolved: "",
   repeat: "",
   syphoneColor: "",
+  code: "",
 };
 
 const ViewComplaintInDetailByUser = () => {
@@ -33,6 +34,7 @@ const ViewComplaintInDetailByUser = () => {
       navigate("/signin");
     }
     fetchComplaint();
+    console.log(complaintInfo);
   }, []);
 
   return (
@@ -111,6 +113,14 @@ const ViewComplaintInDetailByUser = () => {
           </h3>
           <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
             {complaintInfo.syphoneColor}
+          </span>
+        </div>
+        <div className="flex my-5">
+          <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
+            Code :
+          </h3>
+          <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
+            {complaintInfo.code}
           </span>
         </div>
         <div className="flex my-5">

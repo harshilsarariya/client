@@ -30,6 +30,7 @@ const ComplaintForm = (props) => {
     problemSolved: "No",
     repeat: "No",
     syphoneColor: "",
+    code: "",
   });
   const [visitOKComplaints, setVisitOKComplaints] = useState([]);
   const [pendingComplaints, setPendingComplaints] = useState([]);
@@ -127,6 +128,7 @@ const ComplaintForm = (props) => {
           problemSolved: complaint.problemSolved,
           repeat: complaint.repeat,
           syphoneColor: complaint.syphoneColor,
+          code: complaint.code,
           entryUserEmail: localStorage.getItem("email"),
         }),
       }
@@ -148,6 +150,7 @@ const ComplaintForm = (props) => {
         problemSolved: "No",
         repeat: "No",
         syphoneColor: "",
+        code: "",
       });
 
       alert("Complaint Submitted successfully");
@@ -198,6 +201,7 @@ const ComplaintForm = (props) => {
     { label: "Problem Solved", key: "problemSolved" },
     { label: "Repeat", key: "repeat" },
     { label: "Syphone Color", key: "syphoneColor" },
+    { label: "Code", key: "code" },
   ];
 
   return (
@@ -395,20 +399,19 @@ const ComplaintForm = (props) => {
                     />
                   </div>
                 </div>
-                <div className="w-full flex flex-row justify-between space-x-5 my-5">
-                  <div className="mb-3 w-1/2 right-0">
-                    <label
-                      htmlFor="repeat"
-                      className="leading-7 text-base text-gray-600"
-                    >
-                      Repeat
-                    </label>
-                    <select
-                      name="repeat"
-                      onChange={onChange}
-                      value={complaint.repeat}
-                      required
-                      className="form-select form-select-lg mb-3
+                <div className="p-2 w-1/2">
+                  <label
+                    htmlFor="repeat"
+                    className="leading-7 text-base text-gray-600"
+                  >
+                    Repeat
+                  </label>
+                  <select
+                    name="repeat"
+                    onChange={onChange}
+                    value={complaint.repeat}
+                    required
+                    className="form-select form-select-lg mb-3
                   appearance-none
       block
       w-full
@@ -424,11 +427,27 @@ const ComplaintForm = (props) => {
       ease-in-out
       m-0
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                      aria-label=".form-select-lg example"
+                    aria-label=".form-select-lg example"
+                  >
+                    <option className="p-2 text-xl">No</option>
+                    <option className="p-2 text-xl">Yes</option>
+                  </select>
+                </div>
+                <div className="p-2 w-1/2 ">
+                  <div className="relative">
+                    <label
+                      htmlFor="code"
+                      className="leading-7 text-base text-gray-600"
                     >
-                      <option className="p-2 text-xl">No</option>
-                      <option className="p-2 text-xl">Yes</option>
-                    </select>
+                      Code
+                    </label>
+                    <input
+                      type="text"
+                      onChange={onChange}
+                      value={complaint.code}
+                      name="code"
+                      className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    />
                   </div>
                 </div>
                 <div className="p-2 mt-5 w-full">
