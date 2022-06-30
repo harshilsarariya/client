@@ -47,7 +47,7 @@ const ViewComplaintDetails = () => {
           <h2 className="mb-10 text-xl font-semibold">Complaint Details</h2>
           <div className="mb-10 flex text-lg space-x-6">
             <Link
-              to={`/update-complaint/${complaintInfo.id}`}
+              to={`/user-admin/updateComplaint/${complaintInfo.id}`}
               className="flex items-center  cursor-pointer"
             >
               <TbEdit className="text-gray-500" size={19} />
