@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CSVLink } from "react-csv";
+import { BsDownload } from "react-icons/bs";
 import { GrRefresh } from "react-icons/gr";
 var pincodeDirectory = require("india-pincode-lookup");
-const ComplaintForm = () => {
+const ComplaintForm = (props) => {
   const [pincode, setPincode] = useState();
   const [state, setState] = useState("");
   const [district, setDistrict] = useState("");
@@ -31,13 +32,16 @@ const ComplaintForm = () => {
     syphoneColor: "",
   });
   const [visitOKComplaints, setVisitOKComplaints] = useState([]);
+  const [pendingComplaints, setPendingComplaints] = useState([]);
+  const [cancelComplaints, setCancelComplaints] = useState([]);
+  const [closedComplaints, setClosedComplaints] = useState([]);
   const [email, setEmail] = useState(localStorage.getItem("email"));
   let navigate = useNavigate();
 
   const handleTotalComplaint = async () => {
     const response = await fetch(
-      `https://ideal-server.herokuapp.com/api/complaint/fetchComplaintsCount?email=${email}`,
-      // `http://localhost:5000/api/complaint/fetchComplaintsCount?email=${email}`,
+      `https://ideal-server.herokuapp.com/api/complaint/fetchComplaintsCount?email=${email}&month=${props.month}`,
+      // `http://localhost:5000/api/complaint/fetchComplaintsCount?email=${email}&month=${props.month}`,
       {
         method: "GET",
         headers: {
@@ -55,15 +59,20 @@ const ComplaintForm = () => {
       can = 0;
     setVisitOKComplaints([]);
     totalComplaints.map((complaint) => {
-      if (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") {
+      if (
+        (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") ||
+        complaint.workDone === "Yes"
+      ) {
         clo++;
         setClosed(clo);
+        setClosedComplaints((c) => [...c, complaint]);
       } else if (
         complaint.workDone === "No" &&
         complaint.problemSolved === "No"
       ) {
         ope++;
         setPending(ope);
+        setPendingComplaints((c) => [...c, complaint]);
       } else if (complaint.workDone === "Visit Ok") {
         vis++;
         setVisitOk(vis);
@@ -71,14 +80,15 @@ const ComplaintForm = () => {
       } else if (complaint.workDone === "Cancel") {
         can++;
         setCancel(can);
+        setCancelComplaints((c) => [...c, complaint]);
       }
     });
   };
 
   const handleTodaysTotalComplaint = async () => {
     const response = await fetch(
-      `https://ideal-server.herokuapp.com/api/complaint/fetchTodaysComplaintsCount?email=${email}`,
-      // `http://localhost:5000/api/complaint/fetchTodaysComplaintsCount?email=${email}`,
+      `https://ideal-server.herokuapp.com/api/complaint/fetchTodaysComplaintsCount?email=${email}&month=${props.month}`,
+      // `http://localhost:5000/api/complaint/fetchTodaysComplaintsCount?email=${email}&month=${props.month}`,
       {
         method: "GET",
         headers: {
@@ -151,6 +161,7 @@ const ComplaintForm = () => {
     if (e.target.name === "pincode") {
       handlePincode(e);
     }
+
     setComplaint({ ...complaint, [e.target.name]: e.target.value });
   };
 
@@ -360,10 +371,7 @@ const ComplaintForm = () => {
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                       aria-label=".form-select-lg example"
                     >
-                      <option className="p-2 text-xl">
-                        {" "}
-                        Select Office No.
-                      </option>
+                      <option className="p-2 text-xl">Select Office No.</option>
                       <option className="p-2 text-xl">7575024245</option>
                       <option className="p-2 text-xl">9924733933</option>
                       <option className="p-2 text-xl">9913833233</option>
@@ -444,11 +452,14 @@ const ComplaintForm = () => {
               <table className=" table-fixed w-full">
                 <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="pl-3 py-3 ">
                       Complaints
                     </th>
                     <th scope="col" className="px-6 py-3">
                       Count
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Export
                     </th>
                   </tr>
                 </thead>
@@ -456,12 +467,19 @@ const ComplaintForm = () => {
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
                     <th
                       scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                      className="px-6 py-4  font-medium text-gray-900 dark:text-white whitespace-nowrap"
                     >
-                      Total Complaints
+                      Total
                     </th>
-                    <td className=" text-black dark:text-white px-6 py-3 text-right">
+                    <td className=" text-black ml-10 dark:text-white px-6 py-3 text-right">
                       {totalComplaintsCount}
+                    </td>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      <button>
+                        <CSVLink data={totalComplaints} headers={headers}>
+                          <BsDownload />
+                        </CSVLink>
+                      </button>
                     </td>
                   </tr>
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
@@ -469,10 +487,17 @@ const ComplaintForm = () => {
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
                     >
-                      Today's Complaints
+                      Today's
                     </th>
-                    <td className="px-6 py-3 text-black dark:text-white text-right ">
+                    <td className="px-6 py-3 ml-10 text-black dark:text-white text-right ">
                       {todaysTotalComplaintsCount}
+                    </td>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      <button>
+                        <CSVLink data={todaysTotalComplaints} headers={headers}>
+                          <BsDownload />
+                        </CSVLink>
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -489,6 +514,9 @@ const ComplaintForm = () => {
                     <th scope="col" className="px-6 py-3">
                       Count
                     </th>
+                    <th scope="col" className="px-6 py-3">
+                      Export
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -502,6 +530,13 @@ const ComplaintForm = () => {
                     <td className="px-6 py-3 text-black dark:text-white text-right">
                       {pending}
                     </td>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      <button>
+                        <CSVLink data={pendingComplaints} headers={headers}>
+                          <BsDownload />
+                        </CSVLink>
+                      </button>
+                    </td>
                   </tr>
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
                     <th
@@ -512,6 +547,13 @@ const ComplaintForm = () => {
                     </th>
                     <td className="px-6 py-3 text-black dark:text-white text-right ">
                       {visitOk}
+                    </td>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      <button>
+                        <CSVLink data={visitOKComplaints} headers={headers}>
+                          <BsDownload />
+                        </CSVLink>
+                      </button>
                     </td>
                   </tr>
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
@@ -524,6 +566,13 @@ const ComplaintForm = () => {
                     <td className="px-6 py-3 text-black dark:text-white text-right">
                       {closed}
                     </td>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      <button>
+                        <CSVLink data={closedComplaints} headers={headers}>
+                          <BsDownload />
+                        </CSVLink>
+                      </button>
+                    </td>
                   </tr>
                   <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
                     <th
@@ -535,27 +584,16 @@ const ComplaintForm = () => {
                     <td className="px-6 py-3 text-black dark:text-white text-right">
                       {cancel}
                     </td>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      <button>
+                        <CSVLink data={cancelComplaints} headers={headers}>
+                          <BsDownload />
+                        </CSVLink>
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-            <div className="relative mt-7 overflow-x-auto w-72 p-2  text-white sm:rounded-lg ">
-              <CSVLink
-                data={todaysTotalComplaints}
-                headers={headers}
-                className="bg-[#358f1af5] hover:bg-[#448131] shadow-md text-xs p-1  lg:text-sm lg:p-2  xl:text-lg  rounded-lg lg:px-4"
-              >
-                Download Today's Complaint
-              </CSVLink>
-            </div>
-            <div className="relative mt-7 overflow-x-auto w-72 p-2  text-white sm:rounded-lg ">
-              <CSVLink
-                data={visitOKComplaints}
-                headers={headers}
-                className="bg-[#358f1af5] hover:bg-[#448131] shadow-md text-xs p-1  lg:text-sm lg:p-2  xl:text-lg  rounded-lg lg:px-4"
-              >
-                Download VisitOk Complaint
-              </CSVLink>
             </div>
           </div>
         </div>
