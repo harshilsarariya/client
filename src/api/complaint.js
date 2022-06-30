@@ -72,9 +72,11 @@ export const searchComplaint = async (query) => {
     return { error: error.message || error };
   }
 };
-export const searchByState = async (query) => {
+export const searchByState = async (query, month) => {
   try {
-    const { data } = await member(`/complaint/searchByState?state=${query}`);
+    const { data } = await member(
+      `/complaint/searchByState?state=${query}&month=${month}`
+    );
     return data;
   } catch (error) {
     const { response } = error;
@@ -84,10 +86,10 @@ export const searchByState = async (query) => {
     return { error: error.message || error };
   }
 };
-export const searchByPhoneNo = async (query) => {
+export const searchByPhoneNo = async (query, month) => {
   try {
     const { data } = await member(
-      `/complaint/searchByPhoneNo?mobileNo=${query}`
+      `/complaint/searchByPhoneNo?mobileNo=${query}&month=${month}`
     );
     return data;
   } catch (error) {
@@ -112,9 +114,11 @@ export const searchByCompany = async (query) => {
     return { error: error.message || error };
   }
 };
-export const search = async (query) => {
+export const search = async (query, month) => {
   try {
-    const { data } = await member(`/complaint/search?query=${query}`);
+    const { data } = await member(
+      `/complaint/search?query=${query}&month=${month}`
+    );
     return data;
   } catch (error) {
     const { response } = error;

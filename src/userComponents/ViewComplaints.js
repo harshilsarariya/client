@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  searchByState,
-  getMember,
-  searchByPhoneNo,
-  search,
-} from "../api/complaint";
+import { getMember, searchByPhoneNo, search } from "../api/complaint";
 import { CSVLink } from "react-csv";
 import { AiOutlineSearch } from "react-icons/ai";
-import { GrRefresh } from "react-icons/gr";
 import ComplaintList from "./ComplaintList";
 
 export const defaultPost = {
@@ -49,7 +43,7 @@ const ViewComplaints = (props) => {
   };
 
   const getComplaintByState = async (state) => {
-    const data = await searchByState(state);
+    const data = await search(state, props.month);
     setSearchResult(data);
     setIsSearch(true);
   };
@@ -120,13 +114,13 @@ const ViewComplaints = (props) => {
   };
 
   const handleQuerySearch = async () => {
-    const data = await searchByPhoneNo(query);
+    const data = await searchByPhoneNo(query, props.month);
     setIsSearch(true);
     setSearchResult(data);
   };
 
   const handleString = async (e) => {
-    const data = await search(query);
+    const data = await search(query, props.month);
     setIsSearch(true);
     setSearchResult(data);
   };

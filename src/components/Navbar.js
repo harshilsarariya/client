@@ -5,7 +5,7 @@ import ComplaintListForUser from "./ComplaintListForUser";
 import { AiOutlineSearch } from "react-icons/ai";
 import { CSVLink } from "react-csv";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const [searchResult, setSearchResult] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
   const [query, setQuery] = useState("");
@@ -39,23 +39,27 @@ const Navbar = () => {
     navigate("/signin");
   };
 
-  const handleStateBySearch = async () => {
-    const data = await searchByPhoneNo(query);
+  const handleSearchByPhone = async () => {
+    const data = await searchByPhoneNo(query, props.month);
     setIsSearch(true);
     setSearchResult(data);
   };
 
   const handleString = async (e) => {
-    const data = await search(query);
+    const data = await search(query, props.month);
     setIsSearch(true);
     setSearchResult(data);
   };
   const handleSearch = (e) => {
     if (!isNaN(query)) {
-      handleStateBySearch();
+      handleSearchByPhone();
     } else {
       handleString();
     }
+  };
+
+  const handleMonthChange = (e) => {
+    props.setMonth(e.target.value);
   };
 
   let headers = [
@@ -104,7 +108,28 @@ const Navbar = () => {
                     </CSVLink>
                   </div>
                 )}
-
+                <div className="mr-5 flex">
+                  <select
+                    name="month"
+                    className=" border border-gray-100 focus:outline-none focus:border-indigo-700  w-full text-lg text-gray-500 bg-gray-100 py-0.5 px-3  appearance-none rounded-xl"
+                    id="month"
+                    onChange={handleMonthChange}
+                  >
+                    <option value={props.month}>Select Month</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                  </select>
+                </div>
                 <div className="flex ">
                   <input
                     className="border border-gray-100 focus:outline-none focus:border-indigo-700  w-full text-sm text-gray-500 bg-gray-100 pl-4 py-2 rounded-l-xl "

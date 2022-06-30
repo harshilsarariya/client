@@ -3,10 +3,10 @@ import ComplaintForm from "./ComplaintForm";
 import ComplaintListForUser from "./ComplaintListForUser";
 import Navbar from "./Navbar";
 
-const Home = () => {
+const Home = (props) => {
   return (
     <>
-      <ComplaintForm />
+      <ComplaintForm month={props.month} />
     </>
   );
 };

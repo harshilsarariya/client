@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-const Navbar = () => {
+const Navbar = (props) => {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
 
@@ -16,43 +16,43 @@ const Navbar = () => {
     localStorage.removeItem("companyVal");
     navigate("/signin");
   };
+
+  const handleMonthChange = (e) => {
+    props.setMonth(e.target.value);
+  };
   return (
     <div>
       <div className="w-full nunito-font h-full bg-[#F1F5F9]">
         {/* Navigation starts */}
         <nav className="h-16 flex items-center m-2 rounded-xl lg:items-stretch justify-end lg:justify-between bg-[#164E63] shadow relative z-10">
-          <div className="hidden lg:flex w-full pr-6">
+          <div className="hidden lg:flex w-full pr-6 justify-between">
             <div className="w-1/2  hidden lg:flex items-center pl-3">
               <h1 className="text-3xl text-white px-10">Ideal</h1>
             </div>
-            <div className="w-1/2 hidden lg:flex">
+            <div className="w-1/2 hidden lg:flex ">
               <div className="w-full flex items-center pl-8 justify-end">
-                {/* <div className="relative w-1/2 mr-7">
-                  <div className="text-gray-500 absolute ml-4 inset-0 m-auto w-4 h-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="icon icon-tabler icon-tabler-search"
-                      width={16}
-                      height={16}
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path stroke="none" d="M0 0h24v24H0z" />
-                      <circle cx={10} cy={10} r={7} />
-                      <line x1={21} y1={21} x2={15} y2={15} />
-                    </svg>
-                  </div>
-                  <input
-                    className="border border-gray-100 focus:outline-none focus:border-indigo-700 rounded w-full text-sm text-gray-500 bg-gray-100 pl-12 py-2 "
-                    type="text"
-                    disabled
-                    placeholder="Search"
-                  />
-                </div> */}
+                <div className="mr-5 flex items-center ">
+                  <select
+                    name="month"
+                    className=" border border-gray-100 focus:outline-none focus:border-indigo-700  w-full text-lg text-gray-500 bg-gray-100 py-0.5 px-3  appearance-none rounded-xl"
+                    id="month"
+                    onChange={handleMonthChange}
+                  >
+                    <option value={props.month}>Select Month</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                  </select>
+                </div>
                 <div
                   className="flex items-center relative cursor-pointer"
                   onClick={() => setProfile(!profile)}

@@ -5,7 +5,7 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 import AdminHome from "./adminComponents/AdminHome";
@@ -24,6 +24,7 @@ import ViewComplaints from "./userComponents/ViewComplaints";
 import UpdateComplaintByUser from "./userComponents/updateComplaint";
 import UserNavbar from "./components/Navbar";
 import ViewComplaintInDetailByUser from "./components/ViewComplaintInDetailByUser";
+import moment from "moment";
 
 function App() {
   // For Forwarding member status
@@ -36,22 +37,23 @@ function App() {
   const [pendingComplaintsFD, setPendingComplaintsFD] = useState([]);
   const [cancelComplaintsFD, setCancelComplaintsFD] = useState([]);
 
+  // for selecting month so anyone can fetch complaint of that month
+  const [month, setMonth] = useState(moment().month() + 1);
   return (
     <Router>
-      {/* <div id="recaptcha-container"></div> */}
       <Routes>
         {/* Entry Routes */}
         <Route
           element={
             <>
               <div className="w-full nunito-font h-full bg-[#F1F5F9]">
-                <UserNavbar />
+                <UserNavbar setMonth={setMonth} month={month} />
                 <Outlet />
               </div>
             </>
           }
         >
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home month={month} />} />
           <Route path="/signin" element={<SignIn />} />
           <Route
             path="/viewComplaintByUser/:cid"
@@ -71,12 +73,12 @@ function App() {
         <Route path="/users/addMember" element={<AddMember />} />
         <Route path="/users/updateMember/:mid" element={<UpdateMember />} />
 
-        {/* User Admin Routes */}
+        {/* Forwarding Member Routes */}
         <Route
           element={
             <>
               <div className="w-full nunito-font h-full bg-[#F1F5F9]">
-                <Navbar />
+                <Navbar setMonth={setMonth} month={month} />
                 <div className="flex flex-no-wrap">
                   <SlideBar
                     closed={closed}
@@ -111,6 +113,7 @@ function App() {
                 setClosedComplaintsFD={setClosedComplaintsFD}
                 setPendingComplaintsFD={setPendingComplaintsFD}
                 setVisitOkComplaintsFD={setVisitOkComplaintsFD}
+                month={month}
               />
             }
           />
