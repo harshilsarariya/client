@@ -22,7 +22,6 @@ const UpdateMember = () => {
   const fetchMember = async () => {
     const { data } = await getMember(mid);
     setCredentials(data);
-    // setIsForwardingMember(credentials.isForwardingMember);
   };
 
   const onChange = (e) => {
@@ -48,13 +47,6 @@ const UpdateMember = () => {
     }
     fetchMember();
   }, []);
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const { data } = await updateMember(mid, credentials);
-
-  //   alert("User Updated Successfully");
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
