@@ -11,7 +11,55 @@ const Navbar = (props) => {
   const [query, setQuery] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [isViewClicked, setIsViewClicked] = useState(false);
+  const [pendingComplaints, setPendingComplaints] = useState([]);
   let navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("memberId");
+    localStorage.removeItem("sortBy");
+    localStorage.removeItem("stateVal");
+    localStorage.removeItem("search");
+    localStorage.removeItem("companyVal");
+
+    navigate("/signin");
+  };
+
+  const getPendingData = async () => {
+    setPendingComplaints([]);
+    searchResult.forEach((item) => {
+      if (item.workDone === "No" && item.problemSolved === "No") {
+        setPendingComplaints((prev) => [...prev, item]);
+      }
+    });
+  };
+
+  const handleSearchByPhone = async () => {
+    const data = await searchByPhoneNo(query, props.month);
+    setIsSearch(true);
+    setSearchResult(data);
+  };
+
+  const handleString = async (e) => {
+    const data = await search(query, props.month);
+    setIsSearch(true);
+    setSearchResult(data);
+  };
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (!isNaN(query)) {
+      await handleSearchByPhone();
+    } else {
+      await handleString();
+    }
+    getPendingData();
+  };
+
+  const handleMonthChange = (e) => {
+    props.setMonth(e.target.value);
+  };
 
   useEffect(() => {
     if (window.location.pathname === "/signin") {
@@ -27,40 +75,9 @@ const Navbar = (props) => {
     }
   }, [query]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("email");
-    localStorage.removeItem("memberId");
-    localStorage.removeItem("sortBy");
-    localStorage.removeItem("stateVal");
-    localStorage.removeItem("search");
-    localStorage.removeItem("companyVal");
-
-    navigate("/signin");
-  };
-
-  const handleSearchByPhone = async () => {
-    const data = await searchByPhoneNo(query, props.month);
-    setIsSearch(true);
-    setSearchResult(data);
-  };
-
-  const handleString = async (e) => {
-    const data = await search(query, props.month);
-    setIsSearch(true);
-    setSearchResult(data);
-  };
-  const handleSearch = (e) => {
-    if (!isNaN(query)) {
-      handleSearchByPhone();
-    } else {
-      handleString();
-    }
-  };
-
-  const handleMonthChange = (e) => {
-    props.setMonth(e.target.value);
-  };
+  useEffect(() => {
+    getPendingData();
+  }, [searchResult]);
 
   let headers = [
     { label: "Opening Date", key: "date" },
@@ -98,15 +115,26 @@ const Navbar = (props) => {
             <>
               <div className="mr-5 flex items-center">
                 {isSearch && (
-                  <div className="  ">
-                    <CSVLink
-                      data={searchResult}
-                      headers={headers}
-                      className="bg-[#86da32b5] rounded-xl p-2 px-4 text-lg mr-5"
-                    >
-                      Export
-                    </CSVLink>
-                  </div>
+                  <>
+                    <div className="  ">
+                      <CSVLink
+                        data={searchResult}
+                        headers={headers}
+                        className="bg-[#86da32b5] rounded-xl p-2 px-4 text-lg mr-5"
+                      >
+                        Export All
+                      </CSVLink>
+                    </div>
+                    <div className="  ">
+                      <CSVLink
+                        data={searchResult}
+                        headers={headers}
+                        className="bg-[#86da32b5] rounded-xl p-2 px-4 text-lg mr-5"
+                      >
+                        Export Pending Complaints
+                      </CSVLink>
+                    </div>
+                  </>
                 )}
                 <div className="mr-5 flex">
                   <select
@@ -130,7 +158,7 @@ const Navbar = (props) => {
                     <option value="12">December</option>
                   </select>
                 </div>
-                <div className="flex ">
+                <form className="flex ">
                   <input
                     className="border border-gray-100 focus:outline-none focus:border-indigo-700  w-full text-sm text-gray-500 bg-gray-100 pl-4 py-2 rounded-l-xl "
                     onChange={(e) => setQuery(e.target.value)}
@@ -143,7 +171,7 @@ const Navbar = (props) => {
                   >
                     <AiOutlineSearch size={20} />
                   </button>
-                </div>
+                </form>
               </div>
             </>
           )}
