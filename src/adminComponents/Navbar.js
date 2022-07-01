@@ -10,10 +10,9 @@ const Navbar = (props) => {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
     localStorage.removeItem("memberId");
-    localStorage.removeItem("sortBy");
-    localStorage.removeItem("stateVal");
     localStorage.removeItem("search");
-    localStorage.removeItem("companyVal");
+    localStorage.removeItem("queryVal");
+    localStorage.removeItem("otpIdeal");
     navigate("/signin");
   };
 
