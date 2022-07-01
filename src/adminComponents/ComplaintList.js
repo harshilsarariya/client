@@ -31,7 +31,10 @@ const ComplaintList = (props) => {
       vis = 0,
       can = 0;
     allComplaint.map((complaint) => {
-      if (complaint.workDone === "Yes" && complaint.problemSolved === "No") {
+      if (
+        (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") ||
+        complaint.workDone === "Yes"
+      ) {
         clo++;
         props.setClosedCount(clo);
       } else if (
