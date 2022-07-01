@@ -132,6 +132,9 @@ const ComplaintList = (props) => {
                     Status
                   </th>
                   <th scope="col" className="px-6 py-3">
+                    Phone No
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     Date
                   </th>
                   <th scope="col" className="px-6 pl-16 py-3">
@@ -177,6 +180,7 @@ const ComplaintList = (props) => {
                           {status}
                         </td>
                       )}
+                      <td className={`${commonClass}`}>{complaint.mobileNo}</td>
                       <td className={`${commonClass}`}>{complaint.date}</td>
                       <td className={`${commonClass} flex space-x-4`}>
                         {props.isSearch === true ? (
