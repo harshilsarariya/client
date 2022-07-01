@@ -52,6 +52,7 @@ const ComplaintForm = (props) => {
       }
     );
     const json = await response.json();
+
     setTotalComplaintsCount(json.lenTotal);
     setTotalComplaints(json.complaint);
     let ope = 0,
@@ -59,6 +60,14 @@ const ComplaintForm = (props) => {
       vis = 0,
       can = 0;
     setVisitOKComplaints([]);
+    setPendingComplaints([]);
+    setCancelComplaints([]);
+    setClosedComplaints([]);
+    setVisitOk(0);
+    setPending(0);
+    setCancel(0);
+    setClosed(0);
+
     totalComplaints.map((complaint) => {
       if (
         (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") ||
@@ -89,7 +98,7 @@ const ComplaintForm = (props) => {
   const handleTodaysTotalComplaint = async () => {
     const response = await fetch(
       `https://ideal-server.herokuapp.com/api/complaint/fetchTodaysComplaintsCount?email=${email}&month=${props.month}`,
-      // `http://localhost:5000/api/complaint/fetchTodaysComplaintsCount?email=${email}&month=${props.month}`,
+      // `http://localhost:5000/api/complaint/fetchTodaysComplaintsCount?email=${email}`,
       {
         method: "GET",
         headers: {
@@ -186,6 +195,10 @@ const ComplaintForm = (props) => {
     handleTotalComplaint();
     handleTodaysTotalComplaint();
   }, []);
+
+  useEffect(() => {
+    handleTotalComplaint();
+  }, [props.month]);
 
   let headers = [
     { label: "Opening Date", key: "date" },
