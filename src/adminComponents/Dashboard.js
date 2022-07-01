@@ -5,11 +5,15 @@ import ComplaintList from "./ComplaintList";
 const Dashboard = () => {
   const [openCount, setOpenCount] = useState(0);
   const [closedCount, setClosedCount] = useState(0);
+  const [visitOkCount, setVisitOkCount] = useState(0);
+  const [canceledCount, setCanceledCount] = useState(0);
   const [repeatCount, setRepeatCount] = useState(0);
   const labels = [
     { lab: "Open", color: "orange", count: openCount },
-    { lab: "Closed", color: "blue", count: closedCount },
+    { lab: "Visit Ok", color: "blue", count: visitOkCount },
+    { lab: "Closed", color: "green", count: closedCount },
     { lab: "Repeat", color: "green", count: repeatCount },
+    { lab: "Canceled", color: "green", count: canceledCount },
   ];
   let pageNo = 0;
   let POST_LIMIT = 7;
@@ -22,7 +26,7 @@ const Dashboard = () => {
             General Report
           </h1>
 
-          <div className="grid grid-cols-12 gap-16 mt-5 transition duration-150 ease-out hover:ease-in-out">
+          <div className="grid grid-cols-12 gap-5 mt-5 transition duration-150 ease-out hover:ease-in-out">
             {labels.map((label, index) => (
               <ComplaintsCounter
                 key={index}
@@ -39,6 +43,8 @@ const Dashboard = () => {
             setOpenCount={setOpenCount}
             setClosedCount={setClosedCount}
             setRepeatCount={setRepeatCount}
+            setVisitOkCount={setVisitOkCount}
+            setCanceledCount={setCanceledCount}
             pageNo={pageNo}
             limit={POST_LIMIT}
           />

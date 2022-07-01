@@ -27,9 +27,11 @@ const ComplaintList = (props) => {
     setAllComplaints(complaints);
     let ope = 0,
       clo = 0,
-      rep = 0;
+      rep = 0,
+      vis = 0,
+      can = 0;
     allComplaint.map((complaint) => {
-      if (complaint.workDone === "Yes") {
+      if (complaint.workDone === "Yes" && complaint.problemSolved === "No") {
         clo++;
         props.setClosedCount(clo);
       } else if (
@@ -38,6 +40,12 @@ const ComplaintList = (props) => {
       ) {
         ope++;
         props.setOpenCount(ope);
+      } else if (complaint.workDone === "Visit Ok") {
+        vis++;
+        props.setVisitOkCount(vis);
+      } else if (complaint.workDone === "Cancel") {
+        can++;
+        props.setCanceledCount(can);
       }
       if (complaint.repeat === "Yes") {
         rep++;

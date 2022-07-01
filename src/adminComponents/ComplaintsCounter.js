@@ -2,7 +2,7 @@ import React from "react";
 
 const ComplaintsCounter = ({ label, color, count }) => {
   return (
-    <div className="col-span-12 sm:col-span-12 xl:col-span-4 intro-y ">
+    <div className="col-span-12 sm:col-span-12  xl:col-span-2 intro-y ">
       <div className="report-box zoom-in">
         <div
           className={`box p-5 bg-white rounded-lg border-l-4  border-${color}-500`}

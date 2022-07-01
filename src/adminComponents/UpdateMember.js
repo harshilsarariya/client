@@ -191,8 +191,8 @@ const UpdateMember = () => {
                         id="states"
                         value={credentials.states}
                         required
-                        className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg  h-15 outline-none text-gray-700  py-1 px-3 leading-8 transition-colors duration-200 ease-in-out resize-none"
-                        placeholder="Ex. Gujarat,Maharashtra,Delhi"
+                        className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg  h-15 outline-none text-gray-700  py-1 px-3 leading-8 transition-colors duration-200 ease-in-out resize-none "
+                        placeholder="Ex. GUJARAT,MAHARASTRA,DELHI..."
                       />
                     </div>
                   </div>
