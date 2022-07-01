@@ -69,6 +69,8 @@ const ViewComplaints = (props) => {
     props.setClosedComplaintsFD([]);
     props.setVisitOkComplaintsFD([]);
     props.setCancelComplaintsFD([]);
+    props.setTotalComplaintsFD(searchResult);
+    props.setTotal(searchResult.length);
     searchResult.map((complaint) => {
       if (
         (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") ||

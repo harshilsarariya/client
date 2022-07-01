@@ -110,109 +110,151 @@ const SideBar = (props) => {
 
           {/* status table */}
           {visibleStatus && (
-            <div className="relative mt-7 overflow-x-auto w-64  text-white shadow-md sm:rounded-lg">
-              <table className=" table-fixed w-full">
-                <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" className="px-6 py-3">
-                      Status
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Count
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Export
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
-                    >
-                      Open
-                    </th>
-                    <td className="px-6 py-3 text-black dark:text-white text-right">
-                      {props.pending}
-                    </td>
-                    <td className="px-6 py-3 text-black dark:text-white text-right">
-                      <button>
-                        <CSVLink
-                          data={props.pendingComplaintsFD}
-                          headers={headers}
-                        >
-                          <BsDownload />
-                        </CSVLink>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
-                    >
-                      Visit Ok
-                    </th>
-                    <td className="px-6 py-3 text-black dark:text-white text-right ">
-                      {props.visitOk}
-                    </td>
-                    <td className="px-6 py-3 text-black dark:text-white text-right">
-                      <button>
-                        <CSVLink
-                          data={props.visitOkComplaintsFD}
-                          headers={headers}
-                        >
-                          <BsDownload />
-                        </CSVLink>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
-                    >
-                      Closed
-                    </th>
-                    <td className="px-6 py-3 text-black dark:text-white text-right">
-                      {props.closed}
-                    </td>
-                    <td className="px-6 py-3 text-black dark:text-white text-right">
-                      <button>
-                        <CSVLink
-                          data={props.closedComplaintsFD}
-                          headers={headers}
-                        >
-                          <BsDownload />
-                        </CSVLink>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
-                    >
-                      Canceled
-                    </th>
-                    <td className="px-6 py-3 text-black dark:text-white text-right">
-                      {props.cancel}
-                    </td>
-                    <td className="px-6 py-3 text-black dark:text-white text-right">
-                      <button>
-                        <CSVLink
-                          data={props.cancelComplaintsFD}
-                          headers={headers}
-                        >
-                          <BsDownload />
-                        </CSVLink>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <>
+              <div className="relative overflow-x-auto mt-7  w-64  text-white shadow-md sm:rounded-lg">
+                <table className=" table-fixed w-full">
+                  <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="pl-3 py-3 ">
+                        Complaints
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Count
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Export
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                      <th
+                        scope="row"
+                        className="px-6 py-4  font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                      >
+                        Total
+                      </th>
+                      <td className=" text-black ml-10 dark:text-white px-6 py-3 text-right">
+                        {props.total}
+                      </td>
+                      <td className="px-6 py-3 text-black dark:text-white text-right">
+                        <button>
+                          <CSVLink
+                            data={props.totalComplaintsFD}
+                            headers={headers}
+                          >
+                            <BsDownload />
+                          </CSVLink>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="relative mt-4 overflow-x-auto w-64  text-white shadow-md sm:rounded-lg">
+                <table className=" table-fixed w-full">
+                  <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        Status
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Count
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Export
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                      >
+                        Open
+                      </th>
+                      <td className="px-6 py-3 text-black dark:text-white text-right">
+                        {props.pending}
+                      </td>
+                      <td className="px-6 py-3 text-black dark:text-white text-right">
+                        <button>
+                          <CSVLink
+                            data={props.pendingComplaintsFD}
+                            headers={headers}
+                          >
+                            <BsDownload />
+                          </CSVLink>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                      >
+                        Visit Ok
+                      </th>
+                      <td className="px-6 py-3 text-black dark:text-white text-right ">
+                        {props.visitOk}
+                      </td>
+                      <td className="px-6 py-3 text-black dark:text-white text-right">
+                        <button>
+                          <CSVLink
+                            data={props.visitOkComplaintsFD}
+                            headers={headers}
+                          >
+                            <BsDownload />
+                          </CSVLink>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                      >
+                        Closed
+                      </th>
+                      <td className="px-6 py-3 text-black dark:text-white text-right">
+                        {props.closed}
+                      </td>
+                      <td className="px-6 py-3 text-black dark:text-white text-right">
+                        <button>
+                          <CSVLink
+                            data={props.closedComplaintsFD}
+                            headers={headers}
+                          >
+                            <BsDownload />
+                          </CSVLink>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                      >
+                        Canceled
+                      </th>
+                      <td className="px-6 py-3 text-black dark:text-white text-right">
+                        {props.cancel}
+                      </td>
+                      <td className="px-6 py-3 text-black dark:text-white text-right">
+                        <button>
+                          <CSVLink
+                            data={props.cancelComplaintsFD}
+                            headers={headers}
+                          >
+                            <BsDownload />
+                          </CSVLink>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </ul>
       </div>
