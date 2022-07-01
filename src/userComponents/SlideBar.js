@@ -40,6 +40,13 @@ const SideBar = (props) => {
     { label: "Problem Solved", key: "problemSolved" },
     { label: "Repeat", key: "repeat" },
     { label: "Syphone Color", key: "syphoneColor" },
+    { label: "Code", key: "code" },
+    { label: "Repeat", key: "repeat" },
+    { label: "Remark", key: "remark" },
+    { label: "Problem", key: "problem" },
+    { label: "Solutions", key: "solutions" },
+    { label: "Plumber Name", key: "plumberName" },
+    { label: "Closing Date", key: "closingDate" },
   ];
 
   return (
