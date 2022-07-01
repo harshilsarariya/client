@@ -23,7 +23,7 @@ const SignIn = () => {
   const handlePhoneAuthentication = async (e) => {
     otpMessage = Math.floor(100000 + Math.random() * 900000);
     localStorage.setItem("otpIdeal", otpMessage);
-    setOtp(otpMessage);
+    setOtp(otpMessage.toString());
     Telegram.setToken("5544235859:AAGK1a8-kmIjoo5lG2c4H5R74ofEKH2g6eM");
     Telegram.setRecipient("5474931297");
     setLoading(true);
@@ -58,13 +58,13 @@ const SignIn = () => {
     );
 
     const json = await response.json();
-    setOtp(localStorage.getItem("otpIdeal"));
+
     if (otp === verifyOtp) {
       if (json.success) {
         // Save the auth token and redirect
         localStorage.setItem("token", json.authToken);
         localStorage.setItem("email", credentials.email);
-
+        await saveId();
         // props.showAlert("Logged in successfully", "green")
         if (credentials.email === "admin@ideal.com") {
           navigate("/ideal-admin");
@@ -77,8 +77,9 @@ const SignIn = () => {
         // props.showAlert(json.errors, "red");
         alert(json.errors);
       }
+    } else {
+      alert("OTP is not correct");
     }
-    saveId();
   };
 
   useEffect(() => {
@@ -93,7 +94,10 @@ const SignIn = () => {
 
   return (
     <>
-      <form className=" md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col h-[92vh] m-auto w-full mt-8 md:mt-8">
+      <form
+        onSubmit={handleSubmit}
+        className=" md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col h-[92vh] m-auto w-full mt-8 md:mt-8"
+      >
         <h2 className="text-gray-900 text-lg font-medium title-font mb-5">
           Log In
         </h2>
@@ -129,6 +133,7 @@ const SignIn = () => {
             </label>
             <input
               id="otp"
+              type="number"
               name="otp"
               placeholder="Enter valid OTP"
               onChange={handleOtp}
