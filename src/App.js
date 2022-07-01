@@ -32,10 +32,12 @@ function App() {
   const [visitOk, setVisitOk] = useState(0);
   const [pending, setPending] = useState(0);
   const [cancel, setCancel] = useState(0);
+  const [total, setTotal] = useState(0);
   const [closedComplaintsFD, setClosedComplaintsFD] = useState([]);
   const [visitOkComplaintsFD, setVisitOkComplaintsFD] = useState([]);
   const [pendingComplaintsFD, setPendingComplaintsFD] = useState([]);
   const [cancelComplaintsFD, setCancelComplaintsFD] = useState([]);
+  const [totalComplaintsFD, setTotalComplaintsFD] = useState([]);
 
   // for selecting month so anyone can fetch complaint of that month
   const [month, setMonth] = useState(moment().month() + 1);
@@ -63,7 +65,10 @@ function App() {
 
         {/* Admin */}
         <Route path="/ideal-admin" element={<AdminHome />} />
-        <Route path="/view-complaints" element={<ViewComplaint />} />
+        <Route
+          path="/view-complaints"
+          element={<ViewComplaint month={month} />}
+        />
         <Route
           path="/view-details-complaint/:cid"
           element={<ViewComplaintDetails />}
@@ -85,10 +90,12 @@ function App() {
                     pending={pending}
                     visitOk={visitOk}
                     cancel={cancel}
+                    total={total}
                     closedComplaintsFD={closedComplaintsFD}
                     pendingComplaintsFD={pendingComplaintsFD}
                     visitOkComplaintsFD={visitOkComplaintsFD}
                     cancelComplaintsFD={cancelComplaintsFD}
+                    totalComplaintsFD={totalComplaintsFD}
                   />
                   <Outlet />
                 </div>
@@ -105,14 +112,17 @@ function App() {
                 setClosed={setClosed}
                 setPending={setPending}
                 setVisitOk={setVisitOk}
+                setTotal={setTotal}
                 closedComplaintsFD={closedComplaintsFD}
                 pendingComplaintsFD={pendingComplaintsFD}
                 visitOkComplaintsFD={visitOkComplaintsFD}
                 cancelComplaintsFD={cancelComplaintsFD}
+                totalComplaintsFD={totalComplaintsFD}
                 setCancelComplaintsFD={setCancelComplaintsFD}
                 setClosedComplaintsFD={setClosedComplaintsFD}
                 setPendingComplaintsFD={setPendingComplaintsFD}
                 setVisitOkComplaintsFD={setVisitOkComplaintsFD}
+                setTotalComplaintsFD={setTotalComplaintsFD}
                 month={month}
               />
             }
