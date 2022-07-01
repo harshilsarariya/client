@@ -44,48 +44,52 @@ const SignIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSigninLoading(true);
-    const response = await fetch(
-      "https://ideal-server.herokuapp.com/api/auth/signin",
-      // "http://localhost:5000/api/auth/signin",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: credentials.email,
-          password: credentials.password,
-        }),
-      }
-    );
+    if (credentials.email !== "" && credentials.password !== "") {
+      setSigninLoading(true);
+      const response = await fetch(
+        "https://ideal-server.herokuapp.com/api/auth/signin",
+        // "http://localhost:5000/api/auth/signin",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: credentials.email,
+            password: credentials.password,
+          }),
+        }
+      );
 
-    const json = await response.json();
-    if (otp === verifyOtp && otp !== undefined && verifyOtp !== undefined) {
-      if (json.success) {
-        // Save the auth token and redirect
-        localStorage.setItem("token", json.authToken);
-        localStorage.setItem("email", credentials.email);
-        await saveId();
-        // props.showAlert("Logged in successfully", "green")
-        if (credentials.email === "admin@ideal.com") {
+      const json = await response.json();
+      if (otp === verifyOtp && otp !== undefined && verifyOtp !== undefined) {
+        if (json.success) {
+          // Save the auth token and redirect
+          localStorage.setItem("token", json.authToken);
+          localStorage.setItem("email", credentials.email);
+          await saveId();
+          // props.showAlert("Logged in successfully", "green")
+          if (credentials.email === "admin@ideal.com") {
+            setSigninLoading(false);
+            navigate("/ideal-admin");
+          } else if (isForwardingMember === "Yes") {
+            setSigninLoading(false);
+            navigate("/user-admin");
+          } else if (isForwardingMember === "No") {
+            setSigninLoading(false);
+            navigate("/");
+          }
+        } else {
           setSigninLoading(false);
-          navigate("/ideal-admin");
-        } else if (isForwardingMember === "Yes") {
-          setSigninLoading(false);
-          navigate("/user-admin");
-        } else if (isForwardingMember === "No") {
-          setSigninLoading(false);
-          navigate("/");
+          // props.showAlert(json.errors, "red");
+          alert(json.errors);
         }
       } else {
         setSigninLoading(false);
-        // props.showAlert(json.errors, "red");
-        alert(json.errors);
+        alert("OTP is not correct");
       }
     } else {
-      setSigninLoading(false);
-      alert("OTP is not correct");
+      alert("Please enter valid credentials");
     }
   };
 
@@ -118,6 +122,7 @@ const SignIn = () => {
               type="email"
               id="email"
               onChange={onChange}
+              required
               name="email"
               className="w-full bg-white rounded border border-gray-300 focus:border-[#717984] focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             />
@@ -133,6 +138,7 @@ const SignIn = () => {
               type="password"
               id="password"
               onChange={onChange}
+              required
               name="password"
               className="w-full bg-white rounded border border-gray-300 focus:border-[#717984] focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             />
