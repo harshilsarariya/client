@@ -165,6 +165,7 @@ const ViewComplaints = (props) => {
     { label: "Work Done", key: "workDone" },
     { label: "Problem Solved", key: "problemSolved" },
     { label: "Syphone Color", key: "syphoneColor" },
+    { label: "Code", key: "code" },
     { label: "Repeat", key: "repeat" },
     { label: "Remark", key: "remark" },
     { label: "Problem", key: "problem" },
