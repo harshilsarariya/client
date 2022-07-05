@@ -52,7 +52,7 @@ const ViewComplaintDetails = () => {
               className="flex items-center  cursor-pointer"
             >
               <TbEdit className="text-gray-500" size={19} />
-              <spam className="text-gray-500 ml-1 font-semibold">Edit</spam>
+              <span className="text-gray-500 ml-1 font-semibold">Edit</span>
             </Link>
             <a className="flex  items-center cursor-pointer">
               <MdOutlineDelete className="text-red-500" size={20} />

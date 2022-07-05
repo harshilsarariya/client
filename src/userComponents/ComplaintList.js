@@ -149,9 +149,9 @@ const ComplaintList = (props) => {
                               className="flex items-center cursor-pointer"
                             >
                               <TbEdit className="text-gray-500" size={19} />
-                              <spam className="text-gray-500 ml-1 font-semibold">
+                              <span className="text-gray-500 ml-1 font-semibold">
                                 Edit
-                              </spam>
+                              </span>
                             </Link>
                             <button
                               onClick={() => handleDelete(complaint._id)}
@@ -185,9 +185,9 @@ const ComplaintList = (props) => {
                               className="flex items-center cursor-pointer"
                             >
                               <TbEdit className="text-gray-500" size={19} />
-                              <spam className="text-gray-500 ml-1 font-semibold">
+                              <span className="text-gray-500 ml-1 font-semibold">
                                 Edit
-                              </spam>
+                              </span>
                             </Link>
                             <button
                               onClick={() => handleDelete(complaint.id)}
