@@ -34,7 +34,6 @@ const ViewComplaintInDetailByUser = () => {
       navigate("/signin");
     }
     fetchComplaint();
-    console.log(complaintInfo);
   }, []);
 
   return (
