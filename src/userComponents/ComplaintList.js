@@ -69,13 +69,13 @@ const ComplaintList = (props) => {
                   Brand Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  State
-                </th>
-                <th scope="col" className="px-6 py-3">
                   Status
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Phone No
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Plumber Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Date
@@ -105,7 +105,7 @@ const ComplaintList = (props) => {
                       <td className={`${commonClass}  `}>
                         {complaint.brandName}
                       </td>
-                      <td className={`${commonClass}  `}>{complaint.state}</td>
+
                       {status === "Open" ? (
                         <td className={`${commonClass} text-orange-500`}>
                           {status}
@@ -128,6 +128,9 @@ const ComplaintList = (props) => {
                         </td>
                       )}
                       <td className={`${commonClass}`}>{complaint.mobileNo}</td>
+                      <td className={`${commonClass}  `}>
+                        {complaint.plumberName}
+                      </td>
                       <td className={`${commonClass}`}>{complaint.date}</td>
                       <td className={`${commonClass} flex space-x-4`}>
                         {props.isSearch === true ? (
