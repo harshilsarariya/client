@@ -8,7 +8,6 @@ export const fetchallcomplaints = async (pageNo, limit) => {
     return data;
   } catch (error) {
     const { response } = error;
-    console.log(response);
     if (response?.data) {
       return response.data;
     }
@@ -132,7 +131,7 @@ export const search = async (query, month) => {
 export const deleteMember = async (memberId) => {
   try {
     const { data } = await member.delete(`/auth/deleteMember/${memberId}`);
-    console.log(data);
+
     return data;
   } catch (error) {
     const { response } = error;
