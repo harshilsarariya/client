@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { deleteComplaint } from "../api/complaint";
 import { GrRefresh } from "react-icons/gr";
 import { HiOutlineViewGridAdd } from "react-icons/hi";
+
 const ComplaintList = (props) => {
   const [complaints, setComplaints] = useState([]);
   const [totalComplaintCount, setTotalComplaintCount] = useState([]);
@@ -22,14 +23,16 @@ const ComplaintList = (props) => {
     setTotalComplaintCount(complaintCount);
   };
 
-  const getComplaintStatus = async () => {
-    const { complaints } = await fetchallcomplaints();
-    setAllComplaints(complaints);
+  const getAllComplaintStatus = async () => {
+    const data = await fetchallcomplaints();
+    setAllComplaints(data.complaints);
+
     let ope = 0,
       clo = 0,
       rep = 0,
       vis = 0,
       can = 0;
+
     allComplaint.map((complaint) => {
       if (
         (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") ||
@@ -55,6 +58,50 @@ const ComplaintList = (props) => {
         props.setRepeatCount(rep);
       }
     });
+  };
+
+  const getComplaintStatus = async () => {
+    if (props.isDashboard === true) {
+      getAllComplaintStatus();
+    } else if (props.isDashboard === false) {
+      let opeX = 0,
+        cloX = 0,
+        visX = 0,
+        canX = 0;
+      props.setPendingComplaintsFD([]);
+      props.setClosedComplaintsFD([]);
+      props.setVisitOkComplaintsFD([]);
+      props.setCancelComplaintsFD([]);
+      props.setVisitOk(0);
+      props.setCancel(0);
+      props.setClosed(0);
+      props.setPending(0);
+      complaints.map((complaint) => {
+        if (
+          (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") ||
+          complaint.workDone === "Yes"
+        ) {
+          cloX++;
+          props.setClosed(cloX);
+          props.setClosedComplaintsFD((prev) => [...prev, complaint]);
+        } else if (
+          complaint.workDone === "No" &&
+          complaint.problemSolved === "No"
+        ) {
+          opeX++;
+          props.setPending(opeX);
+          props.setPendingComplaintsFD((prev) => [...prev, complaint]);
+        } else if (complaint.workDone === "Visit Ok") {
+          visX++;
+          props.setVisitOk(visX);
+          props.setVisitOkComplaintsFD((prev) => [...prev, complaint]);
+        } else if (complaint.workDone === "Cancel") {
+          canX++;
+          props.setCancel(canX);
+          props.setVisitOkComplaintsFD((prev) => [...prev, complaint]);
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -119,7 +166,7 @@ const ComplaintList = (props) => {
       <div className="flex">
         <div className=" w-full ">
           <div className=" sm:rounded-lg mt-5">
-            <table className="w-[1200px] text-sm text-left text-gray-500 ">
+            <table className="w-full text-sm mr-5 text-left text-gray-500 ">
               <thead className="text-sm text-black uppercase bg-[#F1F5F9] ">
                 <tr className="">
                   <th scope="col" className="px-6 py-4">
@@ -202,9 +249,9 @@ const ComplaintList = (props) => {
                               className="flex items-center cursor-pointer"
                             >
                               <TbEdit className="text-gray-500" size={19} />
-                              <spam className="text-gray-500 ml-1 font-semibold">
+                              <spna className="text-gray-500 ml-1 font-semibold">
                                 Edit
-                              </spam>
+                              </spna>
                             </Link>
                             <button
                               onClick={() => handleDelete(complaint._id)}
@@ -238,9 +285,9 @@ const ComplaintList = (props) => {
                               className="flex items-center cursor-pointer"
                             >
                               <TbEdit className="text-gray-500" size={19} />
-                              <spam className="text-gray-500 ml-1 font-semibold">
+                              <span className="text-gray-500 ml-1 font-semibold">
                                 Edit
-                              </spam>
+                              </span>
                             </Link>
                             <button
                               onClick={() => handleDelete(complaint.id)}

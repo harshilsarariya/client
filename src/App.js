@@ -24,8 +24,8 @@ import ViewComplaints from "./userComponents/ViewComplaints";
 import UpdateComplaintByUser from "./userComponents/updateComplaint";
 import UserNavbar from "./components/Navbar";
 import ViewComplaintInDetailByUser from "./components/ViewComplaintInDetailByUser";
+import SlidebarAdmin from "../src/adminComponents/SideBar";
 import moment from "moment";
-
 function App() {
   // For Forwarding member status
   const [closed, setClosed] = useState(0);
@@ -41,6 +41,9 @@ function App() {
 
   // for selecting month so anyone can fetch complaint of that month
   const [month, setMonth] = useState(moment().month() + 1);
+
+  // for admin dashboard count
+  const [isDashboard, setIsDashboard] = useState(false);
   return (
     <Router>
       <Routes>
@@ -64,20 +67,60 @@ function App() {
         </Route>
 
         {/* Admin */}
-        <Route path="/ideal-admin" element={<AdminHome />} />
-        <Route
-          path="/view-complaints"
-          element={<ViewComplaint month={month} />}
-        />
-        <Route
-          path="/view-details-complaint/:cid"
-          element={<ViewComplaintDetails />}
-        />
-        <Route path="/update-complaint/:cid" element={<UpdateComplaint />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/users/addMember" element={<AddMember />} />
-        <Route path="/users/updateMember/:mid" element={<UpdateMember />} />
 
+        <Route
+          element={
+            <>
+              <div className="w-full nunito-font h-full bg-[#F1F5F9]">
+                <Navbar setMonth={setMonth} month={month} />
+                <div className="flex flex-no-wrap">
+                  <SlidebarAdmin
+                    closed={closed}
+                    pending={pending}
+                    visitOk={visitOk}
+                    cancel={cancel}
+                    closedComplaintsFD={closedComplaintsFD}
+                    pendingComplaintsFD={pendingComplaintsFD}
+                    visitOkComplaintsFD={visitOkComplaintsFD}
+                    cancelComplaintsFD={cancelComplaintsFD}
+                    setIsDashboard={setIsDashboard}
+                  />
+                  <Outlet />
+                </div>
+              </div>
+            </>
+          }
+        >
+          <Route
+            path="/ideal-admin"
+            element={<AdminHome isDashboard={isDashboard} />}
+          />
+          <Route
+            path="/view-complaints"
+            element={
+              <ViewComplaint
+                setCancel={setCancel}
+                setClosed={setClosed}
+                setPending={setPending}
+                setVisitOk={setVisitOk}
+                setCancelComplaintsFD={setCancelComplaintsFD}
+                setClosedComplaintsFD={setClosedComplaintsFD}
+                setPendingComplaintsFD={setPendingComplaintsFD}
+                setVisitOkComplaintsFD={setVisitOkComplaintsFD}
+                isDashboard={isDashboard}
+                month={month}
+              />
+            }
+          />
+          <Route
+            path="/view-details-complaint/:cid"
+            element={<ViewComplaintDetails />}
+          />
+          <Route path="/update-complaint/:cid" element={<UpdateComplaint />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/users/addMember" element={<AddMember />} />
+          <Route path="/users/updateMember/:mid" element={<UpdateMember />} />
+        </Route>
         {/* Forwarding Member Routes */}
         <Route
           element={

@@ -72,10 +72,7 @@ const UpdateComplaint = () => {
 
   return (
     <div className="w-full nunito-font h-full bg-[#F1F5F9]">
-      <div className="">
-        <Navbar />
-        <div className="flex flex-no-wrap">
-          <SideBar />
+
           <div>
             <section className="text-gray-600 w-full body-font relative">
               <div className="container px-5 py-4 mx-auto">
@@ -433,8 +430,6 @@ const UpdateComplaint = () => {
               </div>
             </section>
           </div>
-        </div>
-      </div>
     </div>
   );
 };

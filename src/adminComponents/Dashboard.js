@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ComplaintsCounter from "./ComplaintsCounter";
 import ComplaintList from "./ComplaintList";
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const [openCount, setOpenCount] = useState(0);
   const [closedCount, setClosedCount] = useState(0);
   const [visitOkCount, setVisitOkCount] = useState(0);
@@ -45,6 +45,7 @@ const Dashboard = () => {
             setRepeatCount={setRepeatCount}
             setVisitOkCount={setVisitOkCount}
             setCanceledCount={setCanceledCount}
+            isDashboard={props.isDashboard}
             pageNo={pageNo}
             limit={POST_LIMIT}
           />

@@ -76,10 +76,7 @@ const AddMember = () => {
     "w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out";
   return (
     <div className="w-full nunito-font  h-full bg-[#F1F5F9]">
-      <div className="">
-        <Navbar />
-        <div className="flex flex-no-wrap">
-          <SideBar />
+
           <div className="w-screen">
             <section className="text-gray-600  body-font relative">
               <div className="container px-5 py-4 mx-auto">
@@ -224,8 +221,6 @@ const AddMember = () => {
               </form>
             </section>
           </div>
-        </div>
-      </div>
     </div>
   );
 };
