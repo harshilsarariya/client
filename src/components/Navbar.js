@@ -127,7 +127,7 @@ const Navbar = (props) => {
                     </div>
                     <div className="  ">
                       <CSVLink
-                        data={searchResult}
+                        data={pendingComplaints}
                         headers={headers}
                         className="bg-[#86da32b5] rounded-xl p-2 px-4 text-lg mr-5"
                       >
