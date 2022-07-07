@@ -69,6 +69,12 @@ const ComplaintList = (props) => {
                   Brand Name
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  State
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  District
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Status
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -105,6 +111,8 @@ const ComplaintList = (props) => {
                       <td className={`${commonClass}  `}>
                         {complaint.brandName}
                       </td>
+                      <td className={`${commonClass}`}>{complaint.state}</td>
+                      <td className={`${commonClass}`}>{complaint.city}</td>
 
                       {status === "Open" ? (
                         <td className={`${commonClass} text-orange-500`}>
