@@ -206,20 +206,24 @@ const ComplaintForm = (props) => {
   }, [props.month]);
 
   let headers = [
-    { label: "Opening Date", key: "date" },
-    { label: "Party Name", key: "partyName" },
-    { label: "Address", key: "address" },
-    { label: "Pincode", key: "pincode" },
-    { label: "State", key: "state" },
-    { label: "City", key: "city" },
-    { label: "Mobile No", key: "mobileNo" },
-    { label: "Plumbing No", key: "plumbingNo" },
-    { label: "Brand Name", key: "brandName" },
-    { label: "Work Done", key: "workDone" },
-    { label: "Problem Solved", key: "problemSolved" },
-    { label: "Repeat", key: "repeat" },
-    { label: "Syphone Color", key: "syphoneColor" },
-    { label: "Code", key: "code" },
+    { label: "DATE", key: "date" },
+    { label: "PARTY NAME", key: "partyName" },
+    { label: "ADDRESS", key: "address" },
+    { label: "PINCODE", key: "pincode" },
+    { label: "STATE", key: "state" },
+    { label: "CITY", key: "city" },
+    { label: "MOBILE NO", key: "mobileNo" },
+    { label: "BRAND NAME", key: "brandName" },
+    { label: "REMARK", key: "remark" },
+    { label: "OFFICE NO", key: "plumbingNo" },
+    { label: "WORK DONE", key: "workDone" },
+    { label: "PROBLEM SOLVED", key: "problemSolved" },
+    { label: "REPEAT", key: "repeat" },
+    { label: "SYPHONE COLOR", key: "syphoneColor" },
+    { label: "CODE", key: "code" },
+    // { label: "PROBLEM", key: "problem" },
+    // { label: "SOLUTIONS", key: "solutions" },
+    // { label: "CLOSING DATE", key: "closingDate" },
   ];
 
   return (
