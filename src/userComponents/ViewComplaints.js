@@ -64,17 +64,20 @@ const ViewComplaints = (props) => {
     let ope = 0,
       clo = 0,
       vis = 0,
-      can = 0;
+      can = 0,
+      rep = 0;
     props.setPendingComplaintsFD([]);
     props.setClosedComplaintsFD([]);
     props.setVisitOkComplaintsFD([]);
     props.setCancelComplaintsFD([]);
+    props.setRepeatComplaintsFD([]);
     props.setTotalComplaintsFD(searchResult);
     props.setTotal(searchResult.length);
     props.setClosed(0);
     props.setPending(0);
     props.setVisitOk(0);
     props.setCancel(0);
+    props.setRepeat(0);
     searchResult.map((complaint) => {
       if (
         (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") ||
@@ -115,6 +118,12 @@ const ViewComplaints = (props) => {
           ...cancelComplaintsFDx,
           complaint,
         ]);
+      }
+
+      if (complaint.repeat === "Yes") {
+        rep++;
+        props.setRepeat(rep);
+        props.setRepeatComplaintsFD((prev) => [...prev, complaint]);
       }
     });
   };

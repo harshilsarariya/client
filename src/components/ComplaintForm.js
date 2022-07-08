@@ -4,6 +4,8 @@ import { CSVLink } from "react-csv";
 import { BsDownload } from "react-icons/bs";
 import { GrRefresh } from "react-icons/gr";
 import loadingImg from "../images/loading.gif";
+// import jsPDF from "jspdf";
+// import autoTable from "jspdf-autotable";
 var pincodeDirectory = require("india-pincode-lookup");
 
 const ComplaintForm = (props) => {
@@ -19,6 +21,7 @@ const ComplaintForm = (props) => {
   const [visitOk, setVisitOk] = useState(0);
   const [pending, setPending] = useState(0);
   const [cancel, setCancel] = useState(0);
+  const [repeat, setRepeat] = useState(0);
   const [complaint, setComplaint] = useState({
     partyName: "",
     address: "",
@@ -38,11 +41,56 @@ const ComplaintForm = (props) => {
   const [pendingComplaints, setPendingComplaints] = useState([]);
   const [cancelComplaints, setCancelComplaints] = useState([]);
   const [closedComplaints, setClosedComplaints] = useState([]);
+  const [repeatComplaints, setRepeatComplaints] = useState([]);
   const [email, setEmail] = useState(localStorage.getItem("email"));
   const [signinLoading, setSigninLoading] = useState(false);
 
   let navigate = useNavigate();
+  // const doc = new jsPDF();
 
+  // const handlePdf = () => {
+  //   autoTable(doc, {
+  //     head: [
+  //       [
+  //         "DATE",
+  //         "PARTY NAME",
+  //         "ADDRESS",
+  //         "PINCODE",
+  //         "STATE",
+  //         "CITY",
+  //         "MOBILE NO",
+  //         "BRAND NAME",
+  //         "REMARK",
+  //         "OFFICE NO",
+  //         "WORK DONE",
+  //         "PROBLEM SOLVED",
+  //         "REPEAT",
+  //         "SYPHONE COLOR",
+  //         "CODE",
+  //       ],
+  //     ],
+  //     body: [
+  //       [
+  //         "David",
+  //         "david@example.com",
+  //         "Sweden",
+  //         "David",
+  //         "david@example.com",
+  //         "Sweden",
+  //         "David",
+  //         "david@example.com",
+  //         "Sweden",
+  //         "David",
+  //         "david@example.com",
+  //         "Sweden",
+  //         "David",
+  //         "david@example.com",
+  //         "Sweden",
+  //       ],
+  //     ],
+  //   });
+  //   doc.save("table.pdf");
+  // };
   const handleTotalComplaint = async () => {
     const response = await fetch(
       `https://ideal-server.herokuapp.com/api/complaint/fetchComplaintsCount?email=${email}&month=${props.month}`,
@@ -62,15 +110,18 @@ const ComplaintForm = (props) => {
     let ope = 0,
       clo = 0,
       vis = 0,
-      can = 0;
+      can = 0,
+      rep = 0;
     setVisitOKComplaints([]);
     setPendingComplaints([]);
     setCancelComplaints([]);
     setClosedComplaints([]);
+    setRepeatComplaints([]);
     setVisitOk(0);
     setPending(0);
     setCancel(0);
     setClosed(0);
+    setRepeat(0);
 
     totalComplaints.map((complaint) => {
       if (
@@ -95,6 +146,11 @@ const ComplaintForm = (props) => {
         can++;
         setCancel(can);
         setCancelComplaints((c) => [...c, complaint]);
+      }
+      if (complaint.repeat === "Yes") {
+        rep++;
+        setRepeat(rep);
+        setRepeatComplaints((prev) => [...prev, complaint]);
       }
     });
     setSigninLoading(false);
@@ -629,6 +685,24 @@ const ComplaintForm = (props) => {
                     <td className="px-6 py-3 text-black dark:text-white text-right">
                       <button>
                         <CSVLink data={closedComplaints} headers={headers}>
+                          <BsDownload />
+                        </CSVLink>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                    >
+                      Repeat
+                    </th>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      {repeat}
+                    </td>
+                    <td className="px-6 py-3 text-black dark:text-white text-right">
+                      <button>
+                        <CSVLink data={repeatComplaints} headers={headers}>
                           <BsDownload />
                         </CSVLink>
                       </button>

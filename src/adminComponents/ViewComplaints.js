@@ -104,10 +104,12 @@ const ViewComplaint = (props) => {
           setClosed={props.setClosed}
           setPending={props.setPending}
           setVisitOk={props.setVisitOk}
+          setRepeat={props.setRepeat}
           setCancelComplaintsFD={props.setCancelComplaintsFD}
           setClosedComplaintsFD={props.setClosedComplaintsFD}
           setPendingComplaintsFD={props.setPendingComplaintsFD}
           setVisitOkComplaintsFD={props.setVisitOkComplaintsFD}
+          setRepeatComplaintsFD={props.setRepeatComplaintsFD}
           isDashboard={props.isDashboard}
         />
       </div>

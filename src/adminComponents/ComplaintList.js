@@ -67,14 +67,17 @@ const ComplaintList = (props) => {
       let opeX = 0,
         cloX = 0,
         visX = 0,
-        canX = 0;
+        canX = 0,
+        repX = 0;
       props.setPendingComplaintsFD([]);
       props.setClosedComplaintsFD([]);
       props.setVisitOkComplaintsFD([]);
       props.setCancelComplaintsFD([]);
+      props.setRepeatComplaintsFD([]);
       props.setVisitOk(0);
       props.setCancel(0);
       props.setClosed(0);
+      props.setRepeat(0);
       props.setPending(0);
       complaints.map((complaint) => {
         if (
@@ -99,6 +102,11 @@ const ComplaintList = (props) => {
           canX++;
           props.setCancel(canX);
           props.setVisitOkComplaintsFD((prev) => [...prev, complaint]);
+        }
+        if (complaint.repeat === "Yes") {
+          repX++;
+          props.setRepeat(repX);
+          props.setRepeatComplaintsFD((prev) => [...prev, complaint]);
         }
       });
     }
@@ -125,7 +133,7 @@ const ComplaintList = (props) => {
   }, []);
 
   const commonClass =
-    "px-6 py-4 font-semibold text-base bg-white text-black  whitespace-nowrap";
+    "px-3 py-4 font-semibold text-sm bg-white text-black  whitespace-nowrap";
 
   let status;
   const handleStatus = (complaint) => {
@@ -169,22 +177,22 @@ const ComplaintList = (props) => {
             <table className="w-full text-sm mr-5 text-left text-gray-500 ">
               <thead className="text-sm text-black uppercase bg-[#F1F5F9] ">
                 <tr className="">
-                  <th scope="col" className="px-6 py-4">
+                  <th scope="col" className="px-3 py-4">
                     Party Name
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-3 py-3">
                     Brand Name
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-3 py-3">
                     Status
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-3 py-3">
                     Phone No
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-3 py-3">
                     Date
                   </th>
-                  <th scope="col" className="px-6 pl-16 py-3">
+                  <th scope="col" className="px-3 pl-16 py-3">
                     Action
                   </th>
                 </tr>

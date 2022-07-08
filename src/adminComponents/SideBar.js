@@ -223,6 +223,27 @@ const SideBar = (props) => {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
                   >
+                    Repeat
+                  </th>
+                  <td className="px-6 py-3 text-black dark:text-white text-right">
+                    {props.repeat}
+                  </td>
+                  <td className="px-6 py-3 text-black dark:text-white text-right">
+                    <button>
+                      <CSVLink
+                        data={props.repeatComplaintsFD}
+                        headers={headers}
+                      >
+                        <BsDownload />
+                      </CSVLink>
+                    </button>
+                  </td>
+                </tr>
+                <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                  >
                     Canceled
                   </th>
                   <td className="px-6 py-3 text-black dark:text-white text-right">

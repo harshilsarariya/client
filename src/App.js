@@ -5,7 +5,7 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 import AdminHome from "./adminComponents/AdminHome";
@@ -33,10 +33,12 @@ function App() {
   const [pending, setPending] = useState(0);
   const [cancel, setCancel] = useState(0);
   const [total, setTotal] = useState(0);
+  const [repeat, setRepeat] = useState(0);
   const [closedComplaintsFD, setClosedComplaintsFD] = useState([]);
   const [visitOkComplaintsFD, setVisitOkComplaintsFD] = useState([]);
   const [pendingComplaintsFD, setPendingComplaintsFD] = useState([]);
   const [cancelComplaintsFD, setCancelComplaintsFD] = useState([]);
+  const [repeatComplaintsFD, setRepeatComplaintsFD] = useState([]);
   const [totalComplaintsFD, setTotalComplaintsFD] = useState([]);
 
   // for selecting month so anyone can fetch complaint of that month
@@ -79,9 +81,11 @@ function App() {
                     pending={pending}
                     visitOk={visitOk}
                     cancel={cancel}
+                    repeat={repeat}
                     closedComplaintsFD={closedComplaintsFD}
                     pendingComplaintsFD={pendingComplaintsFD}
                     visitOkComplaintsFD={visitOkComplaintsFD}
+                    repeatComplaintsFD={repeatComplaintsFD}
                     cancelComplaintsFD={cancelComplaintsFD}
                     setIsDashboard={setIsDashboard}
                   />
@@ -102,11 +106,13 @@ function App() {
                 setCancel={setCancel}
                 setClosed={setClosed}
                 setPending={setPending}
+                setRepeat={setRepeat}
                 setVisitOk={setVisitOk}
                 setCancelComplaintsFD={setCancelComplaintsFD}
                 setClosedComplaintsFD={setClosedComplaintsFD}
                 setPendingComplaintsFD={setPendingComplaintsFD}
                 setVisitOkComplaintsFD={setVisitOkComplaintsFD}
+                setRepeatComplaintsFD={setRepeatComplaintsFD}
                 isDashboard={isDashboard}
                 month={month}
               />
@@ -121,6 +127,7 @@ function App() {
           <Route path="/users/addMember" element={<AddMember />} />
           <Route path="/users/updateMember/:mid" element={<UpdateMember />} />
         </Route>
+
         {/* Forwarding Member Routes */}
         <Route
           element={
@@ -134,10 +141,12 @@ function App() {
                     visitOk={visitOk}
                     cancel={cancel}
                     total={total}
+                    repeat={repeat}
                     closedComplaintsFD={closedComplaintsFD}
                     pendingComplaintsFD={pendingComplaintsFD}
                     visitOkComplaintsFD={visitOkComplaintsFD}
                     cancelComplaintsFD={cancelComplaintsFD}
+                    repeatComplaintsFD={repeatComplaintsFD}
                     totalComplaintsFD={totalComplaintsFD}
                   />
                   <Outlet />
@@ -156,10 +165,12 @@ function App() {
                 setPending={setPending}
                 setVisitOk={setVisitOk}
                 setTotal={setTotal}
+                setRepeat={setRepeat}
                 closedComplaintsFD={closedComplaintsFD}
                 pendingComplaintsFD={pendingComplaintsFD}
                 visitOkComplaintsFD={visitOkComplaintsFD}
                 cancelComplaintsFD={cancelComplaintsFD}
+                setRepeatComplaintsFD={setRepeatComplaintsFD}
                 totalComplaintsFD={totalComplaintsFD}
                 setCancelComplaintsFD={setCancelComplaintsFD}
                 setClosedComplaintsFD={setClosedComplaintsFD}

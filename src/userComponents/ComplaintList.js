@@ -4,9 +4,10 @@ import { TbEdit } from "react-icons/tb";
 import { MdOutlineDelete } from "react-icons/md";
 import { HiOutlineViewGridAdd } from "react-icons/hi";
 import { deleteComplaint } from "../api/complaint";
+
 const ComplaintList = (props) => {
   const commonClass =
-    "px-6 py-4 font-semibold text-base bg-white text-black  whitespace-nowrap";
+    "px-3 py-4 font-semibold text-sm bg-white text-black  whitespace-nowrap";
   const [complaints, setComplaints] = useState([]);
   const handleSearchResult = async (e) => {
     if (props.isSearch === true) {
@@ -59,34 +60,31 @@ const ComplaintList = (props) => {
     <div>
       <div className=" w-full ">
         <div className=" sm:rounded-lg mt-5">
-          <table className="w-[1200px] text-sm text-left text-gray-500 ">
+          <table className="w-[1200px]  text-left text-gray-500 ">
             <thead className="text-sm text-black uppercase bg-[#F1F5F9] ">
               <tr className="">
-                <th scope="col" className="px-6 py-4">
+                <th scope="col" className="px-3 py-4">
                   Party Name
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-3 py-3">
                   Brand Name
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  State
-                </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-3 py-3">
                   District
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-3 py-3">
                   Status
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-3 py-3">
                   Phone No
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-3 py-3">
                   Plumber Name
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-3 py-3">
                   Date
                 </th>
-                <th scope="col" className="px-6 pl-16 py-3">
+                <th scope="col" className="px-3 pl-16 py-3">
                   Action
                 </th>
               </tr>
@@ -111,7 +109,6 @@ const ComplaintList = (props) => {
                       <td className={`${commonClass}  `}>
                         {complaint.brandName}
                       </td>
-                      <td className={`${commonClass}`}>{complaint.state}</td>
                       <td className={`${commonClass}`}>{complaint.city}</td>
 
                       {status === "Open" ? (
