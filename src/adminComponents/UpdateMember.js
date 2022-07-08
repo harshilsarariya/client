@@ -1,7 +1,5 @@
-import Navbar from "./Navbar";
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import SideBar from "./SideBar";
 import { getMember, updateMember } from "../api/complaint";
 
 const UpdateMember = () => {
@@ -62,8 +60,8 @@ const UpdateMember = () => {
         body: JSON.stringify({
           name: credentials.name,
           email: credentials.email,
-          isForwardingMember: isForwardingMember,
-          states: states,
+          isForwardingMember: credentials.isForwardingMember,
+          states: credentials.states,
           phone: credentials.phone,
           password: credentials.password,
         }),
@@ -76,8 +74,8 @@ const UpdateMember = () => {
   const commonClass =
     "w-full rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg outline-none text-gray-700  py-2 px-4 leading-8 transition-colors duration-200 ease-in-out";
   return (
-    <div className="w-full nunito-font  h-full bg-[#F1F5F9]">
-      <div className="w-screen">
+    <div className="w-[80vw] nunito-font  h-full bg-[#F1F5F9]">
+      <div className="w-full">
         <section className="text-gray-600  body-font relative">
           <div className="container px-5 py-4 mx-auto">
             <div className="flex flex-col   mb-12">
