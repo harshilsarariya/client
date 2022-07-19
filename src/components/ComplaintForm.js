@@ -46,51 +46,7 @@ const ComplaintForm = (props) => {
   const [signinLoading, setSigninLoading] = useState(false);
 
   let navigate = useNavigate();
-  // const doc = new jsPDF();
 
-  // const handlePdf = () => {
-  //   autoTable(doc, {
-  //     head: [
-  //       [
-  //         "DATE",
-  //         "PARTY NAME",
-  //         "ADDRESS",
-  //         "PINCODE",
-  //         "STATE",
-  //         "CITY",
-  //         "MOBILE NO",
-  //         "BRAND NAME",
-  //         "REMARK",
-  //         "OFFICE NO",
-  //         "WORK DONE",
-  //         "PROBLEM SOLVED",
-  //         "REPEAT",
-  //         "SYPHONE COLOR",
-  //         "CODE",
-  //       ],
-  //     ],
-  //     body: [
-  //       [
-  //         "David",
-  //         "david@example.com",
-  //         "Sweden",
-  //         "David",
-  //         "david@example.com",
-  //         "Sweden",
-  //         "David",
-  //         "david@example.com",
-  //         "Sweden",
-  //         "David",
-  //         "david@example.com",
-  //         "Sweden",
-  //         "David",
-  //         "david@example.com",
-  //         "Sweden",
-  //       ],
-  //     ],
-  //   });
-  //   doc.save("table.pdf");
-  // };
   const handleTotalComplaint = async () => {
     const response = await fetch(
       `https://ideal-server.herokuapp.com/api/complaint/fetchComplaintsCount?email=${email}&month=${props.month}`,
@@ -126,14 +82,22 @@ const ComplaintForm = (props) => {
     totalComplaints.map((complaint) => {
       if (
         (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") ||
-        complaint.workDone === "Yes"
+        (complaint.workDone === "Yes" && complaint.problemSolved === "No")
       ) {
         clo++;
         setClosed(clo);
         setClosedComplaints((c) => [...c, complaint]);
       } else if (
+        complaint.repeat === "Yes" &&
         complaint.workDone === "No" &&
         complaint.problemSolved === "No"
+      ) {
+        rep++;
+        setRepeat(rep);
+        setRepeatComplaints((prev) => [...prev, complaint]);
+      } else if (
+        (complaint.workDone === "No" && complaint.problemSolved === "No") ||
+        complaint.workDone === "No"
       ) {
         ope++;
         setPending(ope);
@@ -146,11 +110,6 @@ const ComplaintForm = (props) => {
         can++;
         setCancel(can);
         setCancelComplaints((c) => [...c, complaint]);
-      }
-      if (complaint.repeat === "Yes") {
-        rep++;
-        setRepeat(rep);
-        setRepeatComplaints((prev) => [...prev, complaint]);
       }
     });
     setSigninLoading(false);
