@@ -4,6 +4,7 @@ import { searchByPhoneNo, search } from "../api/complaint";
 import ComplaintListForUser from "./ComplaintListForUser";
 import { AiOutlineSearch } from "react-icons/ai";
 import { CSVLink } from "react-csv";
+import Telegram from "telegram-send-message";
 
 const Navbar = (props) => {
   const [searchResult, setSearchResult] = useState([]);
@@ -14,7 +15,16 @@ const Navbar = (props) => {
   const [pendingComplaints, setPendingComplaints] = useState([]);
   let navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogoutMsg = async (e) => {
+    let email = localStorage.getItem("email");
+    Telegram.setToken("5544235859:AAGK1a8-kmIjoo5lG2c4H5R74ofEKH2g6eM");
+    Telegram.setRecipient("5474931297");
+    Telegram.setMessage(email + " has been logged out Successfully");
+    Telegram.send();
+  };
+
+  const handleLogout = async () => {
+    await handleLogoutMsg();
     localStorage.removeItem("token");
     localStorage.removeItem("email");
     localStorage.removeItem("memberId");
@@ -22,7 +32,6 @@ const Navbar = (props) => {
     localStorage.removeItem("stateVal");
     localStorage.removeItem("search");
     localStorage.removeItem("companyVal");
-
     navigate("/signin");
   };
 
