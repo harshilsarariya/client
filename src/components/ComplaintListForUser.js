@@ -40,7 +40,6 @@ const ComplaintListForUser = (props) => {
       ) {
         clo++;
         setClosed(clo);
-        setClosedComplaints(complaint);
         setClosedComplaints((prev) => [...prev, complaint]);
       } else if (
         complaint.repeat === "Yes" &&
@@ -56,17 +55,14 @@ const ComplaintListForUser = (props) => {
       ) {
         ope++;
         setPending(ope);
-        setPendingComplaints(complaint);
         setPendingComplaints((prev) => [...prev, complaint]);
       } else if (complaint.workDone === "Visit Ok") {
         vis++;
         setVisitOk(vis);
-        setVisitOkComplaints(complaint);
         setVisitOkComplaints((prev) => [...prev, complaint]);
       } else if (complaint.workDone === "Cancel") {
         can++;
         setCancel(can);
-        setCancelComplaints(complaint);
         setVisitOkComplaints((prev) => [...prev, complaint]);
       }
     });
