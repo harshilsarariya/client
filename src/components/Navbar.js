@@ -12,7 +12,6 @@ const Navbar = (props) => {
   const [query, setQuery] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [isViewClicked, setIsViewClicked] = useState(false);
-  const [pendingComplaints, setPendingComplaints] = useState([]);
   let navigate = useNavigate();
 
   const handleLogoutMsg = async (e) => {
@@ -35,15 +34,6 @@ const Navbar = (props) => {
     navigate("/signin");
   };
 
-  const getPendingData = async () => {
-    setPendingComplaints([]);
-    searchResult.forEach((item) => {
-      if (item.workDone === "No" && item.problemSolved === "No") {
-        setPendingComplaints((prev) => [...prev, item]);
-      }
-    });
-  };
-
   const handleSearchByPhone = async () => {
     const data = await searchByPhoneNo(query, props.month);
     setIsSearch(true);
@@ -63,7 +53,6 @@ const Navbar = (props) => {
     } else {
       await handleString();
     }
-    getPendingData();
   };
 
   const handleMonthChange = (e) => {
@@ -83,10 +72,6 @@ const Navbar = (props) => {
       setIsSearch(false);
     }
   }, [query]);
-
-  useEffect(() => {
-    getPendingData();
-  }, [searchResult]);
 
   let headers = [
     { label: "DATE", key: "date" },
@@ -133,15 +118,6 @@ const Navbar = (props) => {
                         className="bg-[#86da32b5] rounded-xl p-2 px-4 text-lg mr-5"
                       >
                         Export All
-                      </CSVLink>
-                    </div>
-                    <div className="  ">
-                      <CSVLink
-                        data={pendingComplaints}
-                        headers={headers}
-                        className="bg-[#86da32b5] rounded-xl p-2 px-4 text-lg mr-5"
-                      >
-                        Export Pending Complaints
                       </CSVLink>
                     </div>
                   </>
