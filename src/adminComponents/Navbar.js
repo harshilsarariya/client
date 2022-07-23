@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Telegram from "telegram-send-message";
+
 const Navbar = (props) => {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
 
   let navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogoutMsg = async (e) => {
+    let email = localStorage.getItem("email");
+    Telegram.setToken("5544235859:AAGK1a8-kmIjoo5lG2c4H5R74ofEKH2g6eM");
+    Telegram.setRecipient("5474931297");
+    Telegram.setMessage(email + " has been logged out Successfully");
+    Telegram.send();
+  };
+
+  const handleLogout = async () => {
+    await handleLogoutMsg();
     localStorage.removeItem("token");
     localStorage.removeItem("email");
     localStorage.removeItem("memberId");
