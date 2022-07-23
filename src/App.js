@@ -5,7 +5,7 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 import AdminHome from "./adminComponents/AdminHome";
@@ -46,6 +46,10 @@ function App() {
 
   // for admin dashboard count
   const [isDashboard, setIsDashboard] = useState(false);
+
+  useEffect(() => {
+    // localStorage.clear();
+  });
   return (
     <Router>
       <Routes>
