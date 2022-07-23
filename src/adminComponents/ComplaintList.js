@@ -4,13 +4,14 @@ import { TbEdit } from "react-icons/tb";
 import { MdOutlineDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { deleteComplaint } from "../api/complaint";
-import { GrRefresh } from "react-icons/gr";
 import { HiOutlineViewGridAdd } from "react-icons/hi";
+import loadingImg from "../images/loading.gif";
 
 const ComplaintList = (props) => {
   const [complaints, setComplaints] = useState([]);
   const [totalComplaintCount, setTotalComplaintCount] = useState([]);
   const [allComplaint, setAllComplaints] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getallcomplaints = async () => {
     const { pageNo, limit } = props;
@@ -20,13 +21,16 @@ const ComplaintList = (props) => {
     );
 
     setComplaints(complaints);
+    setLoading(false);
     setTotalComplaintCount(complaintCount);
   };
 
   const getAllComplaintStatus = async () => {
     const data = await fetchallcomplaints();
     setAllComplaints(data.complaints);
+  };
 
+  const getAllComplaintsCount = async () => {
     let ope = 0,
       clo = 0,
       rep = 0,
@@ -36,13 +40,20 @@ const ComplaintList = (props) => {
     allComplaint.map((complaint) => {
       if (
         (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") ||
-        complaint.workDone === "Yes"
+        (complaint.workDone === "Yes" && complaint.problemSolved === "No")
       ) {
         clo++;
         props.setClosedCount(clo);
       } else if (
+        complaint.repeat === "Yes" &&
         complaint.workDone === "No" &&
         complaint.problemSolved === "No"
+      ) {
+        rep++;
+        props.setRepeatCount(rep);
+      } else if (
+        (complaint.workDone === "No" && complaint.problemSolved === "No") ||
+        complaint.workDone === "No"
       ) {
         ope++;
         props.setOpenCount(ope);
@@ -52,10 +63,6 @@ const ComplaintList = (props) => {
       } else if (complaint.workDone === "Cancel") {
         can++;
         props.setCanceledCount(can);
-      }
-      if (complaint.repeat === "Yes") {
-        rep++;
-        props.setRepeatCount(rep);
       }
     });
   };
@@ -82,14 +89,22 @@ const ComplaintList = (props) => {
       complaints.map((complaint) => {
         if (
           (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") ||
-          complaint.workDone === "Yes"
+          (complaint.workDone === "Yes" && complaint.problemSolved === "No")
         ) {
           cloX++;
           props.setClosed(cloX);
           props.setClosedComplaintsFD((prev) => [...prev, complaint]);
         } else if (
+          complaint.repeat === "Yes" &&
           complaint.workDone === "No" &&
           complaint.problemSolved === "No"
+        ) {
+          repX++;
+          props.setRepeat(repX);
+          props.setRepeatComplaintsFD((prev) => [...prev, complaint]);
+        } else if (
+          (complaint.workDone === "No" && complaint.problemSolved === "No") ||
+          complaint.workDone === "No"
         ) {
           opeX++;
           props.setPending(opeX);
@@ -103,11 +118,6 @@ const ComplaintList = (props) => {
           props.setCancel(canX);
           props.setVisitOkComplaintsFD((prev) => [...prev, complaint]);
         }
-        if (complaint.repeat === "Yes") {
-          repX++;
-          props.setRepeat(repX);
-          props.setRepeatComplaintsFD((prev) => [...prev, complaint]);
-        }
       });
     }
   };
@@ -116,6 +126,7 @@ const ComplaintList = (props) => {
     if (props.isSearch === true) {
       setComplaints(props.searchResult);
     }
+    setLoading(true);
     getallcomplaints();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.searchResult]);
@@ -124,13 +135,13 @@ const ComplaintList = (props) => {
     if (props.isSearch === true) {
       setComplaints(props.searchResult);
     }
+    getComplaintStatus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [complaints]);
 
   useEffect(() => {
-    getComplaintStatus();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    getAllComplaintsCount();
+  }, [allComplaint]);
 
   const commonClass =
     "px-3 py-4 font-semibold text-sm bg-white text-black  whitespace-nowrap";
@@ -174,158 +185,168 @@ const ComplaintList = (props) => {
       <div className="flex">
         <div className=" w-full ">
           <div className=" sm:rounded-lg mt-5">
-            <table className="w-full text-sm mr-5 text-left text-gray-500 ">
-              <thead className="text-sm text-black uppercase bg-[#F1F5F9] ">
-                <tr className="">
-                  <th scope="col" className="px-3 py-4">
-                    Party Name
-                  </th>
-                  <th scope="col" className="px-3 py-3">
-                    Brand Name
-                  </th>
-                  <th scope="col" className="px-3 py-3">
-                    Status
-                  </th>
-                  <th scope="col" className="px-3 py-3">
-                    Phone No
-                  </th>
-                  <th scope="col" className="px-3 py-3">
-                    Date
-                  </th>
-                  <th scope="col" className="px-3 pl-16 py-3">
-                    Action
-                  </th>
-                </tr>
-                <div className="mb-5" />
-              </thead>
+            {!loading && (
+              <table className="w-full text-sm mr-5 text-left text-gray-500 ">
+                <thead className="text-sm text-black uppercase bg-[#F1F5F9] ">
+                  <tr className="">
+                    <th scope="col" className="px-3 py-4">
+                      Party Name
+                    </th>
+                    <th scope="col" className="px-3 py-3">
+                      Brand Name
+                    </th>
+                    <th scope="col" className="px-3 py-3">
+                      Status
+                    </th>
+                    <th scope="col" className="px-3 py-3">
+                      Phone No
+                    </th>
+                    <th scope="col" className="px-3 py-3">
+                      Date
+                    </th>
+                    <th scope="col" className="px-3 pl-16 py-3">
+                      Action
+                    </th>
+                  </tr>
+                  <div className="mb-5" />
+                </thead>
 
-              <tbody>
-                {complaints.map((complaint, index) => (
-                  <>
-                    {handleStatus(complaint)}
-                    <tr
-                      key={index}
-                      className=" border-b  overflow-x-auto shadow-sm"
-                    >
-                      <th scope="row" className={`${commonClass}`}>
-                        {complaint.partyName}
-                      </th>
-                      <td className={`${commonClass}  `}>
-                        {complaint.brandName}
-                      </td>
+                <tbody>
+                  {/* <InfiniteScroll
+                  dataLength={totalComplaintCount}
+                  next={fetchMoreData}
+                  hasMore={complaints.length < totalComplaintCount}
+                  loader={<h4>Loading...</h4>}
+                > */}
+                  {complaints.map((complaint, index) => (
+                    <>
+                      {handleStatus(complaint)}
+                      <tr
+                        key={index}
+                        className=" border-b  overflow-x-auto shadow-sm"
+                      >
+                        <th scope="row" className={`${commonClass}`}>
+                          {complaint.partyName}
+                        </th>
+                        <td className={`${commonClass}  `}>
+                          {complaint.brandName}
+                        </td>
 
-                      {status === "Open" ? (
-                        <td className={`${commonClass} text-orange-500`}>
-                          {status}
-                        </td>
-                      ) : status === "Closed" ? (
-                        <td className={`${commonClass} text-green-500`}>
-                          {status}
-                        </td>
-                      ) : status === "Visit Ok" ? (
-                        <td className={`${commonClass} text-violet-500`}>
-                          {status}
-                        </td>
-                      ) : status === "Cancel" ? (
-                        <td className={`${commonClass} text-red-500`}>
-                          {status}
-                        </td>
-                      ) : (
-                        <td className={`${commonClass} text-blue-500`}>
-                          {status}
-                        </td>
-                      )}
-                      <td className={`${commonClass}`}>{complaint.mobileNo}</td>
-                      <td className={`${commonClass}`}>{complaint.date}</td>
-                      <td className={`${commonClass} flex space-x-4`}>
-                        {props.isSearch === true ? (
-                          <>
-                            <Link
-                              to={`/view-details-complaint/${complaint._id}`}
-                              className="flex items-center cursor-pointer"
-                            >
-                              <HiOutlineViewGridAdd
-                                className="text-[#4bacc7]"
-                                size={22}
-                              />
-                              <span className="text-[#4bacc7] ml-1 font-semibold">
-                                View
-                              </span>
-                            </Link>
-                            <Link
-                              to={`/update-complaint/${complaint._id}`}
-                              className="flex items-center cursor-pointer"
-                            >
-                              <TbEdit className="text-gray-500" size={19} />
-                              <spna className="text-gray-500 ml-1 font-semibold">
-                                Edit
-                              </spna>
-                            </Link>
-                            <button
-                              onClick={() => handleDelete(complaint._id)}
-                              className="flex  items-center cursor-pointer"
-                            >
-                              <MdOutlineDelete
-                                className="text-red-500"
-                                size={20}
-                              />
-                              <span className="text-red-500 ml-1 font-semibold">
-                                Delete
-                              </span>
-                            </button>
-                          </>
+                        {status === "Open" ? (
+                          <td className={`${commonClass} text-orange-500`}>
+                            {status}
+                          </td>
+                        ) : status === "Closed" ? (
+                          <td className={`${commonClass} text-green-500`}>
+                            {status}
+                          </td>
+                        ) : status === "Visit Ok" ? (
+                          <td className={`${commonClass} text-violet-500`}>
+                            {status}
+                          </td>
+                        ) : status === "Cancel" ? (
+                          <td className={`${commonClass} text-red-500`}>
+                            {status}
+                          </td>
                         ) : (
-                          <>
-                            <Link
-                              to={`/view-details-complaint/${complaint.id}`}
-                              className="flex items-center cursor-pointer"
-                            >
-                              <HiOutlineViewGridAdd
-                                className="text-[#4bacc7]"
-                                size={22}
-                              />
-                              <span className="text-[#4bacc7] ml-1 font-semibold">
-                                View
-                              </span>
-                            </Link>
-                            <Link
-                              to={`/update-complaint/${complaint.id}`}
-                              className="flex items-center cursor-pointer"
-                            >
-                              <TbEdit className="text-gray-500" size={19} />
-                              <span className="text-gray-500 ml-1 font-semibold">
-                                Edit
-                              </span>
-                            </Link>
-                            <button
-                              onClick={() => handleDelete(complaint.id)}
-                              className="flex  items-center cursor-pointer"
-                            >
-                              <MdOutlineDelete
-                                className="text-red-500"
-                                size={20}
-                              />
-                              <span className="text-red-500 ml-1 font-semibold">
-                                Delete
-                              </span>
-                            </button>
-                          </>
+                          <td className={`${commonClass} text-blue-500`}>
+                            {status}
+                          </td>
                         )}
-                      </td>
-                    </tr>
-                    <div className="mb-5" />
-                  </>
-                ))}
-              </tbody>
-            </table>
+                        <td className={`${commonClass}`}>
+                          {complaint.mobileNo}
+                        </td>
+                        <td className={`${commonClass}`}>{complaint.date}</td>
+                        <td className={`${commonClass} flex space-x-4`}>
+                          {props.isSearch === true ? (
+                            <>
+                              <Link
+                                to={`/view-details-complaint/${complaint._id}`}
+                                className="flex items-center cursor-pointer"
+                              >
+                                <HiOutlineViewGridAdd
+                                  className="text-[#4bacc7]"
+                                  size={22}
+                                />
+                                <span className="text-[#4bacc7] ml-1 font-semibold">
+                                  View
+                                </span>
+                              </Link>
+                              <Link
+                                to={`/update-complaint/${complaint._id}`}
+                                className="flex items-center cursor-pointer"
+                              >
+                                <TbEdit className="text-gray-500" size={19} />
+                                <spna className="text-gray-500 ml-1 font-semibold">
+                                  Edit
+                                </spna>
+                              </Link>
+                              <button
+                                onClick={() => handleDelete(complaint._id)}
+                                className="flex  items-center cursor-pointer"
+                              >
+                                <MdOutlineDelete
+                                  className="text-red-500"
+                                  size={20}
+                                />
+                                <span className="text-red-500 ml-1 font-semibold">
+                                  Delete
+                                </span>
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <Link
+                                to={`/view-details-complaint/${complaint.id}`}
+                                className="flex items-center cursor-pointer"
+                              >
+                                <HiOutlineViewGridAdd
+                                  className="text-[#4bacc7]"
+                                  size={22}
+                                />
+                                <span className="text-[#4bacc7] ml-1 font-semibold">
+                                  View
+                                </span>
+                              </Link>
+                              <Link
+                                to={`/update-complaint/${complaint.id}`}
+                                className="flex items-center cursor-pointer"
+                              >
+                                <TbEdit className="text-gray-500" size={19} />
+                                <span className="text-gray-500 ml-1 font-semibold">
+                                  Edit
+                                </span>
+                              </Link>
+                              <button
+                                onClick={() => handleDelete(complaint.id)}
+                                className="flex  items-center cursor-pointer"
+                              >
+                                <MdOutlineDelete
+                                  className="text-red-500"
+                                  size={20}
+                                />
+                                <span className="text-red-500 ml-1 font-semibold">
+                                  Delete
+                                </span>
+                              </button>
+                            </>
+                          )}
+                        </td>
+                      </tr>
+                      <div className="mb-5" />
+                    </>
+                  ))}
+                  {/* </InfiniteScroll> */}
+                </tbody>
+              </table>
+            )}
+            {loading && (
+              <div className="flex mt-40 justify-center">
+                <img className="w-[400px]" src={loadingImg} alt="loading..." />
+              </div>
+            )}
           </div>
         </div>
-        <button
-          onClick={getComplaintStatus}
-          className="bg-gray-400 p-2 h-10 transform rounded-3xl mb-5 "
-        >
-          <GrRefresh size={24} />
-        </button>
       </div>
     </>
   );

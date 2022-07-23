@@ -2,10 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CSVLink } from "react-csv";
 import { BsDownload } from "react-icons/bs";
-import { GrRefresh } from "react-icons/gr";
-import loadingImg from "../images/loading.gif";
-// import jsPDF from "jspdf";
-// import autoTable from "jspdf-autotable";
 var pincodeDirectory = require("india-pincode-lookup");
 
 const ComplaintForm = (props) => {
@@ -43,8 +39,6 @@ const ComplaintForm = (props) => {
   const [closedComplaints, setClosedComplaints] = useState([]);
   const [repeatComplaints, setRepeatComplaints] = useState([]);
   const [email, setEmail] = useState(localStorage.getItem("email"));
-  const [signinLoading, setSigninLoading] = useState(false);
-
   let navigate = useNavigate();
 
   const handleTotalComplaint = async () => {
@@ -63,6 +57,9 @@ const ComplaintForm = (props) => {
 
     setTotalComplaintsCount(json.lenTotal);
     setTotalComplaints(json.complaint);
+  };
+
+  const getComplaintsCount = async () => {
     let ope = 0,
       clo = 0,
       vis = 0,
@@ -112,7 +109,6 @@ const ComplaintForm = (props) => {
         setCancelComplaints((c) => [...c, complaint]);
       }
     });
-    setSigninLoading(false);
   };
 
   const handleTodaysTotalComplaint = async () => {
@@ -215,6 +211,10 @@ const ComplaintForm = (props) => {
     handleTotalComplaint();
     handleTodaysTotalComplaint();
   }, []);
+
+  useEffect(() => {
+    getComplaintsCount();
+  }, [totalComplaints]);
 
   useEffect(() => {
     handleTotalComplaint();
@@ -498,31 +498,6 @@ const ComplaintForm = (props) => {
 
           {/* complaints details */}
           <div className="w-3/12 ">
-            <div className="flex items-center">
-              {!signinLoading && (
-                <div className="w-40 ">
-                  <button
-                    className="bg-gray-400 p-2   h-10 transform rounded-3xl mb-5 "
-                    onClick={handleTotalComplaint}
-                  >
-                    <GrRefresh
-                      onClick={() => setSigninLoading(true)}
-                      size={24}
-                    />
-                  </button>
-                </div>
-              )}
-              {signinLoading && (
-                <div className="">
-                  <img
-                    className="w-40   rounded-full"
-                    src={loadingImg}
-                    alt="loading..."
-                  />
-                </div>
-              )}
-            </div>
-
             <div className="relative overflow-x-auto w-72 text-white shadow-md sm:rounded-lg">
               <table className=" table-fixed w-full">
                 <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

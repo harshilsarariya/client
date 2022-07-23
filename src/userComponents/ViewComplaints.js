@@ -31,10 +31,6 @@ const ViewComplaints = (props) => {
   const [isSearch, setIsSearch] = useState(false);
   const [stateList, setStateList] = useState([]);
   const [openingDate, setOpeningDate] = useState("");
-  const [closedComplaintsFDx, setClosedComplaintsFDx] = useState([]);
-  const [visitOkComplaintsFDx, setVisitOkComplaintsFDx] = useState([]);
-  const [pendingComplaintsFDx, setPendingComplaintsFDx] = useState([]);
-  const [cancelComplaintsFDx, setCancelComplaintsFDx] = useState([]);
   const memberId = localStorage.getItem("memberId");
 
   const getMemberById = async (memberId) => {
@@ -81,49 +77,34 @@ const ViewComplaints = (props) => {
     searchResult.map((complaint) => {
       if (
         (complaint.workDone === "Yes" && complaint.problemSolved === "Yes") ||
-        complaint.workDone === "Yes"
+        (complaint.workDone === "Yes" && complaint.problemSolved === "No")
       ) {
         clo++;
         props.setClosed(clo);
-        setClosedComplaintsFDx(complaint);
-        setClosedComplaintsFDx(complaint);
-        props.setClosedComplaintsFD((closedComplaintsFDx) => [
-          ...closedComplaintsFDx,
-          complaint,
-        ]);
+        props.setClosedComplaintsFD((prev) => [...prev, complaint]);
       } else if (
+        complaint.repeat === "Yes" &&
         complaint.workDone === "No" &&
         complaint.problemSolved === "No"
       ) {
-        ope++;
-        props.setPending(ope);
-        setPendingComplaintsFDx(complaint);
-        props.setPendingComplaintsFD((pendingComplaintsFDx) => [
-          ...pendingComplaintsFDx,
-          complaint,
-        ]);
-      } else if (complaint.workDone === "Visit Ok") {
-        vis++;
-        props.setVisitOk(vis);
-        setVisitOkComplaintsFDx(complaint);
-        props.setVisitOkComplaintsFD((visitOkComplaintsFDx) => [
-          ...visitOkComplaintsFDx,
-          complaint,
-        ]);
-      } else if (complaint.workDone === "Cancel") {
-        can++;
-        props.setCancel(can);
-        setCancelComplaintsFDx(complaint);
-        props.setVisitOkComplaintsFD((cancelComplaintsFDx) => [
-          ...cancelComplaintsFDx,
-          complaint,
-        ]);
-      }
-
-      if (complaint.repeat === "Yes") {
         rep++;
         props.setRepeat(rep);
         props.setRepeatComplaintsFD((prev) => [...prev, complaint]);
+      } else if (
+        (complaint.workDone === "No" && complaint.problemSolved === "No") ||
+        complaint.workDone === "No"
+      ) {
+        ope++;
+        props.setPending(ope);
+        props.setPendingComplaintsFD((prev) => [...prev, complaint]);
+      } else if (complaint.workDone === "Visit Ok") {
+        vis++;
+        props.setVisitOk(vis);
+        props.setVisitOkComplaintsFD((prev) => [...prev, complaint]);
+      } else if (complaint.workDone === "Cancel") {
+        can++;
+        props.setCancel(can);
+        props.setVisitOkComplaintsFD((prev) => [...prev, complaint]);
       }
     });
   };
