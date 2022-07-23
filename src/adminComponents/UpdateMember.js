@@ -61,7 +61,7 @@ const UpdateMember = () => {
           name: credentials.name,
           email: credentials.email,
           isForwardingMember: credentials.isForwardingMember,
-          states: credentials.states,
+          states: states,
           phone: credentials.phone,
           password: credentials.password,
         }),
