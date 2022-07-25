@@ -31,20 +31,36 @@ const SideBar = (props) => {
     { label: "PARTY NAME", key: "partyName" },
     { label: "ADDRESS", key: "address" },
     { label: "PINCODE", key: "pincode" },
-    { label: "STATE", key: "state" },
+    // { label: "STATE", key: "state" },
     { label: "CITY", key: "city" },
     { label: "MOBILE NO", key: "mobileNo" },
     { label: "BRAND NAME", key: "brandName" },
+    { label: "PLUMBER NAME", key: "plumberName" },
     { label: "REMARK", key: "remark" },
-    { label: "OFFICE NO", key: "plumbingNo" },
-    { label: "WORK DONE", key: "workDone" },
-    { label: "PROBLEM SOLVED", key: "problemSolved" },
-    { label: "REPEAT", key: "repeat" },
-    { label: "SYPHONE COLOR", key: "syphoneColor" },
+    // { label: "OFFICE NO", key: "plumbingNo" },
+    // { label: "WORK DONE", key: "workDone" },
+    // { label: "PROBLEM SOLVED", key: "problemSolved" },
+    // { label: "REPEAT", key: "repeat" },
+    // { label: "SYPHONE COLOR", key: "syphoneColor" },
+    // { label: "CODE", key: "code" },
+    // { label: "PROBLEM", key: "problem" },
+    // { label: "SOLUTIONS", key: "solutions" },
+    // { label: "CLOSING DATE", key: "closingDate" },
+  ];
+
+  let headerClosing = [
+    { label: "DATE", key: "date" },
+    { label: "PARTY NAME", key: "partyName" },
+    { label: "ADDRESS", key: "address" },
+    { label: "PINCODE", key: "pincode" },
+    { label: "CITY", key: "city" },
+    { label: "MOBILE NO", key: "mobileNo" },
+    { label: "BRAND NAME", key: "brandName" },
+    { label: "PLUMBER NAME", key: "plumberName" },
+    { label: "REMARK", key: "remark" },
     { label: "CODE", key: "code" },
     { label: "PROBLEM", key: "problem" },
     { label: "SOLUTIONS", key: "solutions" },
-    { label: "PLUMBER NAME", key: "plumberName" },
     { label: "CLOSING DATE", key: "closingDate" },
   ];
 
@@ -222,7 +238,7 @@ const SideBar = (props) => {
                         <button>
                           <CSVLink
                             data={props.closedComplaintsFD}
-                            headers={headers}
+                            headers={headerClosing}
                           >
                             <BsDownload />
                           </CSVLink>

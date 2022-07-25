@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { getMember, searchByPhoneNo, search } from "../api/complaint";
-import { CSVLink } from "react-csv";
 import { AiOutlineSearch } from "react-icons/ai";
 import ComplaintList from "./ComplaintList";
 
@@ -148,28 +147,6 @@ const ViewComplaints = (props) => {
     }
   }, [window.location.pathname]);
 
-  let headers = [
-    { label: "DATE", key: "date" },
-    { label: "PARTY NAME", key: "partyName" },
-    { label: "ADDRESS", key: "address" },
-    { label: "PINCODE", key: "pincode" },
-    { label: "STATE", key: "state" },
-    { label: "CITY", key: "city" },
-    { label: "MOBILE NO", key: "mobileNo" },
-    { label: "BRAND NAME", key: "brandName" },
-    { label: "PLUMBER NAME", key: "plumberName" },
-    { label: "REMARK", key: "remark" },
-    { label: "OFFICE NO", key: "plumbingNo" },
-    { label: "WORK DONE", key: "workDone" },
-    { label: "PROBLEM SOLVED", key: "problemSolved" },
-    { label: "SYPHONE COLOR", key: "syphoneColor" },
-    { label: "CODE", key: "code" },
-    { label: "PROBLEM", key: "problem" },
-    { label: "SOLUTIONS", key: "solutions" },
-    { label: "REPEAT", key: "repeat" },
-    { label: "CLOSING DATE", key: "closingDate" },
-  ];
-
   return (
     <div className="ml-8">
       <div className="flex justify-between  items-center">
@@ -183,15 +160,6 @@ const ViewComplaints = (props) => {
           <GrRefresh size={24} />
         </button> */}
         <div className="flex  items-center">
-          <div>
-            <CSVLink
-              data={searchResult}
-              headers={headers}
-              className="bg-[#a6df6cb5] p-2 rounded-xl"
-            >
-              Export to CSV
-            </CSVLink>
-          </div>
           {stateView && (
             <>
               <div className="rounded-xl flex ml-5  ">
