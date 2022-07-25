@@ -202,6 +202,9 @@ const ComplaintList = (props) => {
                       Phone No
                     </th>
                     <th scope="col" className="px-3 py-3">
+                      Plumber Name
+                    </th>
+                    <th scope="col" className="px-3 py-3">
                       Date
                     </th>
                     <th scope="col" className="px-3 pl-16 py-3">
@@ -212,12 +215,6 @@ const ComplaintList = (props) => {
                 </thead>
 
                 <tbody>
-                  {/* <InfiniteScroll
-                  dataLength={totalComplaintCount}
-                  next={fetchMoreData}
-                  hasMore={complaints.length < totalComplaintCount}
-                  loader={<h4>Loading...</h4>}
-                > */}
                   {complaints.map((complaint, index) => (
                     <>
                       {handleStatus(complaint)}
@@ -255,6 +252,9 @@ const ComplaintList = (props) => {
                         )}
                         <td className={`${commonClass}`}>
                           {complaint.mobileNo}
+                        </td>
+                        <td className={`${commonClass}`}>
+                          {complaint.plumberName}
                         </td>
                         <td className={`${commonClass}`}>{complaint.date}</td>
                         <td className={`${commonClass} flex space-x-4`}>
@@ -336,7 +336,6 @@ const ComplaintList = (props) => {
                       <div className="mb-5" />
                     </>
                   ))}
-                  {/* </InfiniteScroll> */}
                 </tbody>
               </table>
             )}
