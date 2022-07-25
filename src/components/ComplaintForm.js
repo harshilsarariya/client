@@ -230,15 +230,6 @@ const ComplaintForm = (props) => {
     { label: "MOBILE NO", key: "mobileNo" },
     { label: "BRAND NAME", key: "brandName" },
     { label: "REMARK", key: "remark" },
-    { label: "OFFICE NO", key: "plumbingNo" },
-    { label: "WORK DONE", key: "workDone" },
-    { label: "PROBLEM SOLVED", key: "problemSolved" },
-    { label: "REPEAT", key: "repeat" },
-    { label: "SYPHONE COLOR", key: "syphoneColor" },
-    { label: "CODE", key: "code" },
-    // { label: "PROBLEM", key: "problem" },
-    // { label: "SOLUTIONS", key: "solutions" },
-    // { label: "CLOSING DATE", key: "closingDate" },
   ];
 
   return (
