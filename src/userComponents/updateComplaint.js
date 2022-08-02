@@ -23,6 +23,7 @@ export const defaultPost = {
   plumberName: "",
   closingDate: "",
   code: "",
+  entryRemark: "",
 };
 
 const UpdateComplaint = () => {
@@ -341,7 +342,23 @@ const UpdateComplaint = () => {
                       htmlFor="remark"
                       className="leading-7 text-base text-gray-600"
                     >
-                      Remark
+                      Entry Remark
+                    </label>
+                    <textarea
+                      name="entryRemark"
+                      onChange={onChange}
+                      value={complaintInfo.entryRemark}
+                      className="w-full appearance-none rounded-xl border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-1 focus:ring-[#717984] text-lg  h-28 outline-none text-gray-700  py-1 px-3 leading-8 transition-colors duration-200 ease-in-out resize-none"
+                    />
+                  </div>
+                </div>
+                <div className="p-2 w-full">
+                  <div className="relative">
+                    <label
+                      htmlFor="remark"
+                      className="leading-7 text-base text-gray-600"
+                    >
+                      Forwarding Remark
                     </label>
                     <textarea
                       name="remark"

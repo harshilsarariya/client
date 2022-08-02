@@ -32,6 +32,7 @@ const ComplaintForm = (props) => {
     repeat: "No",
     syphoneColor: "",
     code: "",
+    entryRemark: "",
   });
   const [visitOKComplaints, setVisitOKComplaints] = useState([]);
   const [pendingComplaints, setPendingComplaints] = useState([]);
@@ -154,6 +155,7 @@ const ComplaintForm = (props) => {
           repeat: complaint.repeat,
           syphoneColor: complaint.syphoneColor,
           code: complaint.code,
+          entryRemark: complaint.entryRemark,
           entryUserEmail: localStorage.getItem("email"),
         }),
       }
@@ -176,6 +178,7 @@ const ComplaintForm = (props) => {
         repeat: "No",
         syphoneColor: "",
         code: "",
+        entryRemark: "",
       });
 
       alert("Complaint Submitted successfully");
@@ -474,6 +477,23 @@ const ComplaintForm = (props) => {
                       onChange={onChange}
                       value={complaint.code}
                       name="code"
+                      className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    />
+                  </div>
+                </div>
+                <div className="p-2 w-1/2 ">
+                  <div className="relative">
+                    <label
+                      htmlFor="code"
+                      className="leading-7 text-base text-gray-600"
+                    >
+                      Remark
+                    </label>
+                    <input
+                      type="text"
+                      onChange={onChange}
+                      value={complaint.entryRemark}
+                      name="entryRemark"
                       className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-[#717984] focus:bg-white focus:ring-2 focus:ring-[#717984] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     />
                   </div>

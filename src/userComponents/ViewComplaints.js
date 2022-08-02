@@ -21,6 +21,7 @@ export const defaultPost = {
   solution: "",
   plumberName: "",
   closingDate: "",
+  entryRemark: "",
 };
 
 const ViewComplaints = (props) => {
@@ -153,12 +154,6 @@ const ViewComplaints = (props) => {
         <h1 className="text-xl w-44 font-medium mt-8  border-b-2 border-gray-300">
           Complaints
         </h1>
-        {/* <button
-          className="bg-gray-400 p-2  transform rounded-3xl mb-5 "
-          onClick={handleTotalComplaint}
-        >
-          <GrRefresh size={24} />
-        </button> */}
         <div className="flex  items-center">
           {stateView && (
             <>

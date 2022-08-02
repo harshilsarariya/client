@@ -21,6 +21,7 @@ export const defaultPost = {
   plumberName: "",
   closingDate: "",
   code: "",
+  entryRemark: "",
 };
 
 const ViewComplaintDetails = () => {
@@ -167,7 +168,15 @@ const ViewComplaintDetails = () => {
 
         <div className="flex my-5">
           <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
-            Remark :
+            Entry Remark :
+          </h3>
+          <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
+            {complaintInfo.entryRemark}
+          </span>
+        </div>
+        <div className="flex my-5">
+          <h3 className="w-1/6  text-lg bg-white rounded-xl p-2 mr-5">
+            Forwarding Remark :
           </h3>
           <span className="w-5/6 text-lg rounded-xl p-2 bg-white">
             {complaintInfo.remark}
