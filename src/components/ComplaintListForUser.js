@@ -118,7 +118,7 @@ const ComplaintListForUser = (props) => {
     { label: "CITY", key: "city" },
     { label: "MOBILE NO", key: "mobileNo" },
     { label: "BRAND NAME", key: "brandName" },
-    { label: "PLUMBER NAME", key: "plumberName" },
+    // { label: "PLUMBER NAME", key: "plumberName" },
     { label: "REMARK", key: "remark" },
     // { label: "WORK DONE", key: "workDone" },
     // { label: "PROBLEM SOLVED", key: "problemSolved" },
